@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "Engine.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) Engine *engine;
+@property (strong, nonatomic) UIViewController *controller;
 @end

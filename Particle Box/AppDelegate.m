@@ -9,12 +9,18 @@
 #import "AppDelegate.h"
 
 @implementation AppDelegate
-
+@synthesize controller;
+@synthesize engine;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    // Override point for customization after application launch
+    engine = [[Engine alloc] initWithSize:self.window.bounds andColor:[UIColor blueColor]];
+    [self.window addSubview:engine.view];
+    
+    controller = [[UIViewController alloc] init];
+    self.window.rootViewController = controller;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
