@@ -42,11 +42,13 @@
     int maxBytes = (bytesPerRow * (dims.y - 1)) + (dims.x - 1) * BYTESPERPIXEL;
     
     for (int i = 0; i < maxBytes; i+=4) {
-        if (data[i] > 3) data[i]-=3;
-        for (int j = i + 1; j < i + 4; j++){
-        if (data[j] > 5)
-            data[j]-=5;
-    }
+        //if (data[i] > 3) data[i]-=3;
+        for (int j = i + 0; j < i + 3; j++){
+            if (data[j] > 5)
+                data[j]-=5;
+        }
+        if (data[maxBytes + 2] > 3)
+                data[maxBytes + 2] -= 3;
     }
     //NSLog(@"Max Bytes %d",maxBytes);
 }
@@ -110,157 +112,47 @@ void swap(int *a,int *b){
     b = a;
     a = temp;
 }
--(void) LineBresenhamwithX1:(int)p1x andX2:(int)p2x andY1:(int)p1y andY2:(int)p2y andColor:(Color)col
+-(void) LineBresenhamwithX1:(int)x andX2:(int)x2 andY1:(int)y andY2:(int)y2 andColor:(Color)col
 {
-    int F, x, y;
-    
-    if (p1x > p2x)  // Swap points if p1 is on the right of p2
+    int shortLen = y2-y;
+    int longLen = x2-x;
+    bool yLonger;
+    //if ((shortLen ^ (shortLen >> 31) – shortLen >> 31) > (longLen ^ (longLen >> 31)) – (longLen >> 31)))
+    if (((shortLen ^(shortLen >> 31)) - (shortLen >> 31)) > ((longLen ^ (longLen >> 31)) - (longLen >> 31))) 
+   {
+        shortLen ^= longLen;
+        longLen ^= shortLen;
+        shortLen ^= longLen;
+       
+        yLonger = true;
+    }
+    else
     {
-        swap(&p1x, &p2x);
-        swap(&p1y, &p2y);
+        yLonger = false;
     }
     
-    // Handle trivial cases separately for algorithm speed up.
-    // Trivial case 1: m = +/-INF (Vertical line)
-    if (p1x == p2x)
+    int inc = longLen < 0 ? -1 : 1;
+    
+    float multDiff = longLen == 0 ? shortLen : shortLen / longLen;
+    int i = 0;
+    if (yLonger)
     {
-        if (p1y > p2y)  // Swap y-coordinates if p1 is above p2
+        for (i = 0; i != longLen; i += inc)
         {
-            swap(&p1y, &p2y);
-        }
-        
-        x = p1x;
-        y = p1y;
-        while (y <= p2y)
-        {
-            [self renderPixelatX:x andY:y withColor:col];
-            y++;
-        }
-        return;
-    }
-    // Trivial case 2: m = 0 (Horizontal line)
-    else if (p1y == p2y)
-    {
-        x = p1x;
-        y = p1y;
-        
-        while (x <= p2x)
-        {
-            [self renderPixelatX:x andY:y withColor:col];
-            x++;
-        }
-        return;
-    }
-    
-    
-    int dy            = p2y - p1y;  // y-increment from p1 to p2
-    int dx            = p2x - p1x;  // x-increment from p1 to p2
-    int dy2           = (dy << 1);  // dy << 1 == 2*dy
-    int dx2           = (dx << 1);
-    int dy2_minus_dx2 = dy2 - dx2;  // precompute constant for speed up
-    int dy2_plus_dx2  = dy2 + dx2;
-    
-    
-    if (dy >= 0)    // m >= 0
-    {
-        // Case 1: 0 <= m <= 1 (Original case)
-        if (dy <= dx)
-        {
-            F = dy2 - dx;    // initial F
-            
-            x = p1x;
-            y = p1y;
-            while (x <= p2x)
-            {
-                [self renderPixelatX:x andY:y withColor:col];
-                if (F <= 0)
-                {
-                    F += dy2;
-                }
-                else
-                {
-                    y++;
-                    F += dy2_minus_dx2;
-                }
-                x++;
-            }
-        }
-        // Case 2: 1 < m < INF (Mirror about y=x line
-        // replace all dy by dx and dx by dy)
-        else
-        {
-            F = dx2 - dy;    // initial F
-            
-            y = p1y;
-            x = p1x;
-            while (y <= p2y)
-            {
-                [self renderPixelatX:x andY:y withColor:col];
-                if (F <= 0)
-                {
-                    F += dx2;
-                }
-                else
-                {
-                    x++;
-                    F -= dy2_minus_dx2;
-                }
-                y++;
-            }
+            [self renderPixelatX:x + i * multDiff andY: y + i withColor:col];
         }
     }
-    else    // m < 0
+    else
     {
-        // Case 3: -1 <= m < 0 (Mirror about x-axis, replace all dy by -dy)
-        if (dx >= -dy)
+        for (i = 0; i != longLen; i += inc)
         {
-            F = -dy2 - dx;    // initial F
-            
-            x = p1x;
-            y = p1y;
-            while (x <= p2x)
-            {
-                [self renderPixelatX:x andY:y withColor:col];
-                if (F <= 0)
-                {
-                    F -= dy2;
-                }
-                else
-                {
-                    y--;
-                    F -= dy2_plus_dx2;
-                }
-                x++;
-            }
-        }
-        // Case 4: -INF < m < -1 (Mirror about x-axis and mirror
-        // about y=x line, replace all dx by -dy and dy by dx)
-        else
-        {
-            F = dx2 + dy;    // initial F
-            
-            y = p1y;
-            x = p1x;
-            while (y >= p2y)
-            {
-                [self renderPixelatX:x andY:y withColor:col];
-                if (F <= 0)
-                {
-                    F += dx2;
-                }
-                else
-                {
-                    x++;
-                    F += dy2_plus_dx2;
-                }
-                y--;
-            }
+            [self renderPixelatX:x + i andY: y + i * multDiff withColor:col];
         }
     }
 }
 
 -(void) spawn1000Particles {
-    for (int p = 0; p < 1000; p++){
+    for (int p = 0; p < 1500; p++){
         
         Vec2 pos = {
             .x = [Calculator randFloatBetween:0.f and:dims.x],
@@ -274,7 +166,7 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    Graviton *grav = [[Graviton alloc] initWithStrength:5.0f andSuction:2.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/2}];
+    Whirl *grav = [[Whirl alloc] initWithStrength:8.0f andSuction:3.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/2}];
     [forces addObject:grav];        
 }
 #pragma mark - move gravity

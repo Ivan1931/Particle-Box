@@ -21,4 +21,5 @@ CGPoint origion;
 -(void) drawImage:(UIImage*)image{
     self.layer.contents = (id)image.CGImage;
 }
+
 @end

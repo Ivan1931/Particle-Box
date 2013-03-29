@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Particle.h"
 #import "Graviton.h"
+#import "Whirl.h"
 @interface Calculator : NSObject
 {
     @private

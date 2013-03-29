@@ -14,11 +14,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
+    /*if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
         // RETINA DISPLAY
         screenSize.size.width = screenSize.size.width * [[UIScreen mainScreen] scale];
         screenSize.size.height = screenSize.size.height * [[UIScreen mainScreen] scale];
-    }
+    }*/
     self.window = [[UIWindow alloc] initWithFrame:screenSize];
     // Override point for customization after application launch
     
@@ -66,4 +66,11 @@
     NSLog(@"Touch at x: %f and y: %f",point.x, point.y);
     [engine moveForces:point];
 }
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint point = [touch locationInView:[engine view]];
+    NSLog(@"Touch at x: %f and y: %f",point.x, point.y);
+    [engine moveForces:point];
+}
+
 @end

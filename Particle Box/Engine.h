@@ -39,8 +39,6 @@
 @property (nonatomic,retain) CADisplayLink *renderLink;
 @property (nonatomic,retain) CADisplayLink *calculateLink;
 + (Byte*) arrayOfBytesFromData:(NSData*) data;
-+(UIImage*)blankImage:(CGSize)_size withColor:(UIColor*)_color; //Builds blank image with specified color
-
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color;
 -(void) updateImage;
 -(void) render:(CADisplayLink*) link ;
