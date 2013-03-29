@@ -12,8 +12,7 @@
 typedef unsigned char byte;
 
 #define Clamp255(a) (a>255 ? 255 : a)
-#define BYTESPERPIXEL 4
-#define BITSPERCOMPONENT 8
+
 
 @implementation Engine
 
@@ -33,8 +32,8 @@ int startY = 0;
         height = size.size.height;
         colorSpace = CGColorSpaceCreateDeviceRGB();
         //
-        image = [self makeImage:view.bounds];
-        calculateLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(clearRaster:)];
+        image = [self makeCalc:view.bounds];
+        calculateLink = [CADisplayLink displayLinkWithTarget:calc selector:@selector(calculate:)];
         renderLink  =[CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
         [calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         [renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -44,7 +43,8 @@ int startY = 0;
     return self;
 }
 -(void) clearRaster:(CADisplayLink*) link  {
-    NSLog(@"Clear Raster");
+    //NSLog(@"Clear Raster");
+    
     size_t bytesPerRow      = (width * BITSPERCOMPONENT * BYTESPERPIXEL + 7) / 8;
     for (int y = startY ; y < height/2 + startY; y++)
     {
@@ -82,11 +82,12 @@ int startY = 0;
     
 }
 -(void) render:(CADisplayLink*) link  {
-    NSLog(@"Render");
+    //NSLog(@"Render");
     [self updateImage];
     [view drawImage:image];
+    
 }
-- (UIImage*)makeImage: (CGRect)rect
+- (UIImage*)makeCalc: (CGRect)rect
 {
     size_t bitsPerComponent = 8;
     size_t bytesPerPixel    = 4;
@@ -101,7 +102,7 @@ int startY = 0;
                                                  bytesPerRow, colorSpace,
                                                  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
-    
+    calc = [[Calculator alloc] initWithData:data andDimesions:(Vec2){rect.size.width, rect.size.height}];
     CGColorSpaceRelease(colorSpace);
     CGImageRef imageRef = CGBitmapContextCreateImage(context);
     UIImage *result = [UIImage imageWithCGImage:imageRef];
@@ -110,69 +111,7 @@ int startY = 0;
     free(data);    
     return result;
 }
-+ (Byte*) arrayOfBytesFromData:(NSData*) data
-{
-    NSUInteger len = [data length];
-    Byte *byteData = (Byte*)malloc(len);
-    memcpy(byteData, [data bytes], len);
-    return byteData;
-}
-
-+ (UIImage*)blankImage:(CGSize)_size withColor:(UIColor*)_color {
-    UIGraphicsBeginImageContext(_size);
-	CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, _color.CGColor);
-    CGContextFillRect(context, CGRectMake(0.0, 0.0, _size.width, _size.height));
-    UIImage* outputImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return outputImage;
-}
-+ (UIImage*) fromImage:(UIImage*)source toColourR:(int)colR g:(int)colG b:(int)colB {
-    
-    CGContextRef ctx;
-    CGImageRef imageRef = [source CGImage];
-    NSUInteger width = CGImageGetWidth(imageRef);
-    NSUInteger height = CGImageGetHeight(imageRef);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    byte *rawData = malloc(height * width * 4);
-    NSUInteger bytesPerPixel = 4;
-    NSUInteger bytesPerRow = bytesPerPixel * width;
-    NSUInteger bitsPerComponent = 8;
-    CGContextRef context = CGBitmapContextCreate(rawData, width, height,
-                                                 bitsPerComponent, bytesPerRow, colorSpace,
-                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
-    CGContextRelease(context);
-    
-    int byteIndex = 0;
-    for (int ii = 0 ; ii < width * height ; ++ii)
-    {
-        int grey = (rawData[byteIndex] + rawData[byteIndex+1] + rawData[byteIndex+2]) / 3;
-        
-        rawData[byteIndex] = Clamp255(colR*grey/256);
-        rawData[byteIndex+1] = Clamp255(colG*grey/256);
-        rawData[byteIndex+2] = Clamp255(colB*grey/256);
-        
-        byteIndex += 4;
-    }
-    
-    ctx = CGBitmapContextCreate(rawData,
-                                CGImageGetWidth( imageRef ),
-                                CGImageGetHeight( imageRef ),
-                                8,
-                                bytesPerRow,
-                                colorSpace,
-                                kCGImageAlphaPremultipliedLast );
-    CGColorSpaceRelease(colorSpace);
-    
-    imageRef = CGBitmapContextCreateImage (ctx);
-    UIImage* rawImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    
-    CGContextRelease(ctx);
-    free(rawData);
-    
-    return rawImage;
+-(void) moveForces:(CGPoint)xy {
+    [calc moveGravity:xy];
 }
 @end

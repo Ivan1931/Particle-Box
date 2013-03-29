@@ -7,18 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Particle.h"
-@interface Graviton : NSObject
-{
-    @private
-    float strength;
-    //float suctionp1;
-    float suction;
-    Vec2 position;
-}
-@property (nonatomic) Vec2 position;
-@property (nonatomic) float strength;
-@property (nonatomic) float suction;
--(id) initWithStrength:(float) pstrength andSuction:(float)psuction andPosition:(Vec2)xy;
--(void) influenceParticle:(Particle*)particle;
+#import "ForceNode.h"
+@interface Graviton : ForceNode
+-(void) influenceParticle:(Particle *)particle;
 @end

@@ -16,6 +16,7 @@
     self = [super init];
     if(self){
         postion = pposition;
+        previousPosition = pposition;
         color = pcolor;
         velocity.x = 0;
         velocity.x = 0;
@@ -25,7 +26,13 @@
 -(void) addAcceleration:(Vec2)acceleration {
     velocity.x += acceleration.x;
     velocity.y += acceleration.y;
+}
+-(void) move {
+    previousPosition = postion;
     postion.x += velocity.x;
     postion.y += velocity.y;
+}
+-(Vec2) getPrevious {
+    return previousPosition;
 }
 @end

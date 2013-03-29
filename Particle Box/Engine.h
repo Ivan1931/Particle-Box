@@ -45,4 +45,5 @@
 -(void) updateImage;
 -(void) render:(CADisplayLink*) link ;
 -(void) clearRaster:(CADisplayLink*) link;
+-(void) moveForces:(CGPoint)xy;
 @end

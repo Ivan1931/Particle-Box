@@ -26,7 +26,8 @@
 		100526521701CC6000BFAAA6 /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 100526511701CC5F00BFAAA6 /* Calculator.m */; };
 		10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10291D0617023CF100A9D2AB /* QuartzCore.framework */; };
 		10291D0A1703344E00A9D2AB /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D091703344E00A9D2AB /* Particle.m */; };
-		10291D0E17033CEF00A9D2AB /* Graviton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* Graviton.m */; };
+		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
+		10291D111703711900A9D2AB /* Graviton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D101703711900A9D2AB /* Graviton.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +71,10 @@
 		10291D081703344E00A9D2AB /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		10291D091703344E00A9D2AB /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
 		10291D0B1703396800A9D2AB /* Repository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Repository.h; sourceTree = "<group>"; };
-		10291D0C17033CEF00A9D2AB /* Graviton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graviton.h; sourceTree = "<group>"; };
-		10291D0D17033CEF00A9D2AB /* Graviton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graviton.m; sourceTree = "<group>"; };
+		10291D0C17033CEF00A9D2AB /* ForceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForceNode.h; sourceTree = "<group>"; };
+		10291D0D17033CEF00A9D2AB /* ForceNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForceNode.m; sourceTree = "<group>"; };
+		10291D0F1703711800A9D2AB /* Graviton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graviton.h; sourceTree = "<group>"; };
+		10291D101703711900A9D2AB /* Graviton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graviton.m; sourceTree = "<group>"; };
 		10C8AF4A17021EC700848AB8 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		10C8AF4B17021EC700848AB8 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,8 +150,10 @@
 				100526511701CC5F00BFAAA6 /* Calculator.m */,
 				10291D081703344E00A9D2AB /* Particle.h */,
 				10291D091703344E00A9D2AB /* Particle.m */,
-				10291D0C17033CEF00A9D2AB /* Graviton.h */,
-				10291D0D17033CEF00A9D2AB /* Graviton.m */,
+				10291D0C17033CEF00A9D2AB /* ForceNode.h */,
+				10291D0D17033CEF00A9D2AB /* ForceNode.m */,
+				10291D0F1703711800A9D2AB /* Graviton.h */,
+				10291D101703711900A9D2AB /* Graviton.m */,
 				10291D0B1703396800A9D2AB /* Repository.h */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
@@ -304,7 +309,8 @@
 				100526521701CC6000BFAAA6 /* Calculator.m in Sources */,
 				10C8AF4C17021EC700848AB8 /* Timer.m in Sources */,
 				10291D0A1703344E00A9D2AB /* Particle.m in Sources */,
-				10291D0E17033CEF00A9D2AB /* Graviton.m in Sources */,
+				10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */,
+				10291D111703711900A9D2AB /* Graviton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
