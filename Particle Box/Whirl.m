@@ -7,124 +7,56 @@
 //
 
 #import "Whirl.h"
-
+#define RADIAN 0.01745329251
 @implementation Whirl
 -(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy {
     self = [super initWithStrength:pstrength andSuction:psuction andPosition:xy];
     if (self) {
-        radius = pow (strength,2);
-        len = 0;
-        //currentCenter = 0;
-        [self moveCenter:position];
+        radius_s = powf(xy.x, 2) + powf(xy.y, 2);
+        radius = sqrtf(radius_s);
+        omega = atan2f(xy.y, xy.x);
     }
     return  self;
 }
 -(void) influenceParticle:(Particle *)particle {
+    //r = a + bt
+    //y = rsint
+    //x = rsint
+    //At center of 0...
+    float disx = [particle postion].x - position.x;
+    float disy = [particle postion].y - position.y;
     
-    float disx = centers[currentCenter].x - particle.postion.x;
-    float disy = centers[currentCenter].y - particle.postion.y;
-    float squ_d = powf(fabsf(disx) + fabsf(disy),2);
-    Vec2 a = {0.f,0.f};
-    if (fabsf(disx) > (strength + 1) || fabsf(disy) > (strength + 1)) {
-        float puller = 1.f / squ_d * strength;
-        a.x =   disx * puller;
-        a.y =   disy * puller;
-        if (a.y * particle.velocity.y < 0)
-        {
-            a.y *= suction;
-        }
-        if (a.x * particle.velocity.x < 0)
-        {
-            a.x *= suction;
-        }
-        /*
-        if(disx > 0) {
-            if (disy > 0)
-            {
-                if ((particle.velocity.y < 0) && (particle.velocity.x > 0)) a.x *= -1.f * suction;
-            } else {
-                if ((particle.velocity.x < 0) && (particle.velocity.y < 0)) a.y *= -1.f * suction;
-            }
-        } else {
-            if (disy > 0) {
-                if ((particle.velocity.y > 0) && (particle.velocity.x > 0)) a.y *= -1.f * suction;
-            } else {
-                if ((particle.velocity.x < 0) && (particle.velocity.y > 0)) a.x *= -1.f * suction;
-            }
-        }
-        */
-        
-    }
-    //if (a.x / a.y > 3)
-    //NSLog(@"dx: %f dx: %f\n y/x: %f",disx,disy, a.x / a.y);
-    [particle addAcceleration:a];
-}
--(void) moveCenter:(Vec2)center {
-    free (centers);
-    currentCenter = 0;
-    [self circle:(int)position.x withY:(int)position.y withRad:(int)radius];
+    float r_s = powf(disx, 2.f) + powf(disy, 2.f);
+    float r = r_s * [ForceNode Q_rsqrt:r_s];
+    float theta = atan2f(disx, disy);
+    float alpha = M_PI - theta + omega;
     
-}
--(void) moveAround {
-    if (currentCenter > len)
-        currentCenter = 0;
-    else currentCenter++;
-}
-// 'cx' and 'cy' denote the offset of the circle center from the origin.
--(void) circle:(int) cx withY:(int)cy withRad:(int) rad
-{
-    int error = -rad;
-    int x = rad;
-    int y = 0;
+    float dr_s = r_s + radius_s - (2 * radius * r * cosf(alpha));
     
-    // The following while loop may be altered to 'while (x > y)' for a
-    // performance benefit, as long as a call to 'plot4points' follows
-    // the body of the loop. This allows for the elimination of the
-    // '(x != y)' test in 'plot8points', providing a further benefit.
-    //
-    // For the sake of clarity, this is not shown here.
-    while (x >= y)
-    {
-        [self plot8points:cx withCY:cy withX:x withY:y];
+    float dr = dr_s * [ForceNode Q_rsqrt:dr_s];
+    
+    float dangle = asinf((r * sinhf(alpha))/dr) + omega;
+    
+    float x = dr * cosf(dangle);
+    float y = dr * sinf(dangle);
+    NSLog(@"\n\n\n");
+    NSLog (@"Particle position: %f %f",particle.postion.x, particle.postion.y);
+    NSLog(@"Distances: %f %f",disx,disy);
+    NSLog(@"DR :%f, ",dr);
+    NSLog(@"X: %f, Y: %f",x,y);
+    NSLog(@"DLs: %f",dangle);
+    NSLog(@"theta: %f",theta/RADIAN);
+    if (x == particle.postion.x && y == particle.postion.y)
+        NSLog(@"SAME!!!!!!!!!");
+    [particle setPostion:(Vec2){x, y}];
         
-        error += y;
-        ++y;
-        error += y;
-        
-        // The following test may be implemented in assembly language in
-        // most machines by testing the carry flag after adding 'y' to
-        // the value of 'error' in the previous step, since 'error'
-        // nominally has a negative value.
-        if (error >= 0)
-        {
-            error -= x;
-            --x;
-            error -= x;
-        }
-    }
+}
+-(void) setPosition:(Vec2)pos {
+    [super setPosition:pos];
+    radius_s = powf(pos.x, 2) + powf(pos.y, 2);
+    radius = sqrtf(radius_s);
+    omega = atan2f(pos.y, pos.x);
 }
 
--(void) plot8points:(int) cx withCY:(int) cy withX:(int)x withY: (int) y
-{
-    //plot4points(cx, cy, x, y);
-    //if (x != y) plot4points(cx, cy, y, x);
-    [self plot4points:cx withCY:cy andX:x andY:y];
-    if (x != y) [self plot4points:cx withCY:cy andX:y andY:x];
-}
-
-// The '(x != 0 && y != 0)' test in the last line of this function
-// may be omitted for a performance benefit if the radius of the
-// circle is known to be non-zero.
--(void) plot4points:(int) cx withCY:(int) cy andX:(int)x andY:(int)y
-{
-    len+=4;
-    centers = realloc(centers, sizeof(Vec2) * len);
-    //setPixel(cx + x, cy + y);
-
-    centers[len - 4] = (Vec2){cx + x, cy + y};
-    if (x != 0) centers[len - 3] = (Vec2) {cx - x, cy + y};
-    if (y != 0) centers[len -2] = (Vec2) {cx + x, cy - y};
-    if (x != 0 && y != 0) centers[len - 1] = (Vec2){cx - x, cy - y};
-}
 
 @end
