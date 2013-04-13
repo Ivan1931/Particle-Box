@@ -16,9 +16,11 @@
     unsigned char* data;
     NSMutableArray *particles;
     NSMutableArray *forces;
-    
+    int frameNumber;
     int bytesPerRow;
     Vec2 dims;
+    BOOL reset;
+    BOOL tail;
 }
 #pragma mark - Properties
 @property (nonatomic) unsigned char *data;

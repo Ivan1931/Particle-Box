@@ -21,4 +21,5 @@
 @property (nonatomic) float suction;
 -(id) initWithStrength:(float) pstrength andSuction:(float)psuction andPosition:(Vec2)xy;
 -(void) influenceParticle:(Particle*)particle;
++(float) Q_rsqrt:(float) number ;
 @end

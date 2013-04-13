@@ -21,6 +21,9 @@
         data = pdata;
         particles = [[NSMutableArray alloc] init];
         forces = [[NSMutableArray alloc] init];
+        frameNumber = 0;
+        reset = false;
+        tail = true;
         [self spawn1000Particles];
     }
     return self;
@@ -36,19 +39,36 @@
         }
         [local move];
         [self renderParticle:local];
+        if (reset){
+            if(local.postion.x <= 0)
+                local.postion = (Vec2){dims.x, local.postion.y};
+            else if (local.postion.x >= dims.x)
+                local.postion = (Vec2) {0.f,local.postion.y};
+            if (local.postion.y <= 0)
+                local.postion = (Vec2) {local.postion.x, dims.y};
+            else if (local.postion.y >= dims.y)
+                local.postion = (Vec2){local.postion.x, 0.f};
+        }
+        
     }
+    
 }
 -(void) clearRaster {
     int maxBytes = (bytesPerRow * (dims.y - 1)) + (dims.x - 1) * BYTESPERPIXEL;
-    
-    for (int i = 0; i < maxBytes; i+=4) {
-        //if (data[i] > 3) data[i]-=3;
-        for (int j = i + 0; j < i + 3; j++){
-            if (data[j] > 5)
-                data[j]-=5;
+    if (tail) {
+        for (int i = 0; i < maxBytes; i+=4) {
+            //if (data[i] > 3) data[i]-=3;
+            for (int j = i + 0; j < i + 3; j++){
+                if (data[j] > 5)
+                    data[j]-=5;
+            }
+            if (data[maxBytes + 2] > 3)
+                    data[maxBytes + 2] -= 3;
         }
-        if (data[maxBytes + 2] > 3)
-                data[maxBytes + 2] -= 3;
+    } else {
+        for (int i = 0; i < maxBytes; i++) {
+            data[i] = 0;
+        }
     }
     //NSLog(@"Max Bytes %d",maxBytes);
 }
@@ -67,19 +87,7 @@
             data[byteIndex] = col.r;
             data[byteIndex + 1] = col.g;
             data[byteIndex + 2] = col.b;
-            /*
-             data[byteIndex + bytesPerRow] = particle.color.r;
-             data[byteIndex + bytesPerRow + 1] = particle.color.g;
-             data[byteIndex + bytesPerRow + 2] = particle.color.b;
-             
-             data[byteIndex + 4] = particle.color.r;
-             data[byteIndex + 5] = particle.color.g;
-             data[byteIndex + 6] = particle.color.b;
-             
-             data[byteIndex + bytesPerRow + 4] = particle.color.r;
-             data[byteIndex + bytesPerRow + 5] = particle.color.g;
-             data[byteIndex + bytesPerRow + 6] = particle.color.b;
-             */
+            
         }
     }
 
@@ -152,7 +160,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawn1000Particles {
-    for (int p = 0; p < 1500; p++){
+    for (int p = 0; p < 3000; p++){
         
         Vec2 pos = {
             .x = [Calculator randFloatBetween:0.f and:dims.x],
@@ -166,8 +174,8 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    Whirl *grav = [[Whirl alloc] initWithStrength:8.0f andSuction:3.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/2}];
-    [forces addObject:grav];        
+    Whirl *grav = [[Whirl alloc] initWithStrength:10.0f andSuction:4.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/2}];
+    [forces addObject:grav];
 }
 #pragma mark - move gravity
 -(void) moveGravity:(CGPoint)xy {

@@ -7,7 +7,10 @@
 //
 
 #import "Particle.h"
-
+#define VELOCITY_CAPX 10
+#define VELOCITY_CAPY 20
+#define VELOCITY_CAPXN -10
+#define VELOCITY_CAPYN -20
 @implementation Particle
 @synthesize postion;
 @synthesize color;
@@ -24,8 +27,22 @@
     return self;
 }
 -(void) addAcceleration:(Vec2)acceleration {
-    velocity.x += acceleration.x;
-    velocity.y += acceleration.y;
+    if (velocity.x <= VELOCITY_CAPX){
+        if (velocity.x >= VELOCITY_CAPXN)
+            velocity.x += acceleration.x;
+        else velocity.x = VELOCITY_CAPXN;
+    }
+    else velocity.x = VELOCITY_CAPX;
+    if(velocity.y < VELOCITY_CAPY) {
+        if (velocity.y > VELOCITY_CAPYN)
+            velocity.y += acceleration.y;
+        else velocity.y = VELOCITY_CAPYN;
+    } else velocity.y = VELOCITY_CAPY;
+    
+}
+-(void) resetVelocity {
+    velocity.x = 0;
+    velocity.y = 0;
 }
 -(void) move {
     previousPosition = postion;

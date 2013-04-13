@@ -7,7 +7,8 @@
 //
 
 #import "Whirl.h"
-#define RADIAN 0.01745329251
+#import "Calculator.h"
+
 @implementation Whirl
 -(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy {
     self = [super initWithStrength:pstrength andSuction:psuction andPosition:xy];
@@ -25,31 +26,28 @@
     //At center of 0...
     float disx = [particle postion].x - position.x;
     float disy = [particle postion].y - position.y;
-    
-    float r_s = powf(disx, 2.f) + powf(disy, 2.f);
-    float r = r_s * [ForceNode Q_rsqrt:r_s];
-    float theta = atan2f(disx, disy);
-    float alpha = M_PI - theta + omega;
-    
-    float dr_s = r_s + radius_s - (2 * radius * r * cosf(alpha));
-    
-    float dr = dr_s * [ForceNode Q_rsqrt:dr_s];
-    
-    float dangle = asinf((r * sinhf(alpha))/dr) + omega;
-    
-    float x = dr * cosf(dangle);
-    float y = dr * sinf(dangle);
-    NSLog(@"\n\n\n");
-    NSLog (@"Particle position: %f %f",particle.postion.x, particle.postion.y);
-    NSLog(@"Distances: %f %f",disx,disy);
-    NSLog(@"DR :%f, ",dr);
-    NSLog(@"X: %f, Y: %f",x,y);
-    NSLog(@"DLs: %f",dangle);
-    NSLog(@"theta: %f",theta/RADIAN);
-    if (x == particle.postion.x && y == particle.postion.y)
-        NSLog(@"SAME!!!!!!!!!");
-    [particle setPostion:(Vec2){x, y}];
-        
+    float r_s = powf(disx,2.f) + powf(disy,2.f);
+    float r = sqrtf(r_s);
+    float x = 0;
+    float y = 0;
+        if (r > strength * MAGIC_RATIO)
+    {
+        r--;
+        float theta = atan2f(disy, disx) - RADIAN;
+        x = r * cosf(theta) + [Calculator randFloatBetween:-2.f and:2.f];
+        y = r * sinf(theta) + [Calculator randFloatBetween:-2.f and:2.f];
+    } else {
+        float ranx = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.x;
+        float rany = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.y;
+        [particle setPostion:(Vec2){ranx,
+            rany}];
+        [particle setPostion:(Vec2){ranx,
+            rany}];
+    }
+    //NSLog(@"SAME!!!!!!!!!");
+    //[particle addAcceleration:(Vec2) {x - disx, y - disy}];
+    //[particle setPostion:(Vec2){x + position.x, y + position.y}];
+    [particle setVelocity:(Vec2){x - disx, y - disy}];
 }
 -(void) setPosition:(Vec2)pos {
     [super setPosition:pos];
