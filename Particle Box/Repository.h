@@ -20,7 +20,6 @@ typedef struct {
     float y;
 }Vec2;
 #define RADIAN 0.01745329251
-#define MAGIC_RATIO 5
-#define MAGIC_PUSH 40
-#define NEGATIVE_MAGIC_PUSH -40
+
+
 #endif

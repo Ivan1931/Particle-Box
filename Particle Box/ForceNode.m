@@ -28,6 +28,9 @@
 -(void) influenceParticle:(Particle *)particle {
     
 }
+-(void) update{
+    
+}
 +(float) Q_rsqrt:(float) number
 {
     long i;

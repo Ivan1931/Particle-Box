@@ -15,6 +15,7 @@
 @synthesize postion;
 @synthesize color;
 @synthesize velocity;
+@synthesize previousPosition;
 -(id) initWith:(Vec2)pposition andColor:(Color)pcolor {
     self = [super init];
     if(self){
@@ -49,7 +50,7 @@
     postion.x += velocity.x;
     postion.y += velocity.y;
 }
--(Vec2) getPrevious {
-    return previousPosition;
+-(void) bringToCurrent {
+    previousPosition = position;
 }
 @end

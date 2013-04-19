@@ -19,9 +19,10 @@
 @property (nonatomic) Vec2 postion;
 @property (nonatomic) Vec2 velocity;
 @property (nonatomic) Color color;
+@property (nonatomic) Vec2 previousPosition;
 -(id) initWith:(Vec2)pposition andColor:(Color)pcolor;
--(void) addAcceleration:(Vec2) acceleration;
--(void) move;
--(Vec2) getPrevious;
--(void) resetVelocity;
+-(void) addAcceleration:(Vec2) acceleration; //Adds acceletation values to the velocity
+-(void) move; //Adds current velocity values to position
+-(void) resetVelocity;//Sets velocity to zero
+-(void) bringToCurrent; //Sets the previous position to the current position
 @end

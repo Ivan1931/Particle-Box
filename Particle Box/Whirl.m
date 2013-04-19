@@ -10,12 +10,14 @@
 #import "Calculator.h"
 
 @implementation Whirl
--(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy {
+@synthesize clockwise;
+-(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andClockwise:(BOOL)isClockwise{
     self = [super initWithStrength:pstrength andSuction:psuction andPosition:xy];
     if (self) {
         radius_s = powf(xy.x, 2) + powf(xy.y, 2);
         radius = sqrtf(radius_s);
         omega = atan2f(xy.y, xy.x);
+        clockwise = isClockwise;
     }
     return  self;
 }
@@ -32,29 +34,43 @@
     float y = 0;
         if (r > strength * MAGIC_RATIO)
     {
-        r--;
-        float theta = atan2f(disy, disx) - RADIAN;
-        x = r * cosf(theta) + [Calculator randFloatBetween:-2.f and:2.f];
-        y = r * sinf(theta) + [Calculator randFloatBetween:-2.f and:2.f];
+        r -= suction;
+        float theta;
+        if (clockwise)
+            theta = atan2f(disy, disx) + RADIAN;
+        else
+            theta = atan2f(disy, disx) - RADIAN;
+        
+        x = r * cosf(theta) ;//+ [Calculator randFloatBetween:-2.f and:2.f];
+        y = r * sinf(theta) ;//+ [Calculator randFloatBetween:-2.f and:2.f];
+        
+        float dx = x - disx;
+        float dy = y - disy;
+        //dx = dx/r ;// * suction;
+        //dy = dy/r ;//* suction;
+        [particle addAcceleration:(Vec2) {dx, dy}];
     } else {
         float ranx = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.x;
         float rany = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.y;
-        [particle setPostion:(Vec2){ranx,
-            rany}];
-        [particle setPostion:(Vec2){ranx,
-            rany}];
+        [particle setPostion:(Vec2){ranx, rany}];
+        [particle bringToCurrent];
+        [particle resetVelocity];
     }
+    
     //NSLog(@"SAME!!!!!!!!!");
     //[particle addAcceleration:(Vec2) {x - disx, y - disy}];
     //[particle setPostion:(Vec2){x + position.x, y + position.y}];
-    [particle setVelocity:(Vec2){x - disx, y - disy}];
+    
 }
 -(void) setPosition:(Vec2)pos {
     [super setPosition:pos];
     radius_s = powf(pos.x, 2) + powf(pos.y, 2);
     radius = sqrtf(radius_s);
     omega = atan2f(pos.y, pos.x);
+    currentSuction = suction;
 }
-
+-(void) update {
+    currentSuction *= MAGIC_INCREMENTOR;
+}
 
 @end

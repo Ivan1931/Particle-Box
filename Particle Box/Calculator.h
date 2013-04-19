@@ -21,6 +21,7 @@
     Vec2 dims;
     BOOL reset;
     BOOL tail;
+    BOOL whirls;
 }
 #pragma mark - Properties
 @property (nonatomic) unsigned char *data;

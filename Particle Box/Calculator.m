@@ -24,6 +24,7 @@
         frameNumber = 0;
         reset = false;
         tail = true;
+        whirls = false;
         [self spawn1000Particles];
     }
     return self;
@@ -38,6 +39,8 @@
             [(ForceNode*)[forces objectAtIndex:f] influenceParticle:local];
         }
         [local move];
+        if (whirls)
+            [local resetVelocity];
         [self renderParticle:local];
         if (reset){
             if(local.postion.x <= 0)
@@ -50,6 +53,10 @@
                 local.postion = (Vec2){local.postion.x, 0.f};
         }
         
+    }
+    for (int f = 0 ; f < forces.count; f++)
+    {
+        [(ForceNode*)[forces objectAtIndex:f] update];
     }
     
 }
@@ -77,8 +84,8 @@
     //int mult = bytesPerRow / dims.x;
     [self renderPixelatX:particle.postion.x andY:particle.postion.y withColor:particle.color];
     //NSLog(@"%f %f %f %f",particle.postion.x, particle.postion.y, [particle getPrevious].x, [particle getPrevious].y);
-    [self LineBresenhamwithX1:particle.postion.x andX2:[particle getPrevious].x
-                    andY1:particle.postion.y andY2:[particle getPrevious].y andColor:particle.color];
+    [self LineBresenhamwithX1:particle.postion.x andX2:[particle previousPosition].x
+                    andY1:particle.postion.y andY2:[particle previousPosition].y andColor:particle.color];
 }
 -(void) renderPixel:(Vec2)pos andColor:(Color)col {
     if (pos.x >= 0 && pos.x < dims.x - 6){
@@ -174,8 +181,14 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    Whirl *grav = [[Whirl alloc] initWithStrength:10.0f andSuction:4.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/2}];
-    [forces addObject:grav];
+    Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.7f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
+    //Whirl *force1 = [[Whirl alloc] initWithStrength:10.0f andSuction:1.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3} andClockwise:false];
+    
+    /*Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.8f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
+    Graviton *force1 = [[Graviton alloc] initWithStrength:10.0f andSuction:1.3f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3}];*/
+    [forces addObject:force];
+    //[forces addObject:force1];
+    
 }
 #pragma mark - move gravity
 -(void) moveGravity:(CGPoint)xy {
