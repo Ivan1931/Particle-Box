@@ -26,8 +26,8 @@
     //y = rsint
     //x = rsint
     //At center of 0...
-    float disx = [particle postion].x - position.x;
-    float disy = [particle postion].y - position.y;
+    float disx = [particle position].x - position.x;
+    float disy = [particle position].y - position.y;
     float r_s = powf(disx,2.f) + powf(disy,2.f);
     float r = sqrtf(r_s);
     float x = 0;
@@ -52,7 +52,7 @@
     } else {
         float ranx = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.x;
         float rany = [Calculator randFloatBetween:NEGATIVE_MAGIC_PUSH and:MAGIC_PUSH] + position.y;
-        [particle setPostion:(Vec2){ranx, rany}];
+        [particle setPosition:(Vec2){ranx, rany}];
         [particle bringToCurrent];
         [particle resetVelocity];
     }

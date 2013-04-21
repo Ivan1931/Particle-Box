@@ -43,14 +43,14 @@
             [local resetVelocity];
         [self renderParticle:local];
         if (reset){
-            if(local.postion.x <= 0)
-                local.postion = (Vec2){dims.x, local.postion.y};
-            else if (local.postion.x >= dims.x)
-                local.postion = (Vec2) {0.f,local.postion.y};
-            if (local.postion.y <= 0)
-                local.postion = (Vec2) {local.postion.x, dims.y};
-            else if (local.postion.y >= dims.y)
-                local.postion = (Vec2){local.postion.x, 0.f};
+            if(local.position.x <= 0)
+                local.position = (Vec2){dims.x, local.position.y};
+            else if (local.position.x >= dims.x)
+                local.position = (Vec2) {0.f,local.position.y};
+            if (local.position.y <= 0)
+                local.position = (Vec2) {local.position.x, dims.y};
+            else if (local.position.y >= dims.y)
+                local.position = (Vec2){local.position.x, 0.f};
         }
         
     }
@@ -82,10 +82,10 @@
 #pragma mark - render
 -(void) renderParticle:(Particle*)particle{
     //int mult = bytesPerRow / dims.x;
-    [self renderPixelatX:particle.postion.x andY:particle.postion.y withColor:particle.color];
+    [self renderPixelatX:particle.position.x andY:particle.position.y withColor:particle.color];
     //NSLog(@"%f %f %f %f",particle.postion.x, particle.postion.y, [particle getPrevious].x, [particle getPrevious].y);
-    [self LineBresenhamwithX1:particle.postion.x andX2:[particle previousPosition].x
-                    andY1:particle.postion.y andY2:[particle previousPosition].y andColor:particle.color];
+    [self LineBresenhamwithX1:particle.position.x andX2:[particle previousPosition].x
+                    andY1:particle.position.y andY2:[particle previousPosition].y andColor:particle.color];
 }
 -(void) renderPixel:(Vec2)pos andColor:(Color)col {
     if (pos.x >= 0 && pos.x < dims.x - 6){

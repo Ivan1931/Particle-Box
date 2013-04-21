@@ -16,7 +16,7 @@
     Color color;
 
 }
-@property (nonatomic) Vec2 postion;
+@property (nonatomic) Vec2 position;
 @property (nonatomic) Vec2 velocity;
 @property (nonatomic) Color color;
 @property (nonatomic) Vec2 previousPosition;

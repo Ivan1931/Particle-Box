@@ -12,14 +12,14 @@
 #define VELOCITY_CAPXN -10
 #define VELOCITY_CAPYN -20
 @implementation Particle
-@synthesize postion;
+@synthesize position;
 @synthesize color;
 @synthesize velocity;
 @synthesize previousPosition;
 -(id) initWith:(Vec2)pposition andColor:(Color)pcolor {
     self = [super init];
     if(self){
-        postion = pposition;
+        position = pposition;
         previousPosition = pposition;
         color = pcolor;
         velocity.x = 0;
@@ -46,9 +46,9 @@
     velocity.y = 0;
 }
 -(void) move {
-    previousPosition = postion;
-    postion.x += velocity.x;
-    postion.y += velocity.y;
+    previousPosition = position;
+    position.x += velocity.x;
+    position.y += velocity.y;
 }
 -(void) bringToCurrent {
     previousPosition = position;

@@ -11,8 +11,8 @@
 @implementation Graviton
 -(void) influenceParticle:(Particle *)particle {
     
-    float disx = position.x - particle.postion.x;
-    float disy = position.y - particle.postion.y;
+    float disx = position.x - particle.position.x;
+    float disy = position.y - particle.position.y;
     float squ_d = powf(fabsf(disx) + fabsf(disy),2);
     Vec2 a = {0.f,0.f};
     if (squ_d >= strength + 1) {

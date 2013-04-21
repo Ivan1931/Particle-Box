@@ -13,6 +13,7 @@
 @synthesize suction;
 @synthesize position;
 @synthesize strength;
+#pragma mark - Default constructor
 -(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy
 {
     self = [super init];
@@ -31,6 +32,7 @@
 -(void) update{
     
 }
+#pragma mark - Maths methods
 +(float) Q_rsqrt:(float) number
 {
     long i;
@@ -46,5 +48,19 @@
     //      y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
     
     return y;
+}
+//Returns a two vector containing the x and y difference between two point
+Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2)
+{
+    return (Vec2){vec1.x - vec2.x, vec1.y - vec2.y};
+}
+//Evaluates to true with the following condition
+//1. Both parameter vectors have equal values for x and y
+bool isEqualVectors (Vec2 vec1, Vec2 vec2)
+{
+    return (vec1.x == vec2.x && vec1.y == vec2.y);
+}
+float computeDistance (Vec2 vec1, Vec2 vec2) {
+    return sqrtf(powf(vec1.x - vec2.x,2.f) + powf(vec1.y - vec2.y, 2.f));
 }
 @end
