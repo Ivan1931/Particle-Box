@@ -106,19 +106,6 @@
             data[byteIndex] = col.r;
             data[byteIndex + 1] = col.g;
             data[byteIndex + 2] = col.b;
-            /*
-             data[byteIndex + bytesPerRow] = col.r;
-             data[byteIndex + bytesPerRow + 1] = col.g;
-             data[byteIndex + bytesPerRow + 2] = col.b;
-             
-             data[byteIndex + 4] = col.r;
-             data[byteIndex + 5] = col.g;
-             data[byteIndex + 6] = col.b;
-             
-             data[byteIndex + bytesPerRow + 4] = col.r;
-             data[byteIndex + bytesPerRow + 5] = col.g;
-             data[byteIndex + bytesPerRow + 6] = col.b;
-             */
         }
     }
 }
@@ -181,14 +168,20 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.7f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
+    /*Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.7f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
     //Whirl *force1 = [[Whirl alloc] initWithStrength:10.0f andSuction:1.0f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3} andClockwise:false];
     
-    /*Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.8f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
-    Graviton *force1 = [[Graviton alloc] initWithStrength:10.0f andSuction:1.3f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3}];*/
-    [forces addObject:force];
-    //[forces addObject:force1];
+    Graviton *force = [[Graviton alloc] initWithStrength:10.0f andSuction:1.8f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4}];
+    Graviton *force1 = [[Graviton alloc] initWithStrength:10.0f andSuction:1.3f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3}];
+    //[forces addObject:force];
+    //[forces addObject:force1];*/
+    [self spawnTwoRoses];
     
+}
+-(void) spawnTwoRoses {
+    Rose *rose = [[Rose alloc] initWithStrength:10.f andSuction:3.f andPosition:(Vec2){dims.x / 2, dims.y / 2}
+        andFirePosition:(Vec2){dims.x / 2, dims.y / 4} andDimensions:dims];
+    [forces addObject:rose];
 }
 #pragma mark - move gravity
 -(void) moveGravity:(CGPoint)xy {

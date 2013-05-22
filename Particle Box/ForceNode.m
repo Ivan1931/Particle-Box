@@ -22,6 +22,7 @@
         suction = psuction;
         position = xy;
         NSLog(@"x: %f y: %f", xy.x,xy.y);
+        nothing = (Vec2){0.f,0.f};
 
     }
     return self;
@@ -62,5 +63,8 @@ bool isEqualVectors (Vec2 vec1, Vec2 vec2)
 }
 float computeDistance (Vec2 vec1, Vec2 vec2) {
     return sqrtf(powf(vec1.x - vec2.x,2.f) + powf(vec1.y - vec2.y, 2.f));
+}
+float computeGradient (Vec2 vecA, Vec2 vecB) {
+    return (vecA.y - vecB.y)/(vecA.x - vecB.x);
 }
 @end

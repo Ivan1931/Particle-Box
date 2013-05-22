@@ -15,6 +15,7 @@
     //float suctionp1;
     float suction;
     Vec2 position;
+    Vec2 nothing;
 }
 @property (nonatomic) Vec2 position;
 @property (nonatomic) float strength;
@@ -25,5 +26,6 @@
 +(float) Q_rsqrt:(float) number;
 Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2);
 float computeDistance (Vec2 vec1, Vec2 vec2);
+float computeGradient (Vec2 vecA, Vec2 vecB);
 bool isEqualVectors (Vec2 vec1, Vec2 vec2);
 @end

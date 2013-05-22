@@ -7,14 +7,16 @@
 //
 
 #import "ForceNode.h"
-
+#import "Calculator.h"
+#define RAND_TABLE_SIZE 255
 @interface Rose : ForceNode
 {
     @private
     Vec2 firePosition;
     Vec2 dims;
+    float* randomValueTable;
 }
--(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andFirePosition:(Vec2) fp andDimensions:(Vec2) dims;
+-(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andFirePosition:(Vec2) fp andDimensions:(Vec2) pdims;
 -(void) influenceParticle:(Particle *)particle;
 @property (nonatomic) Vec2 firePosition;
 @end

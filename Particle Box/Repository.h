@@ -21,5 +21,4 @@ typedef struct {
 }Vec2;
 #define RADIAN 0.01745329251
 
-
 #endif
