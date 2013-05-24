@@ -12,7 +12,7 @@
 @implementation Whirl
 @synthesize clockwise;
 -(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andClockwise:(BOOL)isClockwise{
-    self = [super initWithStrength:pstrength andSuction:psuction andPosition:xy];
+    self = [super initWithStrength:pstrength Suction:psuction Position:xy];
     if (self) {
         radius_s = powf(xy.x, 2) + powf(xy.y, 2);
         radius = sqrtf(radius_s);

@@ -19,6 +19,11 @@ typedef struct {
     float x;
     float y;
 }Vec2;
+typedef struct{
+    Vec2 position;
+    int ID;
+}Node;
 #define RADIAN 0.01745329251
 #define CHANGE_DURATION 200000
+#define MAX_NODES 5
 #endif

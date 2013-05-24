@@ -12,7 +12,7 @@
 @synthesize firePosition;
 
 -(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andFirePosition:(Vec2)fp andDimensions:(Vec2)pdims{
-    self = [super initWithStrength:pstrength andSuction:psuction andPosition:xy];
+    self = [super initWithStrength:pstrength Suction:psuction Position:xy];
     if (self) {
         firePosition = fp;
         dims = pdims;

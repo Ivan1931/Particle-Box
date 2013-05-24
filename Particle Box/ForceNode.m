@@ -14,7 +14,7 @@
 @synthesize position;
 @synthesize strength;
 #pragma mark - Default constructor
--(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy
+-(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy
 {
     self = [super init];
     if (self) {
@@ -24,7 +24,9 @@
         NSLog(@"x: %f y: %f", xy.x,xy.y);
         nothing = (Vec2){0.f,0.f};
         changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
-
+        numNodes = 1;
+        nodes = malloc(sizeof(Node));
+        nodes[0] = (Node) {xy, 0};
     }
     return self;
 }
@@ -33,6 +35,40 @@
 }
 -(void) update{
     
+}
+-(void) moveNode:(Vec2)pposition {
+    nodes[[self getIndexToClosestNode:pposition]].position = pposition;
+    
+}
+-(void) deleteNode:(Vec2)pposition {
+    int closest = [self getIndexToClosestNode:pposition];
+    for (int i = closest; i < numNodes - 1; i++) {
+        nodes[i] = nodes[i + 1];
+    }
+    numNodes--;
+}
+-(void) addNode:(Vec2)pposition {
+    if (numNodes < MAX_NODES) {
+        nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
+        nodes[numNodes] = (Node){pposition,numNodes - 1};
+        numNodes++;
+    }
+}
+-(int) getIndexToClosestNode:(Vec2)pposition {
+    int ret = 0;
+    float temp;
+    float max = computeDistance(nodes[0].position, pposition);
+    for (int i = 1 ; i < numNodes; i++) {
+        temp = computeDistance(nodes[i].position, pposition);
+        if (temp < max) {
+            max = temp;
+            ret = i;
+        }
+    }
+    return ret;
+}
+-(int) getNumberNodes {
+    return numNodes;
 }
 #pragma mark - Maths methods
 +(float) Q_rsqrt:(float) number

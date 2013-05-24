@@ -185,7 +185,7 @@ void swap(int *a,int *b){
     [forces addObject:rose];
 }
 -(void) spawnGraviton {
-    Graviton *grav = [[Graviton alloc] initWithStrength:10.f andSuction:3.f andPosition:(Vec2){dims.x / 2, dims.y / 2}];
+    Graviton *grav = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 2}];
     [forces addObject:grav];
 }
 #pragma mark - move gravity
