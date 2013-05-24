@@ -12,8 +12,13 @@
 -(void) influenceParticle:(Particle *)particle {
     if (rand() % CHANGE_DURATION == 0)
         changeColor = (Color){rand() % 200 + 50,rand() % 200 + 50,rand() % 200 + 50};
-    float disx = position.x - particle.position.x;
-    float disy = position.y - particle.position.y;
+    for (int i = 0; i < numNodes; i++)
+        [self applyGravity:particle withNode:nodes[i]];
+    
+}
+-(void) applyGravity:(Particle*)particle withNode:(Node)node {
+    float disx = node.position.x - particle.position.x;
+    float disy = node.position.y - particle.position.y;
     float squ_d = powf(fabsf(disx) + fabsf(disy),2);
     Vec2 a = {0.f,0.f};
     if (squ_d >= strength + 1) {
@@ -31,8 +36,5 @@
         [particle setColor:changeColor];
     }
     [particle addAcceleration:a];
-}
--(void) applyGravity:(Particle*)particle withNode:(Node)node {
-    
 }
 @end

@@ -18,7 +18,7 @@
 
 @synthesize data;
 @synthesize particles;
-@synthesize forces;
+@synthesize node;
 
 -(id) initWithData:(unsigned char *)pdata andDimesions:(Vec2)xy {
     self = [super init];
@@ -27,7 +27,6 @@
         bytesPerRow = (xy.x * BITSPERCOMPONENT * BYTESPERPIXEL + 7) / 8;
         data = pdata;
         particles = [[NSMutableArray alloc] init];
-        forces = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
         tail = true;
@@ -43,12 +42,8 @@
     [self clearRaster];
     for (int p = 0; p < particles.count; p++) {
         Particle* local = [particles objectAtIndex:p];
-        for (int f = 0; f < forces.count; f++) {
-            [(ForceNode*)[forces objectAtIndex:f] influenceParticle:local];
-        }
+        [node influenceParticle:local];
         [local move];
-        if (whirls)
-            [local resetVelocity];
         [self renderParticle:local];
         if (reset){
             if(local.position.x <= 0)
@@ -62,11 +57,7 @@
         }
         
     }
-    for (int f = 0 ; f < forces.count; f++)
-    {
-        [(ForceNode*)[forces objectAtIndex:f] update];
-    }
-    
+    [node update];
 }
 
 -(void) clearRaster {
@@ -198,19 +189,19 @@ void swap(int *a,int *b){
 -(void) spawnTwoRoses {
     Rose *rose = [[Rose alloc] initWithStrength:10.f andSuction:3.f andPosition:(Vec2){dims.x / 2, dims.y / 2}
         andFirePosition:(Vec2){dims.x / 2, dims.y / 4} andDimensions:dims];
-    [forces addObject:rose];
+    node = rose;
 }
 
 -(void) spawnGraviton {
-    Graviton *grav = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 2}];
-    [forces addObject:grav];
+    Graviton *grav = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 4}];
+    [grav addNode:(Vec2){dims.x/2,dims.y/4 * 3}];
+    node = grav;
 }
 
 #pragma mark - move gravity
 
 -(void) moveGravity:(CGPoint)xy {
-    [[forces objectAtIndex:0] setPosition:(Vec2){xy.x,xy.y}];
-    
+    [node moveNode:(Vec2){xy.x, xy.y}];
 }
 
 +(float) randFloatBetween:(float)low and:(float)high {

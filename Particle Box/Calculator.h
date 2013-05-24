@@ -16,18 +16,18 @@
     @private
     unsigned char* data;
     NSMutableArray *particles;
-    NSMutableArray *forces;
     int frameNumber;
     int bytesPerRow;
     Vec2 dims;
     BOOL reset;
     BOOL tail;
     BOOL whirls;
+    ForceNode *node;
 }
 #pragma mark - Properties
 @property (nonatomic) unsigned char *data;
 @property (nonatomic, strong) NSMutableArray *particles;
-@property (nonatomic, strong) NSMutableArray *forces;
+@property (nonatomic, strong) ForceNode *node;
 #pragma mark - Methods
 -(void) calculate:(CADisplayLink*)link;
 -(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
