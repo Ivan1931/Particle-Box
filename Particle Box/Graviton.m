@@ -20,24 +20,19 @@
         float puller = 1.f / squ_d * strength;
         a.x =   disx * puller;
         a.y =   disy * puller;
-        if (a.y * particle.velocity.y <= 0)
-        {
+        if (a.y * particle.velocity.y <= 0){
             a.y *= suction;
         }
-        if (a.x * particle.velocity.x <= 0)
-        {
+        if (a.x * particle.velocity.x <= 0){
             a.x *= suction;
         }
-        a.x += powf(particle.velocity.x,2) / squ_d;
-        a.y += powf(particle.velocity.y, 2) / squ_d;
     } else {
         
-        
-            [particle setColor:changeColor];
-        
+        [particle setColor:changeColor];
     }
-    //if (a.x / a.y > 3)
-    //NSLog(@"dx: %f dx: %f\n y/x: %f",disx,disy, a.x / a.y);
     [particle addAcceleration:a];
+}
+-(void) applyGravity:(Particle*)particle withNode:(Node)node {
+    
 }
 @end
