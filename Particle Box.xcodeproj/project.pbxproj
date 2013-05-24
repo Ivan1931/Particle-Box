@@ -29,6 +29,7 @@
 		10291D0A1703344E00A9D2AB /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D091703344E00A9D2AB /* Particle.m */; };
 		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
 		10291D111703711900A9D2AB /* Graviton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D101703711900A9D2AB /* Graviton.m */; };
+		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
 		10DA945D17215BF400A7EBA3 /* Rose.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DA945C17215BF400A7EBA3 /* Rose.m */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,8 @@
 		10291D0D17033CEF00A9D2AB /* ForceNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForceNode.m; sourceTree = "<group>"; };
 		10291D0F1703711800A9D2AB /* Graviton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graviton.h; sourceTree = "<group>"; };
 		10291D101703711900A9D2AB /* Graviton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graviton.m; sourceTree = "<group>"; };
+		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
+		10991330174F7D540031EC8F /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
 		10C8AF4A17021EC700848AB8 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		10C8AF4B17021EC700848AB8 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		10DA945B17215BF400A7EBA3 /* Rose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rose.h; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				10291D0D17033CEF00A9D2AB /* ForceNode.m */,
 				10291D0F1703711800A9D2AB /* Graviton.h */,
 				10291D101703711900A9D2AB /* Graviton.m */,
+				1099132F174F7D540031EC8F /* Ribbon.h */,
+				10991330174F7D540031EC8F /* Ribbon.m */,
 				1012BA371706167C003019DC /* Whirl.h */,
 				1012BA381706167C003019DC /* Whirl.m */,
 				10DA945B17215BF400A7EBA3 /* Rose.h */,
@@ -323,6 +328,7 @@
 				10291D111703711900A9D2AB /* Graviton.m in Sources */,
 				1012BA391706167C003019DC /* Whirl.m in Sources */,
 				10DA945D17215BF400A7EBA3 /* Rose.m in Sources */,
+				10991331174F7D540031EC8F /* Ribbon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

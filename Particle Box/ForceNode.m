@@ -23,6 +23,7 @@
         position = xy;
         NSLog(@"x: %f y: %f", xy.x,xy.y);
         nothing = (Vec2){0.f,0.f};
+        changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
 
     }
     return self;

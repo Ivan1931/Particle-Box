@@ -16,6 +16,8 @@
     float suction;
     Vec2 position;
     Vec2 nothing;
+    Color changeColor;
+
 }
 @property (nonatomic) Vec2 position;
 @property (nonatomic) float strength;

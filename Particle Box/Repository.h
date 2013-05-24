@@ -20,5 +20,5 @@ typedef struct {
     float y;
 }Vec2;
 #define RADIAN 0.01745329251
-
+#define CHANGE_DURATION 200000
 #endif

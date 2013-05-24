@@ -87,27 +87,28 @@
     [self LineBresenhamwithX1:particle.position.x andX2:[particle previousPosition].x
                     andY1:particle.position.y andY2:[particle previousPosition].y andColor:particle.color];
 }
--(void) renderPixel:(Vec2)pos andColor:(Color)col {
-    if (pos.x >= 0 && pos.x < dims.x - 6){
-        if (pos.y >= 0 && pos.y < dims.y - 6){
-            int byteIndex = 4 * (int) (pos.x) + bytesPerRow * (int)(pos.y);
-            data[byteIndex] = col.r;
-            data[byteIndex + 1] = col.g;
-            data[byteIndex + 2] = col.b;
-            
-        }
-    }
-
-}
 -(void) renderPixelatX:(int)x andY:(int)y withColor:(Color)col {
     if (x >= 0 && x < dims.x - 6){
         if (y >= 0 && y < dims.y - 6){
             int byteIndex = 4 * x + bytesPerRow * y;
-            data[byteIndex] = col.r;
-            data[byteIndex + 1] = col.g;
-            data[byteIndex + 2] = col.b;
+            
+            //[self averageBlendAtIndex:byteIndex withColor:col];
+            [self maxBlendAtIndex:byteIndex withColor:col];
         }
     }
+}
+-(void) averageBlendAtIndex:(int) index withColor:(Color) color {
+    data[index] = averageBlend(data[index], color.r);
+    data[index + 1] = averageBlend(data[index + 1], color.g);
+    data[index + 2] = averageBlend(data[index + 2], color.b);
+}
+-(void) maxBlendAtIndex:(int) index withColor:(Color) color {
+    data[index] = MAX(data[index], color.r);
+    data[index + 1] = MAX(data[index + 1], color.g);
+    data[index + 2] = MAX(data[index + 2], color.b);
+}
+Byte averageBlend (Byte a, Byte b) {
+    return MAX((a + b)/2, 255);
 }
 void swap(int *a,int *b){
     int *temp = b;
@@ -175,13 +176,17 @@ void swap(int *a,int *b){
     Graviton *force1 = [[Graviton alloc] initWithStrength:10.0f andSuction:1.3f andPosition:(Vec2){ .x = dims.x / 2, .y = dims.y/4 * 3}];
     //[forces addObject:force];
     //[forces addObject:force1];*/
-    [self spawnTwoRoses];
+    [self spawnGraviton];
     
 }
 -(void) spawnTwoRoses {
     Rose *rose = [[Rose alloc] initWithStrength:10.f andSuction:3.f andPosition:(Vec2){dims.x / 2, dims.y / 2}
         andFirePosition:(Vec2){dims.x / 2, dims.y / 4} andDimensions:dims];
     [forces addObject:rose];
+}
+-(void) spawnGraviton {
+    Graviton *grav = [[Graviton alloc] initWithStrength:10.f andSuction:3.f andPosition:(Vec2){dims.x / 2, dims.y / 2}];
+    [forces addObject:grav];
 }
 #pragma mark - move gravity
 -(void) moveGravity:(CGPoint)xy {

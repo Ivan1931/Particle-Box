@@ -10,7 +10,8 @@
 
 @implementation Graviton
 -(void) influenceParticle:(Particle *)particle {
-    
+    if (rand() % CHANGE_DURATION == 0)
+        changeColor = (Color){rand() % 200 + 50,rand() % 200 + 50,rand() % 200 + 50};
     float disx = position.x - particle.position.x;
     float disy = position.y - particle.position.y;
     float squ_d = powf(fabsf(disx) + fabsf(disy),2);
@@ -29,6 +30,11 @@
         }
         a.x += powf(particle.velocity.x,2) / squ_d;
         a.y += powf(particle.velocity.y, 2) / squ_d;
+    } else {
+        
+        
+            [particle setColor:changeColor];
+        
     }
     //if (a.x / a.y > 3)
     //NSLog(@"dx: %f dx: %f\n y/x: %f",disx,disy, a.x / a.y);
