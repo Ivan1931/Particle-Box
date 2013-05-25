@@ -25,4 +25,5 @@
 -(void) move; //Adds current velocity values to position
 -(void) resetVelocity;//Sets velocity to zero
 -(void) bringToCurrent; //Sets the previous position to the current position
+-(BOOL) inRectBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner;
 @end

@@ -10,6 +10,7 @@
 #define Particle_Box_Repository_h
 #define BYTESPERPIXEL 4
 #define BITSPERCOMPONENT 8
+
 typedef struct {
     Byte r;
     Byte g;

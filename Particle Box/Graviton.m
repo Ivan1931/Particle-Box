@@ -11,7 +11,7 @@
 @implementation Graviton
 -(void) influenceParticle:(Particle *)particle {
     if (rand() % CHANGE_DURATION == 0)
-        changeColor = (Color){rand() % 200 + 50,rand() % 200 + 50,rand() % 200 + 50};
+        CHANGECOLOR(changeColor, 50);
     for (int i = 0; i < numNodes; i++)
         [self applyGravity:particle withNode:nodes[i]];
     

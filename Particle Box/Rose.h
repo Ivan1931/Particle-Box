@@ -16,7 +16,7 @@
     Vec2 dims;
     float* randomValueTable;
 }
--(id) initWithStrength:(float)pstrength andSuction:(float)psuction andPosition:(Vec2)xy andFirePosition:(Vec2) fp andDimensions:(Vec2) pdims;
+-(id) initWithStrength:(float)pstrength suction:(float)psuction position:(Vec2)xy firePosition:(Vec2) fp dimensions:(Vec2) pdims;
 -(void) influenceParticle:(Particle *)particle;
 @property (nonatomic) Vec2 firePosition;
 @end

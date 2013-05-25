@@ -53,4 +53,10 @@
 -(void) bringToCurrent {
     previousPosition = position;
 }
+-(BOOL) inRectBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {
+    if (position.x >= topLeftCorner.x && position.x <= bottomRightCorner.x)
+        if (position.y >= topLeftCorner.y && position.y <= bottomRightCorner.y)
+            return true;
+    return false;
+}
 @end

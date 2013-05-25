@@ -14,8 +14,7 @@
 @synthesize position;
 @synthesize strength;
 #pragma mark - Default constructor
--(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy
-{
+-(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims{
     self = [super init];
     if (self) {
         strength = pstrength;
@@ -27,6 +26,7 @@
         numNodes = 1;
         nodes = malloc(sizeof(Node));
         nodes[0] = (Node) {xy, 0};
+        dimesions = pdims;
     }
     return self;
 }
@@ -88,14 +88,13 @@
     return y;
 }
 //Returns a two vector containing the x and y difference between two point
-Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2)
-{
+Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2){
     return (Vec2){vec1.x - vec2.x, vec1.y - vec2.y};
+    
 }
 //Evaluates to true with the following condition
 //1. Both parameter vectors have equal values for x and y
-bool isEqualVectors (Vec2 vec1, Vec2 vec2)
-{
+bool isEqualVectors (Vec2 vec1, Vec2 vec2){
     return (vec1.x == vec2.x && vec1.y == vec2.y);
 }
 float computeDistance (Vec2 vec1, Vec2 vec2) {
@@ -103,5 +102,11 @@ float computeDistance (Vec2 vec1, Vec2 vec2) {
 }
 float computeGradient (Vec2 vecA, Vec2 vecB) {
     return (vecA.y - vecB.y)/(vecA.x - vecB.x);
+}
+void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize){
+    topBox->x =  -500 + (arc4random() % (int)area->x + 500);
+    topBox->y =  -500 + (arc4random() % (int)area->y + 500);
+    bottomBox->x = topBox->x + arc4random() % boxSize;
+    bottomBox->y = topBox->y + arc4random() % boxSize;
 }
 @end
