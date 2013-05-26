@@ -18,6 +18,7 @@
 #define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
 #define RESPAWN_AREA_S 20
 #define NODE_CHANGE_TIME 500
+#define REDEF_RAND_BOX_FREQ 4000
 @interface ForceNode : NSObject
 {
     @protected

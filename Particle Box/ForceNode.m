@@ -34,7 +34,8 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    
+    NSLog(@"Here");
+    [particle addAcceleration:VEC2((float)RAND_BETWEEN(-5, 5), (float)RAND_BETWEEN(-5, 5))];
 }
 
 -(void) update{
@@ -71,7 +72,7 @@
 -(void) addNode:(Vec2)pposition {
     if (numNodes < MAX_NODES) {
         nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
-        nodes[numNodes].position = position;
+        nodes[numNodes].position = pposition;
         nodes[numNodes].ID = numNodes;
         numNodes++;
     }
@@ -134,7 +135,10 @@ float computeDistance (Vec2 vec1, Vec2 vec2) {
 }
 
 float computeGradient (Vec2 vecA, Vec2 vecB) {
-    return (vecA.y - vecB.y)/(vecA.x - vecB.x);
+    if (fabsf(vecA.x - vecB.x) > 0)
+        return (vecA.y - vecB.y)/(vecA.x - vecB.x);
+    else
+        return 0.f;
 }
 
 void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize){

@@ -38,7 +38,6 @@
 @property (nonatomic,retain) Calculator *calc;
 @property (nonatomic,retain) CADisplayLink *renderLink;
 @property (nonatomic,retain) CADisplayLink *calculateLink;
-+ (Byte*) arrayOfBytesFromData:(NSData*) data;
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color;
 -(void) updateImage;
 -(void) render:(CADisplayLink*) link ;

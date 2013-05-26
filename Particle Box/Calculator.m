@@ -112,11 +112,13 @@
 Byte averageBlend (Byte a, Byte b) {
     return MAX((a + b)/2, 255);
 }
+
 void swap(int *a,int *b){
     int *temp = b;
     b = a;
     a = temp;
 }
+
 -(void) spawn1000Particles {
     for (int p = 0; p < 3000; p++){
         
@@ -134,7 +136,8 @@ void swap(int *a,int *b){
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
     //[self spawnTwoRoses];
     //[self spawnGraviton];
-    [self spawnWhirl];
+    //[self spawnWhirl];
+    [self spawnRibbon];
 }
 
 -(void) spawnTwoRoses {
@@ -149,12 +152,21 @@ void swap(int *a,int *b){
     [grav addNode:(Vec2){dims.x/2,dims.y/4 * 3}];
     node = grav;
 }
+
 -(void) spawnWhirl {
     Whirl *whirl = [[Whirl alloc] initWithStrength:15.f Suction:3.f
                                        Position:(Vec2){dims.x / 2, dims.y / 4} Clockwise:TRUE screenDimesions:dims];
     [whirl addNode:(Vec2) {dims.x / 2, dims.y / 4 * 3}];
     node = whirl;
 }
+
+-(void) spawnRibbon {
+    Ribbon *ribbon = [[Ribbon alloc] initWithStrength:15.f
+                    Suction:3.f Position:VEC2(dims.x/2, dims.y/4 ) dimesions:dims];
+    [ribbon addNode:VEC2(dims.x / 2, dims.y / 4 * 3)];
+    node = ribbon;
+}
+
 #pragma mark - move gravity
 
 -(void) moveGravity:(CGPoint)xy {

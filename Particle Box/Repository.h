@@ -10,7 +10,7 @@
 #define Particle_Box_Repository_h
 #define BYTESPERPIXEL 4
 #define BITSPERCOMPONENT 8
-
+#define VEC2(x,y)((Vec2){(x),(y)})
 typedef struct {
     Byte r;
     Byte g;

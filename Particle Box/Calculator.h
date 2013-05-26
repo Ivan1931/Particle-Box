@@ -11,6 +11,7 @@
 #import "Graviton.h"
 #import "Whirl.h"
 #import "Rose.h"
+#import "Ribbon.h"
 @interface Calculator : NSObject
 {
     @private
@@ -33,7 +34,6 @@
 -(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
 -(void) spawn1000Particles;
 -(void) moveGravity:(CGPoint)xy;
--(void) LineBresenhamwithX1:(int)x1 andX2:(int)x2 andY1:(int)y1 andY2:(int)y2 andColor:(Color)col;
 -(void) spawnTwoRoses;
 +(float) randFloatBetween:(float)low and:(float)high;
 @end
