@@ -16,31 +16,49 @@
     if (self) {
         firePosition = fp;
         dims = pdims;
-        randomValueTable = malloc(sizeof(float) * RAND_TABLE_SIZE);
-        for (int i = 0; i < RAND_TABLE_SIZE; i++)
-            randomValueTable[i] = (float)rand() / (float)RAND_MAX;
+        randomValue = arc4random();
     }
     return self;
 }
 -(void) influenceParticle:(Particle *)particle {
-    if (particle.position.x == position.x && particle.position.y == position.y)
-    {
-        float sr = strength / computeDistance(firePosition, particle.position);
-        float ranoffsetX = randomValueTable[rand() % RAND_TABLE_SIZE];
-        float ranoffsetY = randomValueTable[rand() % RAND_TABLE_SIZE];
-        Vec2 dixy = computeXYDiff(firePosition, particle.position);
-        [particle setVelocity:(Vec2){sr * dixy.x * ranoffsetX, sr * dixy.y * ranoffsetY}];
-        //NSLog(@"HERE");
-    } else if (particle.position.x < 0 || particle.position.y < 0
-          || particle.position.x > dims.x || particle.position.y > dims.y)
-    {
-        [self bringToCenter:particle];
-        
-    } else if (isEqualVectors(particle.velocity,nothing))
-    {
-        [self bringToCenter:particle];
-        
+    //[particle resetVelocity];
+    //
+    randomValue = arc4random();
+    for (int i = 0 ; i < numNodes; i++){
+        [self shootBetweenNodes:particle node:nodes[i] gradient:0];
+        if (randomValue % CHANGE_DURATION == 0) {
+                CHANGECOLOR(nodes[i].nodeColor, 50);
+        }
     }
+    if (randomValue % NODE_CHANGE_TIME == 0) {
+        [self changeParticleNode:particle];
+        setRespawnBox(&dims, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S);
+    }
+}
+-(void) shootBetweenNodes:(Particle*) particle node:(Node)pnode gradient:(float)grad {
+    //r = (cos(x + a))^2
+    if(![particle outOfBounds:nothing :dims] && randomValue % ESCAPE_FREQUENCY != 0) {
+        Vec2 dxy = computeXYDiff(particle.position, pnode.position);
+        float theta = atan2f(dxy.y, dxy.x);
+        float r = -powf(cosf(theta + grad),2);
+        float x = r * cos(theta);
+        float y = r * sinf(theta);
+        //NSLog(@"%f %f:",x,y);
+        if (y * particle.velocity.y <= 0)
+            y *= suction;
+    
+        if (x * particle.velocity.x <= 0)
+            x *= suction;
+        if (abs(dxy.x) < COLOR_CHANGE_DISTANCE &&
+            abs(dxy.y) < COLOR_CHANGE_DISTANCE && particle.nodeID == pnode.ID)
+            [self particleColorToNode:particle];
+        [particle addAcceleration:(Vec2){x,y}];
+    } else {
+        [self respawnParticleInRandomBox:particle];
+        [particle bringToCurrent];
+        [particle resetVelocity];
+    }
+    
     
 }
 -(void) bringToCenter:(Particle*) particle {

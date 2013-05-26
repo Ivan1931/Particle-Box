@@ -9,5 +9,11 @@
 #import "Ribbon.h"
 
 @implementation Ribbon
-
+-(void) influenceParticle:(Particle *)particle {
+    
+}
+-(void) ribbonEffect:(Particle *)particle toNode:(Node)node {
+    Vec2 d = computeXYDiff(particle.position, node.position);
+    //float distance =
+}
 @end

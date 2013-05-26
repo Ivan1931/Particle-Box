@@ -22,6 +22,7 @@ typedef struct {
 }Vec2;
 typedef struct{
     Vec2 position;
+    Color nodeColor;
     int ID;
 }Node;
 #define RADIAN 0.01745329251

@@ -27,7 +27,7 @@
     [particle resetVelocity];
     if(arc4random() % SHORT_CHANGE == 0)
         CHANGECOLOR(changeColor, 50);
-    if (![particle inRectBounds:nothing :dimesions]) {
+    if ([particle outOfBounds:nothing :dimesions]) {
         if (arc4random() % RETURN_FREQUENCY != 0)
             return;
         else {
@@ -36,10 +36,10 @@
         }
     }
     for (int i = 0; i < numNodes; i++)
-        [self applyWhirl:particle to:nodes[i]];
+        [self whirlEffect:particle to:nodes[i]];
     
 }
--(void) applyWhirl:(Particle*)particle to:(Node)node {
+-(void) whirlEffect:(Particle*)particle to:(Node)node {
     float disx = [particle position].x - node.position.x;
     float disy = [particle position].y - node.position.y;
     float r_s = powf(disx,2.f) + powf(disy,2.f);

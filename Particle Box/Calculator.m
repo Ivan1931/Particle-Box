@@ -8,7 +8,7 @@
 
 #import "Calculator.h"
 
-
+#define FADE_RATE 10
 #define ipart_(X) ((int)(X))
 #define round_(X) ((int)(((double)(X))+0.5))
 #define fpart_(X) (((double)(X))-(double)ipart_(X))
@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = true;
+        tail = false;
         whirls = false;
         [self spawn1000Particles];
     }
@@ -65,12 +65,12 @@
     if (tail) {
         for (int i = 0; i < maxBytes; i+=4) {
             //if (data[i] > 3) data[i]-=3;
-            for (int j = i + 0; j < i + 3; j++){
-                if (data[j] > 5)
-                    data[j]-=5;
+            for (int j = i; j < i + 3; j++){
+                if (data[j] > FADE_RATE)
+                    data[j]-=FADE_RATE;
             }
-            if (data[maxBytes + 2] > 3)
-                    data[maxBytes + 2] -= 3;
+            if (data[maxBytes + 2] > FADE_RATE)
+                    data[maxBytes + 2] -= FADE_RATE;
         }
     } else {
         for (int i = 0; i < maxBytes; i++) {
@@ -82,15 +82,11 @@
 
 #pragma mark - render
 -(void) renderParticle:(Particle*)particle{
-    //int mult = bytesPerRow / dims.x;
-    [self renderPixelatX:particle.position.x andY:particle.position.y withColor:particle.color];
-    //NSLog(@"%f %f %f %f",particle.postion.x, particle.postion.y, [particle getPrevious].x, [particle getPrevious].y);
-    [self LineBresenhamwithX1:particle.position.x andX2:[particle previousPosition].x
-                    andY1:particle.position.y andY2:[particle previousPosition].y andColor:particle.color];
-    //[self draw_line_antialiasAt:[particle position] :[particle previousPosition] withColor:[particle color]];
+    //[self renderPixelatX:particle.position.x atY:particle.position.y withColor:particle.color];
+    [self draw_line_antialiasAt:[particle position] :[particle previousPosition] withColor:[particle color]];
 }
 
--(void) renderPixelatX:(int)x andY:(int)y withColor:(Color)col {
+-(void) renderPixelatX:(int)x atY:(int)y withColor:(Color)col {
     if (x >= 0 && x < dims.x - 6){
         if (y >= 0 && y < dims.y - 6){
             int byteIndex = 4 * x + bytesPerRow * y;
@@ -121,45 +117,6 @@ void swap(int *a,int *b){
     b = a;
     a = temp;
 }
-
--(void) LineBresenhamwithX1:(int)x andX2:(int)x2 andY1:(int)y andY2:(int)y2 andColor:(Color)col {
-    int shortLen = y2-y;
-    int longLen = x2-x;
-    bool yLonger;
-    //if ((shortLen ^ (shortLen >> 31) – shortLen >> 31) > (longLen ^ (longLen >> 31)) – (longLen >> 31)))
-    if (((shortLen ^(shortLen >> 31)) - (shortLen >> 31)) > ((longLen ^ (longLen >> 31)) - (longLen >> 31))) 
-   {
-        shortLen ^= longLen;
-        longLen ^= shortLen;
-        shortLen ^= longLen;
-       
-        yLonger = true;
-    }
-    else
-    {
-        yLonger = false;
-    }
-    
-    int inc = longLen < 0 ? -1 : 1;
-    
-    float multDiff = longLen == 0 ? shortLen : shortLen / longLen;
-    int i = 0;
-    if (yLonger)
-    {
-        for (i = 0; i != longLen; i += inc)
-        {
-            [self renderPixelatX:x + i * multDiff andY: y + i withColor:col];
-        }
-    }
-    else
-    {
-        for (i = 0; i != longLen; i += inc)
-        {
-            [self renderPixelatX:x + i andY: y + i * multDiff withColor:col];
-        }
-    }
-}
-
 -(void) spawn1000Particles {
     for (int p = 0; p < 3000; p++){
         
@@ -175,23 +132,25 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
+    //[self spawnTwoRoses];
+    //[self spawnGraviton];
     [self spawnWhirl];
-
 }
 
 -(void) spawnTwoRoses {
-    Rose *rose = [[Rose alloc] initWithStrength:10.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 2}
+    Rose *rose = [[Rose alloc] initWithStrength:10.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 4}
         firePosition:(Vec2){dims.x / 2, dims.y / 4} dimensions:dims];
+    [rose addNode:(Vec2) {dims.x/2, dims.y / 4 * 3}];
     node = rose;
 }
 
 -(void) spawnGraviton {
-    Graviton *grav = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 4} dimesions:dims];
+    Graviton *grav = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 4} dimesions:dims];
     [grav addNode:(Vec2){dims.x/2,dims.y/4 * 3}];
     node = grav;
 }
 -(void) spawnWhirl {
-    Whirl *whirl = [[Whirl alloc] initWithStrength:10.f Suction:3.f
+    Whirl *whirl = [[Whirl alloc] initWithStrength:15.f Suction:3.f
                                        Position:(Vec2){dims.x / 2, dims.y / 4} Clockwise:TRUE screenDimesions:dims];
     [whirl addNode:(Vec2) {dims.x / 2, dims.y / 4 * 3}];
     node = whirl;
@@ -211,7 +170,7 @@ void swap(int *a,int *b){
     col.r = MIN(255, (Byte)(float)col.r * br * 1.1f);
     col.g = MIN(255, (Byte)(float)col.g * br * 1.1f);
     col.b = MIN(255, (Byte)(float)col.b * br * 1.1f);
-    [self renderPixelatX:x andY:y withColor:col];
+    [self renderPixelatX:x atY:y withColor:col];
 }
 
 -(void) draw_line_antialiasAt:(Vec2) a :(Vec2)b withColor:(Color)col {

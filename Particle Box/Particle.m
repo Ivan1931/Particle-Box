@@ -16,6 +16,8 @@
 @synthesize color;
 @synthesize velocity;
 @synthesize previousPosition;
+@synthesize nodeID;
+
 -(id) initWith:(Vec2)pposition andColor:(Color)pcolor {
     self = [super init];
     if(self){
@@ -24,9 +26,11 @@
         color = pcolor;
         velocity.x = 0;
         velocity.x = 0;
+        nodeID = 0;
     }
     return self;
 }
+
 -(void) addAcceleration:(Vec2)acceleration {
     if (velocity.x <= VELOCITY_CAPX){
         if (velocity.x >= VELOCITY_CAPXN)
@@ -41,22 +45,26 @@
     } else velocity.y = VELOCITY_CAPY;
     
 }
+
 -(void) resetVelocity {
     velocity.x = 0;
     velocity.y = 0;
 }
+
 -(void) move {
     previousPosition = position;
     position.x += velocity.x;
     position.y += velocity.y;
 }
+
 -(void) bringToCurrent {
     previousPosition = position;
 }
--(BOOL) inRectBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {
+
+-(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {
     if (position.x >= topLeftCorner.x && position.x <= bottomRightCorner.x)
         if (position.y >= topLeftCorner.y && position.y <= bottomRightCorner.y)
-            return true;
-    return false;
+            return false;
+    return true;
 }
 @end

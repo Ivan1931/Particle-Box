@@ -12,7 +12,7 @@
 #define RETURN_FREQUENCY 10
 #define NEGATIVE_MAGIC_PUSH -500
 #define MAGIC_INCREMENTOR 1.00001
-#define ESCAPE_FREQUENCY 300
+
 @interface Whirl : ForceNode
 {
     @private

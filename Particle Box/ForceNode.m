@@ -25,21 +25,41 @@
         changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
         numNodes = 1;
         nodes = malloc(sizeof(Node));
-        nodes[0] = (Node) {xy, 0};
+        nodes[0].position = xy;
+        nodes[0].ID =  0;
         dimesions = pdims;
+        setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S);
     }
     return self;
 }
+
 -(void) influenceParticle:(Particle *)particle {
     
 }
+
 -(void) update{
     
 }
+
+-(void) respawnParticleInRandomBox:(Particle*) particle {
+    [particle setPosition:(Vec2){ RAND_BETWEEN((int)spawnBoxUp.x,(int)spawnBoxLow.x),
+                                        RAND_BETWEEN((int)spawnBoxUp.y, (int)spawnBoxLow.y)}];
+}
+
+-(void) particleColorToNode:(Particle*)particle {
+    if (!([particle nodeID] >= numNodes))
+        [particle setColor:nodes[particle.nodeID].nodeColor];
+}
+
+-(void) changeParticleNode:(Particle*) particle {
+    [particle setNodeID:arc4random() % numNodes];
+}
+
 -(void) moveNode:(Vec2)pposition {
     nodes[[self getIndexToClosestNode:pposition]].position = pposition;
     
 }
+
 -(void) deleteNode:(Vec2)pposition {
     int closest = [self getIndexToClosestNode:pposition];
     for (int i = closest; i < numNodes - 1; i++) {
@@ -47,13 +67,16 @@
     }
     numNodes--;
 }
+
 -(void) addNode:(Vec2)pposition {
     if (numNodes < MAX_NODES) {
         nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
-        nodes[numNodes] = (Node){pposition,numNodes - 1};
+        nodes[numNodes].position = position;
+        nodes[numNodes].ID = numNodes;
         numNodes++;
     }
 }
+
 -(int) getIndexToClosestNode:(Vec2)pposition {
     int ret = 0;
     float temp;
@@ -67,9 +90,11 @@
     }
     return ret;
 }
+
 -(int) getNumberNodes {
     return numNodes;
 }
+
 #pragma mark - Maths methods
 +(float) Q_rsqrt:(float) number
 {
@@ -87,22 +112,31 @@
     
     return y;
 }
+
 //Returns a two vector containing the x and y difference between two point
 Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2){
     return (Vec2){vec1.x - vec2.x, vec1.y - vec2.y};
     
 }
+
+Vec2 computeMidPoint (Vec2 vec1, Vec2 vec2) {
+    return (Vec2){(vec1.x + vec2.x)/2, (vec1.y + vec2.y)/2};
+}
+
 //Evaluates to true with the following condition
 //1. Both parameter vectors have equal values for x and y
 bool isEqualVectors (Vec2 vec1, Vec2 vec2){
     return (vec1.x == vec2.x && vec1.y == vec2.y);
 }
+
 float computeDistance (Vec2 vec1, Vec2 vec2) {
     return sqrtf(powf(vec1.x - vec2.x,2.f) + powf(vec1.y - vec2.y, 2.f));
 }
+
 float computeGradient (Vec2 vecA, Vec2 vecB) {
     return (vecA.y - vecB.y)/(vecA.x - vecB.x);
 }
+
 void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize){
     topBox->x =  -500 + (arc4random() % (int)area->x + 500);
     topBox->y =  -500 + (arc4random() % (int)area->y + 500);

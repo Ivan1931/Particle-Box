@@ -10,10 +10,14 @@
 
 @implementation Graviton
 -(void) influenceParticle:(Particle *)particle {
-    if (rand() % CHANGE_DURATION == 0)
-        CHANGECOLOR(changeColor, 50);
-    for (int i = 0; i < numNodes; i++)
+    int random = arc4random();
+    for (int i = 0; i < numNodes; i++) {
         [self applyGravity:particle withNode:nodes[i]];
+        if (random % CHANGE_DURATION == 0)
+            CHANGECOLOR(nodes[i].nodeColor, 50);
+    }
+    if (random % NODE_CHANGE_TIME)
+        [self changeParticleNode:particle];
     
 }
 -(void) applyGravity:(Particle*)particle withNode:(Node)node {
@@ -31,9 +35,9 @@
         if (a.x * particle.velocity.x <= 0){
             a.x *= suction;
         }
-    } else {
+    } else if (particle.nodeID == node.ID) {
         
-        [particle setColor:changeColor];
+        [particle setColor:node.nodeColor];
     }
     [particle addAcceleration:a];
 }

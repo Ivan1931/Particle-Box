@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "Particle.h"
+#define ESCAPE_FREQUENCY 300
 #define CHANGECOLOR(COL,MINCOL) { \
                                 int rng = 255 - (MINCOL + 1);        \
                                 (COL).r = rand() % rng + MINCOL; \
                                 (COL).g = rand() % rng + MINCOL; \
                                 (COL).b = rand() % rng + MINCOL; \
                             }
+#define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
 #define RESPAWN_AREA_S 20
-#define SET_RESPAWN_BOX
+#define NODE_CHANGE_TIME 500
 @interface ForceNode : NSObject
 {
     @protected
@@ -46,6 +48,11 @@
 -(void) influenceParticle:(Particle*)particle;
 -(void) update;
 
+-(void) changeParticleNode:(Particle*) particle;
+-(void) particleColorToNode:(Particle*)particle;
+
+-(void) respawnParticleInRandomBox:(Particle*) particle;
+
 -(int) getNumberNodes;
 -(void) addNode:(Vec2)position;
 -(void) deleteNode:(Vec2)position;
@@ -54,6 +61,7 @@
 +(float) Q_rsqrt:(float) number;
 
 Vec2 computeXYDiff (Vec2 vec1, Vec2 vec2);
+Vec2 computeMidPoint (Vec2 vec1, Vec2 vec2);
 float computeDistance (Vec2 vec1, Vec2 vec2);
 float computeGradient (Vec2 vecA, Vec2 vecB);
 bool isEqualVectors (Vec2 vec1, Vec2 vec2);
