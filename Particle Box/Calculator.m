@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = false;
+        tail = true;
         whirls = false;
         [self spawn1000Particles];
     }
@@ -141,7 +141,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnTwoRoses {
-    Rose *rose = [[Rose alloc] initWithStrength:10.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 4}
+    Rose *rose = [[Rose alloc] initWithStrength:20.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 4}
         firePosition:(Vec2){dims.x / 2, dims.y / 4} dimensions:dims];
     [rose addNode:(Vec2) {dims.x/2, dims.y / 4 * 3}];
     node = rose;
@@ -161,9 +161,10 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnRibbon {
-    Ribbon *ribbon = [[Ribbon alloc] initWithStrength:15.f
-                    Suction:3.f Position:VEC2(dims.x/2, dims.y/4 ) dimesions:dims];
-    [ribbon addNode:VEC2(dims.x / 2, dims.y / 4 * 3)];
+    Ribbon *ribbon = [[Ribbon alloc] initWithStrength:10.f
+                    Suction:0.f Position:VEC2(dims.x/4, dims.y / 4 ) dimesions:dims];
+    [ribbon addNode:VEC2(dims.x / 4 * 2, dims.y / 4 * 2)];
+    [ribbon addNode:VEC2(dims.x / 4 * 3, dims.y / 4 * 3)];
     node = ribbon;
 }
 

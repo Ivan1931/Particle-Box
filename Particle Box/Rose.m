@@ -32,7 +32,7 @@
     }
     if (randomValue % NODE_CHANGE_TIME == 0) {
         [self changeParticleNode:particle];
-        setRespawnBox(&dims, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S);
+        setRespawnBox(&dims, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
 }
 -(void) shootBetweenNodes:(Particle*) particle node:(Node)pnode gradient:(float)grad {

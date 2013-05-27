@@ -11,6 +11,7 @@
 #define BYTESPERPIXEL 4
 #define BITSPERCOMPONENT 8
 #define VEC2(x,y)((Vec2){(x),(y)})
+#define RANFLOAT ((float)arc4random() / (float)RAND_MAX)
 typedef struct {
     Byte r;
     Byte g;

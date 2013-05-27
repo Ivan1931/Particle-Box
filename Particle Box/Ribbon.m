@@ -8,47 +8,42 @@
 
 #import "Ribbon.h"
 
-#define CATCH_DISTANCE 5.f
-
+#define CATCH_DISTANCE 15.f
+#define SPREAD_FACT 2.f
+#define COLOR_DURATION 500000
 @implementation Ribbon
 
 -(void) influenceParticle:(Particle *)particle {
-    if (numNodes > 1){
-        int count = 0;
-        int nextNode;
-        while (count < numNodes) {
-            nextNode = (count != numNodes - 1) ? count + 1 : 0;
-            [self ribbonEffect:particle fromNode:nodes[count] toNode:nodes[nextNode]];
-            count++;
-        }
-    }
-}
-
--(void) ribbonEffect:(Particle *)particle fromNode:(Node)node toNode:(Node)node0 {
     int random = arc4random();
-    /*if (random % REDEF_RAND_BOX_FREQ == 0) {
-        setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S);
+    if (![particle outOfBounds
+         :VEC2(nodes[particle.nodeID].position.x - CATCH_DISTANCE, nodes[particle.nodeID].position.y - CATCH_DISTANCE)
+          :VEC2(nodes[particle.nodeID].position.x + CATCH_DISTANCE, nodes[particle.nodeID].position.y + CATCH_DISTANCE)]) {
+        [particle setNodeID:(particle.nodeID >= numNodes - 1) ? 0 : particle.nodeID + 1 ];
+        [particle setColor:nodes[particle.nodeID].nodeColor];
     }
-    if ([particle outOfBounds:nothing :dimesions]) {
-        [self respawnParticleInRandomBox:particle];
-        [particle setVelocity:nothing];
-    } else {*/
+    [self ribbonEffect:particle withNode:nodes[particle.nodeID]];
+    if (random % COLOR_DURATION == 0)
+        CHANGECOLOR(nodes[particle.nodeID].nodeColor, 50);
+    if (random % ESCAPE_FREQUENCY == 0)
+        [self teleport:particle to:nodes[random % numNodes]];
         
-        Vec2 d;
-        
-        if (fabsf(computeDistance(particle.position, node.position)) < CATCH_DISTANCE){
-            d = computeXYDiff(node0.position, node.position);
-            [particle setColor:node.nodeColor];
-        } else if (fabsf(computeDistance(particle.position, node0.position)) < CATCH_DISTANCE) {
-            d = computeXYDiff(node.position, node0.position);
-            [particle setColor:node.nodeColor];
-        } else if (isEqualVectors(particle.velocity, nothing)){
-            d = computeXYDiff(nodes[random % numNodes].position, particle.position );
-            [particle setNodeID:random % numNodes];
-        } else return;
-        
-        [particle setVelocity:VEC2(1/strength * d.x, 1/strength * d.y)];
-    //}
 }
 
+-(void) ribbonEffect:(Particle *)particle withNode:(Node) node {
+    float distance = computeDistance(particle.position, node.position);
+    Vec2 d = computeXYDiff(particle.position, node.position);
+    
+    Vec2 a = VEC2(strength * -sinf(d.x / distance * M_1_PI),
+                strength * -sinf(d.y / distance * M_1_PI));
+    a.x += SPREAD_FACT * (RANFLOAT - RANFLOAT);
+    a.y += SPREAD_FACT * (RANFLOAT - RANFLOAT);
+    [particle setVelocity:a];
+}
+-(void) teleport:(Particle *)particle to:(Node)node {
+    [particle setPosition:VEC2(node.position.x + SPREAD_FACT * (RANFLOAT - RANFLOAT),
+                              node.position.y + SPREAD_FACT * (RANFLOAT - RANFLOAT))];
+    [particle bringToCurrent];
+    [particle setNodeID:node.ID];
+    [particle setColor:node.nodeColor];
+}
 @end

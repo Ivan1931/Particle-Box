@@ -19,7 +19,7 @@
         radius = sqrtf(radius_s);
         omega = atan2f(xy.y, xy.x);
         clockwise = isClockwise;
-        setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S);
+        setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S, 500);
     }
     return  self;
 }
@@ -32,7 +32,7 @@
             return;
         else {
             [particle setColor:changeColor];
-            setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S);
+            setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S,500);
         }
     }
     for (int i = 0; i < numNodes; i++)

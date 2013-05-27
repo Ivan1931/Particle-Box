@@ -18,7 +18,8 @@
 #define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
 #define RESPAWN_AREA_S 20
 #define NODE_CHANGE_TIME 500
-#define REDEF_RAND_BOX_FREQ 4000
+#define REDEF_RAND_BOX_FREQ 200000
+#define NODE_COL_CHG_FREQ 50000
 @interface ForceNode : NSObject
 {
     @protected
@@ -66,6 +67,6 @@ Vec2 computeMidPoint (Vec2 vec1, Vec2 vec2);
 float computeDistance (Vec2 vec1, Vec2 vec2);
 float computeGradient (Vec2 vecA, Vec2 vecB);
 bool isEqualVectors (Vec2 vec1, Vec2 vec2);
-void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize);
+void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize, int outerBounds);
 
 @end

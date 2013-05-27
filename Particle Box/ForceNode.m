@@ -28,7 +28,7 @@
         nodes[0].position = xy;
         nodes[0].ID =  0;
         dimesions = pdims;
-        setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S);
+        setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
 }
@@ -45,6 +45,7 @@
 -(void) respawnParticleInRandomBox:(Particle*) particle {
     [particle setPosition:(Vec2){ RAND_BETWEEN((int)spawnBoxUp.x,(int)spawnBoxLow.x),
                                         RAND_BETWEEN((int)spawnBoxUp.y, (int)spawnBoxLow.y)}];
+    [particle bringToCurrent];
 }
 
 -(void) particleColorToNode:(Particle*)particle {
@@ -141,9 +142,9 @@ float computeGradient (Vec2 vecA, Vec2 vecB) {
         return 0.f;
 }
 
-void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize){
-    topBox->x =  -500 + (arc4random() % (int)area->x + 500);
-    topBox->y =  -500 + (arc4random() % (int)area->y + 500);
+void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize, int outerBounds){
+    topBox->x =  -outerBounds + (arc4random() % (int)area->x + outerBounds);
+    topBox->y =  -outerBounds + (arc4random() % (int)area->y + outerBounds);
     bottomBox->x = topBox->x + arc4random() % boxSize;
     bottomBox->y = topBox->y + arc4random() % boxSize;
 }
