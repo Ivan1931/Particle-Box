@@ -28,8 +28,8 @@
         data = pdata;
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
-        reset = false;
-        tail = true;
+        reset = true;
+        tail = false;
         whirls = false;
         [self spawn1000Particles];
     }
@@ -142,30 +142,42 @@ void swap(int *a,int *b){
 
 -(void) spawnTwoRoses {
     Rose *rose = [[Rose alloc] initWithStrength:20.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 4}
-        firePosition:(Vec2){dims.x / 2, dims.y / 4} dimensions:dims];
-    [rose addNode:(Vec2) {dims.x/2, dims.y / 4 * 3}];
+        firePosition:(Vec2){dims.x / 6, dims.y / 6} dimensions:dims];
+    [rose addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
+    [rose addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
+    [rose addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
+    [rose addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
     node = rose;
 }
 
 -(void) spawnGraviton {
-    Graviton *grav = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 2, dims.y / 4} dimesions:dims];
-    [grav addNode:(Vec2){dims.x/2,dims.y/4 * 3}];
+    Graviton *grav = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
     node = grav;
+    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
+    [node addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
+    [node addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
+    [node addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
 }
 
 -(void) spawnWhirl {
     Whirl *whirl = [[Whirl alloc] initWithStrength:15.f Suction:3.f
-                                       Position:(Vec2){dims.x / 2, dims.y / 4} Clockwise:TRUE screenDimesions:dims];
-    [whirl addNode:(Vec2) {dims.x / 2, dims.y / 4 * 3}];
+                                       Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
+    [whirl addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
+    [whirl addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
+    [whirl addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
+    [whirl addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
     node = whirl;
+    
 }
 
 -(void) spawnRibbon {
     Ribbon *ribbon = [[Ribbon alloc] initWithStrength:10.f
                     Suction:0.f Position:VEC2(dims.x/4, dims.y / 4 ) dimesions:dims];
-    [ribbon addNode:VEC2(dims.x / 4 * 2, dims.y / 4 * 2)];
-    [ribbon addNode:VEC2(dims.x / 4 * 3, dims.y / 4 * 3)];
     node = ribbon;
+    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
+    [node addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
+    [node addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
+    [node addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
 }
 
 #pragma mark - move gravity

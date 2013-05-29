@@ -7,7 +7,7 @@
 //
 
 #import "Rose.h"
-
+#define MAX_INTERACTION 3
 @implementation Rose
 @synthesize firePosition;
 
@@ -20,21 +20,25 @@
     }
     return self;
 }
+
 -(void) influenceParticle:(Particle *)particle {
-    //[particle resetVelocity];
-    //
     randomValue = arc4random();
-    for (int i = 0 ; i < numNodes; i++){
-        [self shootBetweenNodes:particle node:nodes[i] gradient:0];
+    int count = 0;
+    int nodeIndex = particle.nodeID;
+    while (count < MAX_INTERACTION) {
+        nodeIndex = (particle.nodeID + count >= numNodes) ? -1 + count : particle.nodeID + count;
+        [self shootBetweenNodes:particle node:nodes[nodeIndex] gradient:RANFLOAT * M_1_PI];
         if (randomValue % CHANGE_DURATION == 0) {
-                CHANGECOLOR(nodes[i].nodeColor, 50);
+                CHANGECOLOR(nodes[nodeIndex].nodeColor, 50);
         }
+        count++;
     }
     if (randomValue % NODE_CHANGE_TIME == 0) {
         [self changeParticleNode:particle];
         setRespawnBox(&dims, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
 }
+
 -(void) shootBetweenNodes:(Particle*) particle node:(Node)pnode gradient:(float)grad {
     //r = (cos(x + a))^2
     if(![particle outOfBounds:nothing :dims] && randomValue % ESCAPE_FREQUENCY != 0) {
@@ -61,9 +65,5 @@
     
     
 }
--(void) bringToCenter:(Particle*) particle {
-    [particle setPosition:position];
-    [particle bringToCurrent];
-    [particle resetVelocity];
-}
+
 @end
