@@ -28,10 +28,10 @@
         data = pdata;
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
-        reset = true;
+        reset = false;
         tail = false;
         whirls = false;
-        [self spawn1000Particles];
+        [self spawnParticles];
     }
     return self;
 }
@@ -119,7 +119,7 @@ void swap(int *a,int *b){
     a = temp;
 }
 
--(void) spawn1000Particles {
+-(void) spawnParticles {
     for (int p = 0; p < 3000; p++){
         
         Vec2 pos = {
@@ -137,7 +137,14 @@ void swap(int *a,int *b){
     //[self spawnTwoRoses];
     //[self spawnGraviton];
     //[self spawnWhirl];
-    [self spawnRibbon];
+    //[self spawnRibbon];
+    [self spawnBackShot];
+}
+
+-(void) spawnBackShot {
+    BackShot *backShot = [[BackShot alloc] initWithStrength:5.f
+                        Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+    node = backShot;
 }
 
 -(void) spawnTwoRoses {

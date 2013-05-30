@@ -12,6 +12,7 @@
 #import "Whirl.h"
 #import "Rose.h"
 #import "Ribbon.h"
+#import "BackShot.h"
 @interface Calculator : NSObject
 {
     @private
@@ -32,7 +33,7 @@
 #pragma mark - Methods
 -(void) calculate:(CADisplayLink*)link;
 -(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
--(void) spawn1000Particles;
+-(void) spawnParticles;
 -(void) moveGravity:(CGPoint)xy;
 -(void) spawnTwoRoses;
 +(float) randFloatBetween:(float)low and:(float)high;

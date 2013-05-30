@@ -9,10 +9,12 @@
 #import "ForceNode.h"
 
 @implementation ForceNode
+
 #pragma mark - getters
 @synthesize suction;
 @synthesize position;
 @synthesize strength;
+
 #pragma mark - Default constructor
 -(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims{
     self = [super init];
@@ -28,6 +30,8 @@
         nodes[0].position = xy;
         nodes[0].ID =  0;
         dimesions = pdims;
+        prevNodePos = (Vec2*)malloc(sizeof(Vec2) * 5);
+        prevNodePos[0] = xy;
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
@@ -48,6 +52,8 @@
     [particle bringToCurrent];
 }
 
+//Implementation of the node system ///////////////////////////////////////
+
 -(void) particleColorToNode:(Particle*)particle {
     if (!([particle nodeID] >= numNodes))
         [particle setColor:nodes[particle.nodeID].nodeColor];
@@ -58,7 +64,9 @@
 }
 
 -(void) moveNode:(Vec2)pposition {
-    nodes[[self getIndexToClosestNode:pposition]].position = pposition;
+    int closestNode = [self getIndexToClosestNode:pposition];
+    prevNodePos[closestNode] = nodes[closestNode].position;
+    nodes[closestNode].position = pposition;
     
 }
 
@@ -66,6 +74,8 @@
     int closest = [self getIndexToClosestNode:pposition];
     for (int i = closest; i < numNodes - 1; i++) {
         nodes[i] = nodes[i + 1];
+        nodes[i].ID = i + 1;
+        prevNodePos[i] = prevNodePos[i + 1];
     }
     numNodes--;
 }
@@ -75,6 +85,7 @@
         nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
         nodes[numNodes].position = pposition;
         nodes[numNodes].ID = numNodes;
+        prevNodePos[numNodes] = pposition;
         numNodes++;
     }
 }
@@ -96,6 +107,8 @@
 -(int) getNumberNodes {
     return numNodes;
 }
+
+/////////////////////////////////////////////////////////////////////
 
 #pragma mark - Maths methods
 +(float) Q_rsqrt:(float) number

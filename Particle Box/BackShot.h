@@ -10,4 +10,6 @@
 
 @interface BackShot : ForceNode
 
+-(void) influenceParticle:(Particle *)particle;
+
 @end
