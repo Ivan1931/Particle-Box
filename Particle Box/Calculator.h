@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "Particle.h"
 #import "Graviton.h"
 #import "Whirl.h"
 #import "Rose.h"
 #import "Ribbon.h"
 #import "BackShot.h"
+#import "Suction.h"
+
 @interface Calculator : NSObject
 {
     @private

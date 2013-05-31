@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = false;
+        tail = true;
         whirls = false;
         [self spawnParticles];
     }
@@ -140,6 +140,7 @@ void swap(int *a,int *b){
     //[self spawnRibbon];
     //[self spawnBackShot];
     //[self spawnNode];
+    [self createSuction:2];
 }
 
 -(void) spawnBackShot {
@@ -190,6 +191,17 @@ void swap(int *a,int *b){
 
 -(void) spawnNode {
     node = [[ForceNode alloc] initWithStrength:2.f Suction:1.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+}
+
+-(void) createSuction:(int) number {
+    
+    Suction *suction = [[Suction alloc] initWithStrength:10.f Suction:1.f Position:VEC2(dims.x / 3, dims.y / 3) dimesions:dims];
+    
+    node = suction;
+    
+    for (int i = 1; i < number; i++) {
+        [node addNode:VEC2(dims.x / (number + 1) * (i + 1), dims.y / (number + 1) * (i + 1))];
+    }
 }
 
 #pragma mark - move gravity

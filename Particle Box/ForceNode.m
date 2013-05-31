@@ -37,6 +37,8 @@
         
         dimesions = pdims;
         
+        colorChngGap = 0;
+        
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
@@ -44,7 +46,7 @@
 
 -(void) influenceParticle:(Particle *)particle {
     //NSLog(@"Here");
-    [particle setVelocity:VEC2(strength * (RANFLOAT - RANFLOAT), strength * (RANFLOAT - RANFLOAT))];
+    [particle addAcceleration:VEC2(0.1f * (RANFLOAT - RANFLOAT), 0.1f * (RANFLOAT - RANFLOAT))];
 }
 
 -(void) update{
@@ -166,4 +168,5 @@ void setRespawnBox (Vec2* area, Vec2* topBox, Vec2* bottomBox, size_t boxSize, i
     bottomBox->x = topBox->x + arc4random() % boxSize;
     bottomBox->y = topBox->y + arc4random() % boxSize;
 }
+
 @end

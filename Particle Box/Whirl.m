@@ -9,8 +9,10 @@
 #import "Whirl.h"
 #import "Calculator.h"
 #define SHORT_CHANGE 50000
+
 @implementation Whirl
 @synthesize clockwise;
+
 -(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy
              Clockwise:(BOOL)isClockwise screenDimesions:(Vec2)pdims{
     self = [super initWithStrength:pstrength Suction:psuction Position:xy dimesions:pdims];
@@ -23,6 +25,7 @@
     }
     return  self;
 }
+
 -(void) influenceParticle:(Particle *)particle {
     [particle resetVelocity];
     if(arc4random() % SHORT_CHANGE == 0)
@@ -39,6 +42,7 @@
         [self whirlEffect:particle to:nodes[i]];
     
 }
+
 -(void) whirlEffect:(Particle*)particle to:(Node)node {
     float disx = [particle position].x - node.position.x;
     float disy = [particle position].y - node.position.y;
@@ -69,6 +73,7 @@
         [particle resetVelocity];
     }
 }
+
 -(void) setPosition:(Vec2)pos {
     [super setPosition:pos];
     radius_s = powf(pos.x, 2) + powf(pos.y, 2);
@@ -76,6 +81,7 @@
     omega = atan2f(pos.y, pos.x);
     currentSuction = suction;
 }
+
 -(void) update {
     currentSuction *= MAGIC_INCREMENTOR;
 }

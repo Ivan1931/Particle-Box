@@ -61,6 +61,10 @@
     previousPosition = position;
 }
 
+-(Vec2) getFuturePosition {
+    return VEC2(position.x + velocity.x, position.y + velocity.y);
+}
+
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {
     if (position.x >= topLeftCorner.x && position.x <= bottomRightCorner.x)
         if (position.y >= topLeftCorner.y && position.y <= bottomRightCorner.y)

@@ -29,6 +29,7 @@
 		10291D0A1703344E00A9D2AB /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D091703344E00A9D2AB /* Particle.m */; };
 		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
 		10291D111703711900A9D2AB /* Graviton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D101703711900A9D2AB /* Graviton.m */; };
+		108EA0B217589AAD001951B9 /* Suction.m in Sources */ = {isa = PBXBuildFile; fileRef = 108EA0B117589AAD001951B9 /* Suction.m */; };
 		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
 		10CFCEF217567F1400899CED /* BackShot.m in Sources */ = {isa = PBXBuildFile; fileRef = 10CFCEF117567F1400899CED /* BackShot.m */; };
@@ -81,6 +82,8 @@
 		10291D0D17033CEF00A9D2AB /* ForceNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForceNode.m; sourceTree = "<group>"; };
 		10291D0F1703711800A9D2AB /* Graviton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graviton.h; sourceTree = "<group>"; };
 		10291D101703711900A9D2AB /* Graviton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graviton.m; sourceTree = "<group>"; };
+		108EA0B017589AAD001951B9 /* Suction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suction.h; sourceTree = "<group>"; };
+		108EA0B117589AAD001951B9 /* Suction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suction.m; sourceTree = "<group>"; };
 		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
 		10991330174F7D540031EC8F /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
 		10C8AF4A17021EC700848AB8 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				1012BA381706167C003019DC /* Whirl.m */,
 				10DA945B17215BF400A7EBA3 /* Rose.h */,
 				10DA945C17215BF400A7EBA3 /* Rose.m */,
+				108EA0B017589AAD001951B9 /* Suction.h */,
+				108EA0B117589AAD001951B9 /* Suction.m */,
 				10291D0B1703396800A9D2AB /* Repository.h */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
@@ -335,6 +340,7 @@
 				10DA945D17215BF400A7EBA3 /* Rose.m in Sources */,
 				10991331174F7D540031EC8F /* Ribbon.m in Sources */,
 				10CFCEF217567F1400899CED /* BackShot.m in Sources */,
+				108EA0B217589AAD001951B9 /* Suction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

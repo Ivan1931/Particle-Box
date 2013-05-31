@@ -29,7 +29,7 @@
     int nodeIndex = particle.nodeID;
     while (count < MAX_INTERACTION) {
         nodeIndex = (particle.nodeID + count >= numNodes) ? -1 + count : particle.nodeID + count;
-        [self shootBetweenNodes:particle node:nodes[nodeIndex] gradient:0.f];
+        [self roseAffectWithNode:particle node:nodes[nodeIndex] gradient:0.f];
         if (randomValue % CHANGE_DURATION == 0) {
                 CHANGECOLOR(nodes[nodeIndex].nodeColor, 50);
         }
@@ -41,7 +41,7 @@
     }
 }
 
--(void) shootBetweenNodes:(Particle*) particle node:(Node)pnode gradient:(float)grad {
+-(void) roseAffectWithNode:(Particle*) particle node:(Node)pnode gradient:(float)grad {
     //r = (cos(x + a))^2
     if( ![particle outOfBounds:nothing :dimesions]  && randomValue % ESCAPE_FREQUENCY != 0 ) {
         

@@ -38,6 +38,8 @@
     
     Vec2 spawnBoxUp;
     Vec2 spawnBoxLow;
+    
+    int colorChngGap;
 }
 @property (nonatomic) Vec2 position;
 
