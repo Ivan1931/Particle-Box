@@ -7,15 +7,17 @@
 //
 
 #import "Rose.h"
+
 #define MAX_INTERACTION 3
+#define LOWEST_VELOCITY 0.2f
+
+
 @implementation Rose
 @synthesize firePosition;
 
--(id) initWithStrength:(float)pstrength suction:(float)psuction position:(Vec2)xy firePosition:(Vec2)fp dimensions:(Vec2)pdims{
+-(id) initWithStrength:(float) pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims {
     self = [super initWithStrength:pstrength Suction:psuction Position:xy dimesions:pdims];
     if (self) {
-        firePosition = fp;
-        dims = pdims;
         randomValue = arc4random();
     }
     return self;
@@ -27,7 +29,7 @@
     int nodeIndex = particle.nodeID;
     while (count < MAX_INTERACTION) {
         nodeIndex = (particle.nodeID + count >= numNodes) ? -1 + count : particle.nodeID + count;
-        [self shootBetweenNodes:particle node:nodes[nodeIndex] gradient:RANFLOAT * M_1_PI];
+        [self shootBetweenNodes:particle node:nodes[nodeIndex] gradient:0.f];
         if (randomValue % CHANGE_DURATION == 0) {
                 CHANGECOLOR(nodes[nodeIndex].nodeColor, 50);
         }
@@ -35,28 +37,32 @@
     }
     if (randomValue % NODE_CHANGE_TIME == 0) {
         [self changeParticleNode:particle];
-        setRespawnBox(&dims, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
+        setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
 }
 
 -(void) shootBetweenNodes:(Particle*) particle node:(Node)pnode gradient:(float)grad {
     //r = (cos(x + a))^2
-    if(![particle outOfBounds:nothing :dims] && randomValue % ESCAPE_FREQUENCY != 0) {
+    if( ![particle outOfBounds:nothing :dimesions]  && randomValue % ESCAPE_FREQUENCY != 0 ) {
+        
         Vec2 dxy = computeXYDiff(particle.position, pnode.position);
+        
         float theta = atan2f(dxy.y, dxy.x);
-        float r = -powf(cosf(theta + grad),2);
-        float x = r * cos(theta);
-        float y = r * sinf(theta);
-        //NSLog(@"%f %f:",x,y);
-        if (y * particle.velocity.y <= 0)
+        float r = -powf(cosf(theta),2.f);
+        float x = strength * r * cos(theta);
+        float y = strength * r * sinf(theta);
+        
+        if (y * particle.velocity.y <= 0.f)
             y *= suction;
     
-        if (x * particle.velocity.x <= 0)
+        if (x * particle.velocity.x <= 0.f)
             x *= suction;
+        
         if (abs(dxy.x) < COLOR_CHANGE_DISTANCE &&
             abs(dxy.y) < COLOR_CHANGE_DISTANCE && particle.nodeID == pnode.ID)
             [self particleColorToNode:particle];
         [particle addAcceleration:(Vec2){x,y}];
+        
     } else {
         [self respawnParticleInRandomBox:particle];
         [particle bringToCurrent];

@@ -19,27 +19,32 @@
 -(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims{
     self = [super init];
     if (self) {
+        
         strength = pstrength;
         suction = psuction;
+        
         position = xy;
-        NSLog(@"x: %f y: %f", xy.x,xy.y);
+        
         nothing = (Vec2){0.f,0.f};
+        
         changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
+        
         numNodes = 1;
         nodes = malloc(sizeof(Node));
         nodes[0].position = xy;
         nodes[0].ID =  0;
+        nodes[0].prevPos = position;
+        
         dimesions = pdims;
-        prevNodePos = (Vec2*)malloc(sizeof(Vec2) * 5);
-        prevNodePos[0] = xy;
+        
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    NSLog(@"Here");
-    [particle addAcceleration:VEC2((float)RAND_BETWEEN(-5, 5), (float)RAND_BETWEEN(-5, 5))];
+    //NSLog(@"Here");
+    [particle setVelocity:VEC2(strength * (RANFLOAT - RANFLOAT), strength * (RANFLOAT - RANFLOAT))];
 }
 
 -(void) update{
@@ -65,7 +70,8 @@
 
 -(void) moveNode:(Vec2)pposition {
     int closestNode = [self getIndexToClosestNode:pposition];
-    prevNodePos[closestNode] = nodes[closestNode].position;
+    NSLog(@"Node %d moved",closestNode);
+    nodes[closestNode].prevPos = nodes[closestNode].position;
     nodes[closestNode].position = pposition;
     
 }
@@ -75,7 +81,6 @@
     for (int i = closest; i < numNodes - 1; i++) {
         nodes[i] = nodes[i + 1];
         nodes[i].ID = i + 1;
-        prevNodePos[i] = prevNodePos[i + 1];
     }
     numNodes--;
 }
@@ -85,7 +90,7 @@
         nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
         nodes[numNodes].position = pposition;
         nodes[numNodes].ID = numNodes;
-        prevNodePos[numNodes] = pposition;
+        nodes[numNodes].prevPos = pposition;
         numNodes++;
     }
 }

@@ -8,8 +8,13 @@
 
 #import "ForceNode.h"
 
-@interface BackShot : ForceNode
+@interface BackShot : ForceNode {
+    @private
+    int firedParticles;
+}
 
 -(void) influenceParticle:(Particle *)particle;
+
+-(void) moveNode:(Vec2)pposition;
 
 @end

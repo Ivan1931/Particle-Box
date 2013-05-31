@@ -32,7 +32,6 @@
     Color changeColor;
     
     Node* nodes;
-    Vec2* prevNodePos;
     int numNodes;
     
     Vec2 dimesions;

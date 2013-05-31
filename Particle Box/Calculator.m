@@ -120,7 +120,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnParticles {
-    for (int p = 0; p < 3000; p++){
+    for (int p = 0; p < 2000; p++){
         
         Vec2 pos = {
             .x = [Calculator randFloatBetween:0.f and:dims.x],
@@ -134,26 +134,27 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    //[self spawnTwoRoses];
+    [self spawnTwoRoses];
     //[self spawnGraviton];
     //[self spawnWhirl];
     //[self spawnRibbon];
-    [self spawnBackShot];
+    //[self spawnBackShot];
+    //[self spawnNode];
 }
 
 -(void) spawnBackShot {
-    BackShot *backShot = [[BackShot alloc] initWithStrength:5.f
+    BackShot *backShot = [[BackShot alloc] initWithStrength:10.f
                         Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
     node = backShot;
 }
 
 -(void) spawnTwoRoses {
-    Rose *rose = [[Rose alloc] initWithStrength:20.f suction:3.f position:(Vec2){dims.x / 2, dims.y / 4}
-        firePosition:(Vec2){dims.x / 6, dims.y / 6} dimensions:dims];
+    Rose *rose = [[Rose alloc] initWithStrength:2.f Suction:2.f
+                Position:VEC2 (dims.x / 2, dims.y / 2) dimesions:dims];
     [rose addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
-    [rose addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
+    /*[rose addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
     [rose addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
-    [rose addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
+    [rose addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];*/
     node = rose;
 }
 
@@ -185,6 +186,10 @@ void swap(int *a,int *b){
     [node addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
     [node addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
     [node addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
+}
+
+-(void) spawnNode {
+    node = [[ForceNode alloc] initWithStrength:2.f Suction:1.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 #pragma mark - move gravity

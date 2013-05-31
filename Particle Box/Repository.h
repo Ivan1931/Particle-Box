@@ -23,6 +23,7 @@ typedef struct {
 }Vec2;
 typedef struct{
     Vec2 position;
+    Vec2 prevPos;
     Color nodeColor;
     int ID;
 }Node;

@@ -13,11 +13,14 @@
 @interface Rose : ForceNode
 {
     @private
-    Vec2 firePosition;
-    Vec2 dims;
     int randomValue;
 }
--(id) initWithStrength:(float)pstrength suction:(float)psuction position:(Vec2)xy firePosition:(Vec2) fp dimensions:(Vec2) pdims;
+
+-(id) initWithStrength:(float) pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims;
+
 -(void) influenceParticle:(Particle *)particle;
+
 @property (nonatomic) Vec2 firePosition;
+
+
 @end

@@ -16,8 +16,10 @@ const int HALF_MAX_RAND = RAND_MAX / 2;
 
 -(void) influenceParticle:(Particle *)particle {
     for (int i = 0 ; i < numNodes; i++) {
-        if (!isEqualVectors(nodes[i].position, prevNodePos[i])) {
+        if (!isEqualVectors(nodes[i].position,nodes[i].prevPos)) {
             [self fireToLast:particle :nodes[i]];
+            if (arc4random() % 50000 == 0)
+                CHANGECOLOR(nodes[i].nodeColor, 50);
         }
     }
     
@@ -26,12 +28,19 @@ const int HALF_MAX_RAND = RAND_MAX / 2;
 -(void) fireToLast:(Particle *)particle :(Node)node {
     int random = arc4random();
     int random0 = arc4random();
-    if (random % 5 == 0){
-    if (isEqualVectors(particle.position, node.position) && ![particle outOfBounds:nothing :dimesions]) {
+    if (([particle outOfBounds:nothing :dimesions ] || random % 100 == 0 || firedParticles < 1000)) {
+        [particle setPosition:node.position];
+        [particle resetVelocity];
+        [particle bringToCurrent];
+        [particle setColor:node.nodeColor];
+        firedParticles++;
+    }
+    if (isEqualVectors(particle.position, node.position) || isEqualVectors(particle.position, nothing)) {
         Vec2 a;
-        Vec2 d = computeXYDiff(node.position, prevNodePos[node.ID]);
-        if (d.x != 0 && d.y != 0) {
-            float distance = computeDistance(node.position, prevNodePos[node.ID]);
+        Vec2 d = computeXYDiff(node.position, node.prevPos);
+        float distance = computeDistance(node.position, node.prevPos);
+        if (distance > 0) {
+            //firedParticles++;
             float ranX = (float) random / (float)RAND_MAX * ((random < HALF_MAX_RAND) ? 1.f : -1.f);
             float ranY = (float) random0 / (float)RAND_MAX * ((random0 < HALF_MAX_RAND) ? 1.f : -1.f);
             a.x = strength * -sinf(d.x / distance * M_1_PI) + ranX;
@@ -39,13 +48,11 @@ const int HALF_MAX_RAND = RAND_MAX / 2;
             [particle setVelocity:a];
         }
     }
-    }  else {
-        if (arc4random() % 30 == 0) {
-            [particle setPosition:node.position];
-            [particle resetVelocity];
-            [particle bringToCurrent];
-        } 
-    }
 }
 
+-(void) moveNode:(Vec2)pposition {
+    [super moveNode:pposition];
+    firedParticles = 0;
+
+}
 @end
