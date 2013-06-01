@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = true;
+        tail = false;
         whirls = false;
         [self spawnParticles];
     }

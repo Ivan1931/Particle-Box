@@ -9,7 +9,9 @@
 #import "RenderView.h"
 
 @implementation RenderView
+
 CGPoint origion;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -18,6 +20,7 @@ CGPoint origion;
     }
     return self;
 }
+
 -(void) drawImage:(UIImage*)image{
     self.layer.contents = (id)image.CGImage;
 }

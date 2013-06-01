@@ -8,7 +8,9 @@
 
 #import "Whirl.h"
 #import "Calculator.h"
+
 #define SHORT_CHANGE 50000
+
 
 @implementation Whirl
 @synthesize clockwise;

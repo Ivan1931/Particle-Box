@@ -22,6 +22,7 @@ typedef unsigned char byte;
 @synthesize calculateLink;
 int startX = 0;
 int startY = 0;
+
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
     self = [super init];
     if (self)
@@ -42,6 +43,7 @@ int startY = 0;
     }
     return self;
 }
+
 -(void) clearRaster:(CADisplayLink*) link  {
     //NSLog(@"Clear Raster");
     
@@ -64,6 +66,7 @@ int startY = 0;
         startY = 0;
     } else startY++;
 }
+
 -(void) updateImage{
     size_t bytesPerRow      = (width * BITSPERCOMPONENT * BYTESPERPIXEL + 7) / 8;
     CGContextRef context = CGBitmapContextCreate(data, width, height,
@@ -81,12 +84,14 @@ int startY = 0;
     
     
 }
+
 -(void) render:(CADisplayLink*) link  {
     //NSLog(@"Render");
     [self updateImage];
     [view drawImage:image];
     
 }
+
 - (UIImage*)makeCalc: (CGRect)rect
 {
     size_t bitsPerComponent = 8;
@@ -111,6 +116,7 @@ int startY = 0;
     free(data);    
     return result;
 }
+
 -(void) moveForces:(CGPoint)xy {
     [calc moveGravity:xy];
 }

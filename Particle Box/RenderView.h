@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 @interface RenderView : UIView
+
 -(void) drawImage:(UIImage*)image;
+
 @end
