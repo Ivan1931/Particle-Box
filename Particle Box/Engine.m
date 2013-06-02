@@ -87,7 +87,12 @@ int startY = 0;
 
 -(void) render:(CADisplayLink*) link  {
     //NSLog(@"Render");
-    [self updateImage];
+    @try {
+        [self updateImage];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception");
+    }
     [view drawImage:image];
     
 }
@@ -113,7 +118,7 @@ int startY = 0;
     UIImage *result = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     CGContextRelease(context);
-    free(data);    
+    //free(data);
     return result;
 }
 

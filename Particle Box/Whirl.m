@@ -19,9 +19,6 @@
              Clockwise:(BOOL)isClockwise screenDimesions:(Vec2)pdims{
     self = [super initWithStrength:pstrength Suction:psuction Position:xy dimesions:pdims];
     if (self) {
-        radius_s = powf(xy.x, 2) + powf(xy.y, 2);
-        radius = sqrtf(radius_s);
-        omega = atan2f(xy.y, xy.x);
         clockwise = isClockwise;
         setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S, 500);
     }
@@ -74,18 +71,6 @@
         [particle bringToCurrent];
         [particle resetVelocity];
     }
-}
-
--(void) setPosition:(Vec2)pos {
-    [super setPosition:pos];
-    radius_s = powf(pos.x, 2) + powf(pos.y, 2);
-    radius = sqrtf(radius_s);
-    omega = atan2f(pos.y, pos.x);
-    currentSuction = suction;
-}
-
--(void) update {
-    currentSuction *= MAGIC_INCREMENTOR;
 }
 
 @end

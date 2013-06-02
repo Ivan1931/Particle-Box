@@ -38,6 +38,14 @@
 -(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
 -(void) spawnParticles;
 -(void) moveGravity:(CGPoint)xy;
--(void) spawnTwoRoses;
+
 +(float) randFloatBetween:(float)low and:(float)high;
+
+-(void) spawnNode;
+-(void) spawnRose;
+-(void) swawnGravity;
+-(void) swawnRibbon;
+-(void) spawnWhirl;
+-(void) spawnSuction;
+-(void) spawnBackShot;
 @end

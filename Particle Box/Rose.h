@@ -13,14 +13,12 @@
 @interface Rose : ForceNode
 {
     @private
-    int randomValue;
+    int particleEscapeCount;
+    int randomBoxChangeTime;
 }
 
 -(id) initWithStrength:(float) pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims;
 
 -(void) influenceParticle:(Particle *)particle;
-
-@property (nonatomic) Vec2 firePosition;
-
 
 @end

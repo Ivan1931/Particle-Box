@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = false;
+        tail = true;
         whirls = false;
         [self spawnParticles];
     }
@@ -134,13 +134,13 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    [self spawnTwoRoses];
+    [self spawnRose];
     //[self spawnGraviton];
     //[self spawnWhirl];
     //[self spawnRibbon];
     //[self spawnBackShot];
     //[self spawnNode];
-    [self createSuction:2];
+    //[self createSuction:2];
 }
 
 -(void) spawnBackShot {
@@ -149,7 +149,7 @@ void swap(int *a,int *b){
     node = backShot;
 }
 
--(void) spawnTwoRoses {
+-(void) spawnRose {
     Rose *rose = [[Rose alloc] initWithStrength:2.f Suction:2.f
                 Position:VEC2 (dims.x / 2, dims.y / 2) dimesions:dims];
     [rose addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
