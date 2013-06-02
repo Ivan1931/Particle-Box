@@ -8,36 +8,73 @@
 
 #import "Spirals.h"
 
-#define EFFECT_DISTANCE 50.f
+
+#define RINGS 100.f
+#define PULLIN 2.f
+#define COLOR_CHNG_FREQ 1000000
 
 @implementation Spirals
 
+-(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims {
+    self = [super initWithStrength:pstrength Suction:pstrength Position:xy dimesions:pdims];
+    if (self) {
+        colorChangeCount = 0;
+        effectDistance = strength * 5.f;
+        [self calculateEffectLocation];
+        CHANGECOLOR(col, MIN_RGB_VAL);
+    }
+    return self;
+}
+
 -(void) influenceParticle:(Particle *)particle {
-    [self spirallingEffect:particle :nodes[0].position];
+    
+    if (colorChangeCount< COLOR_CHNG_FREQ) {
+        colorChangeCount ++;
+    } else {
+        CHANGECOLOR(col, MIN_RGB_VAL);
+        colorChangeCount = 0;
+    }
+    
+    [particle setColor:col];
+    [self spirallingEffect:particle :effectLocation];
 }
 
 -(void) spirallingEffect:(Particle *) particle :(Vec2)centralPoint {
     Vec2 d = computeXYDiff(particle.position, centralPoint);
     float distance = computeDistance(particle.position, centralPoint);
-    if ( ![ particle outOfBounds:nothing :dimesions ]) {
-        Vec2 a;
-        if (fabsf (distance) > strength) {
-            if (distance > EFFECT_DISTANCE || (d.x * particle.velocity.x <= 0 && d.y * particle.velocity.y <= 0)) {
-                //Apply suction
-                a.x = -d.x / distance + 0.2f;
-                a.y = -d.y / distance + 0.2f;
-            } else {
-                //Apply acceleration
-                a.x = d.x / distance;
-                a.y = d.y / distance;
-            }
-            
-            [particle addAcceleration:a];
-        }
+    Vec2 a;
+    a.x = -sinf(d.x / distance);
+    a.y = -sinf(d.y / distance);
+    if (distance < effectDistance) {
+        [particle addAcceleration:a];
     } else {
-        [particle setPosition:centralPoint];
-        [particle bringToCurrent];
+        [particle setVelocity:a];
     }
+}
+
+-(void) calculateEffectLocation {
+    float totalx = 0.f;
+    float totaly = 0.f;
+    for (int i = 0; i < numNodes; i++) {
+        totalx += nodes[i].position.x;
+        totaly += nodes[i].position.y;
+    }
+    effectLocation = VEC2(totalx / numNodes, totaly / numNodes);
+}
+
+-(void) addNode:(Vec2)position {
+    [super addNode:position];
+    [self calculateEffectLocation];
+}
+
+-(void) deleteNode:(Vec2)position {
+    [super deleteNode:position];
+    [self calculateEffectLocation];
+}
+
+-(void) moveNode:(Vec2)position {
+    [super moveNode:position];
+    [self calculateEffectLocation];
 }
 
 @end

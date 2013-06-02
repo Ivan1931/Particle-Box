@@ -27,7 +27,6 @@
     float strength;
     float suction;
     
-    Vec2 position;
     Vec2 nothing;
     Color changeColor;
     

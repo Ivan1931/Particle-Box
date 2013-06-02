@@ -134,13 +134,14 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    [self spawnRose];
+    //[self spawnRose];
     //[self spawnGraviton];
     //[self spawnWhirl];
     //[self spawnRibbon];
     //[self spawnBackShot];
     //[self spawnNode];
-    //[self createSuction:2];
+    //[self createSuction:5];
+    [self spawnSpiral];
 }
 
 -(void) spawnBackShot {
@@ -202,6 +203,12 @@ void swap(int *a,int *b){
     for (int i = 1; i < number; i++) {
         [node addNode:VEC2(dims.x / (number + 1) * (i + 1), dims.y / (number + 1) * (i + 1))];
     }
+}
+
+-(void) spawnSpiral {
+    Spirals *spiral = [[Spirals alloc] initWithStrength:20.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+    
+    node = spiral;
 }
 
 #pragma mark - move gravity
