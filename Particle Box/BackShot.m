@@ -11,6 +11,7 @@
 const float DISTANCE_INCREASE = 0.5f;
 const float RANDOM_GRAD_INC = M_PI_4;
 const int HALF_MAX_RAND = RAND_MAX / 2;
+const int NODE_COLOR_CHANGE_FREQ = 500;
 
 @implementation BackShot
 
@@ -18,8 +19,7 @@ const int HALF_MAX_RAND = RAND_MAX / 2;
     for (int i = 0 ; i < numNodes; i++) {
         if (!isEqualVectors(nodes[i].position,nodes[i].prevPos)) {
             [self fireToLast:particle :nodes[i]];
-            if (arc4random() % 50000 == 0)
-                CHANGECOLOR(nodes[i].nodeColor, 50);
+            [self iterateColorNodeChangeValue:&nodes[i] :NODE_COLOR_CHANGE_FREQ];
         }
     }
     

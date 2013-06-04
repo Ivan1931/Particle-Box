@@ -39,6 +39,8 @@
         
         colorChngGap = 0;
         
+        nodeChangeGap = 0;
+        
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
@@ -60,6 +62,15 @@
 }
 
 //Implementation of the node system ///////////////////////////////////////
+
+-(void) iterateNodeChange:(Particle *) particle :(int) iterationLimit {
+    if (nodeChangeGap < iterationLimit) {
+        nodeChangeGap++;
+    } else {
+        [self changeParticleNode:particle];
+        nodeChangeGap = 0;
+    }
+}
 
 -(void) particleColorToNode:(Particle*)particle {
     if (!([particle nodeID] >= numNodes))
@@ -115,6 +126,14 @@
     return numNodes;
 }
 
+-(void) iterateColorNodeChangeValue:(Node*)node :(int) iterationLimit {
+    if (colorChngGap < iterationLimit) {
+        colorChngGap++;
+    } else {
+        colorChngGap = 0;
+        CHANGECOLOR(node->nodeColor, MIN_RGB_VAL);
+    }
+}
 /////////////////////////////////////////////////////////////////////
 
 #pragma mark - Maths methods

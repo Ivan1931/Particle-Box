@@ -16,6 +16,8 @@
 #import "BackShot.h"
 #import "Suction.h"
 #import "Spirals.h"
+#import "Swirl.h"
+#import "Repulsion.h"
 
 @interface Calculator : NSObject
 {
@@ -50,4 +52,6 @@
 -(void) spawnSuction;
 -(void) spawnBackShot;
 -(void) spawnSpiral;
+-(void) spawnSwirl;
+-(void) spawnRepulsion;
 @end

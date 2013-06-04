@@ -39,6 +39,8 @@
     Vec2 spawnBoxLow;
     
     int colorChngGap;
+    int nodeChangeGap;
+    
 }
 @property (nonatomic) Vec2 position;
 
@@ -53,9 +55,11 @@
 
 -(void) changeParticleNode:(Particle*) particle;
 -(void) particleColorToNode:(Particle*)particle;
+-(void) iterateColorNodeChangeValue:(Node*) node :(int)iterationLimit;
 
 -(void) respawnParticleInRandomBox:(Particle*) particle;
 
+-(void) iterateNodeChange:(Particle *) particle :(int) iterationLimit;
 -(int) getNumberNodes;
 -(void) addNode:(Vec2)position;
 -(void) deleteNode:(Vec2)position;

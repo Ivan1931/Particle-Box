@@ -25,6 +25,8 @@
 		1005264F1700A69000BFAAA6 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1005264E1700A69000BFAAA6 /* Engine.m */; };
 		100526521701CC6000BFAAA6 /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 100526511701CC5F00BFAAA6 /* Calculator.m */; };
 		1012BA391706167C003019DC /* Whirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1012BA381706167C003019DC /* Whirl.m */; };
+		1023E14B175B820100963586 /* Swirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023E14A175B820100963586 /* Swirl.m */; };
+		1023E14E175BC13500963586 /* Repulsion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023E14D175BC13500963586 /* Repulsion.m */; };
 		10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10291D0617023CF100A9D2AB /* QuartzCore.framework */; };
 		10291D0A1703344E00A9D2AB /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D091703344E00A9D2AB /* Particle.m */; };
 		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
@@ -75,6 +77,10 @@
 		100526511701CC5F00BFAAA6 /* Calculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculator.m; sourceTree = "<group>"; };
 		1012BA371706167C003019DC /* Whirl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Whirl.h; sourceTree = "<group>"; };
 		1012BA381706167C003019DC /* Whirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Whirl.m; sourceTree = "<group>"; };
+		1023E149175B820000963586 /* Swirl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Swirl.h; sourceTree = "<group>"; };
+		1023E14A175B820100963586 /* Swirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Swirl.m; sourceTree = "<group>"; };
+		1023E14C175BC13500963586 /* Repulsion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repulsion.h; sourceTree = "<group>"; };
+		1023E14D175BC13500963586 /* Repulsion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repulsion.m; sourceTree = "<group>"; };
 		10291D0617023CF100A9D2AB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10291D081703344E00A9D2AB /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		10291D091703344E00A9D2AB /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
@@ -184,6 +190,10 @@
 				108EA0B117589AAD001951B9 /* Suction.m */,
 				10413D8E175B3E8B00AE79A4 /* Spirals.h */,
 				10413D8F175B3E8B00AE79A4 /* Spirals.m */,
+				1023E149175B820000963586 /* Swirl.h */,
+				1023E14A175B820100963586 /* Swirl.m */,
+				1023E14C175BC13500963586 /* Repulsion.h */,
+				1023E14D175BC13500963586 /* Repulsion.m */,
 				10291D0B1703396800A9D2AB /* Repository.h */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
@@ -347,6 +357,8 @@
 				10CFCEF217567F1400899CED /* BackShot.m in Sources */,
 				108EA0B217589AAD001951B9 /* Suction.m in Sources */,
 				10413D90175B3E8C00AE79A4 /* Spirals.m in Sources */,
+				1023E14B175B820100963586 /* Swirl.m in Sources */,
+				1023E14E175BC13500963586 /* Repulsion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,8 +462,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -462,8 +475,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

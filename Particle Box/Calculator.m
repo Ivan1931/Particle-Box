@@ -29,7 +29,7 @@
         particles = [[NSMutableArray alloc] init];
         frameNumber = 0;
         reset = false;
-        tail = true;
+        tail = false;
         whirls = false;
         [self spawnParticles];
     }
@@ -46,14 +46,21 @@
         [local move];
         [self renderParticle:local];
         if (reset){
-            if(local.position.x <= 0)
+            if(local.position.x <= 0) { 
                 local.position = (Vec2){dims.x, local.position.y};
-            else if (local.position.x >= dims.x)
+                [local resetVelocity];
+            }
+            else if (local.position.x >= dims.x) {
                 local.position = (Vec2) {0.f,local.position.y};
-            if (local.position.y <= 0)
+                [local resetVelocity];
+            }
+            if (local.position.y <= 0) {
                 local.position = (Vec2) {local.position.x, dims.y};
-            else if (local.position.y >= dims.y)
+                [local resetVelocity];
+            } else if (local.position.y >= dims.y) {
                 local.position = (Vec2){local.position.x, 0.f};
+                [local resetVelocity];
+            }
         }
         
     }
@@ -141,7 +148,9 @@ void swap(int *a,int *b){
     //[self spawnBackShot];
     //[self spawnNode];
     //[self createSuction:5];
-    [self spawnSpiral];
+    //[self spawnSpiral];
+    [self spawnSwirl];
+    //[self spawnRepulsion];
 }
 
 -(void) spawnBackShot {
@@ -209,6 +218,21 @@ void swap(int *a,int *b){
     Spirals *spiral = [[Spirals alloc] initWithStrength:20.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
     
     node = spiral;
+}
+
+-(void) spawnSwirl {
+    Swirl *swirl = [[Swirl alloc] initWithStrength:10.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+    
+    node = swirl;
+    
+    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
+}
+
+-(void) spawnRepulsion {
+    Repulsion *repulsion = [[Repulsion alloc] initWithStrength:10.f Suction:3.f
+                                            Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+    
+    node = repulsion;
 }
 
 #pragma mark - move gravity
