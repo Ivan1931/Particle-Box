@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-@interface RenderView : UIView
+
+
+@interface RenderView : UIView {
+    @private
+    UIButton *menuButton;
+}
 
 -(void) drawImage:(UIImage*)image;
 

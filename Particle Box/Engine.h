@@ -11,16 +11,16 @@
 #include "Calculator.h"
 #include "Timer.h"
 
+extern const float BUTTON_WIDTH_RATIO;
 
-@interface Engine : NSObject
+@interface Engine : UIView
 {
     @public
-    RenderView *view;
     Calculator *calc;
     CADisplayLink *renderLink;
     CADisplayLink *calculateLink;
     @private
-    
+    UIButton *menuButton;
     UIImage *image;
     unsigned char* data;
     NSUInteger len;
@@ -34,13 +34,18 @@
     
 }
 
-@property (nonatomic,retain) RenderView *view;
+@property (nonatomic, strong) UIButton *menuButton;
+
 @property (nonatomic,retain) Calculator *calc;
+
 @property (nonatomic,retain) CADisplayLink *renderLink;
 @property (nonatomic,retain) CADisplayLink *calculateLink;
+
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color;
 -(void) updateImage;
 -(void) render:(CADisplayLink*) link ;
 -(void) clearRaster:(CADisplayLink*) link;
 -(void) moveForces:(CGPoint)xy;
+
+-(void) menuButtonSelected;
 @end

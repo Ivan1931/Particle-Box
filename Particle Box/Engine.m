@@ -13,10 +13,11 @@ typedef unsigned char byte;
 
 #define Clamp255(a) (a>255 ? 255 : a)
 
+const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 @implementation Engine
 
-@synthesize view;
+@synthesize menuButton;
 @synthesize calc;
 @synthesize renderLink;
 @synthesize calculateLink;
@@ -24,20 +25,33 @@ int startX = 0;
 int startY = 0;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
-    self = [super init];
+    self = [super initWithFrame:size];
+    
     if (self)
-    {
-        view = [[RenderView alloc] initWithFrame:size];
-        //
+    {        //
         width = size.size.width;
         height = size.size.height;
         colorSpace = CGColorSpaceCreateDeviceRGB();
         //
-        image = [self makeCalc:view.bounds];
+        
+        float _size = size.size.width * BUTTON_WIDTH_RATIO;
+        CGRect buttonFrame = CGRectMake(0.f,
+                                        height - 2 * _size, _size, _size);
+        menuButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        menuButton.backgroundColor = [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f];
+        menuButton.frame = buttonFrame;
+        [menuButton setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
+        [menuButton setOpaque:YES];
+        [menuButton addTarget:self action:@selector(menuButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:menuButton];
+        
+        image = [self makeCalc:self.bounds];
         calculateLink = [CADisplayLink displayLinkWithTarget:calc selector:@selector(calculate:)];
         renderLink  =[CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
         [calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         [renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        
         
        
     }
@@ -93,7 +107,7 @@ int startY = 0;
     @catch (NSException *exception) {
         NSLog(@"Exception");
     }
-    [view drawImage:image];
+    [self drawImage:image];
     
 }
 
@@ -122,7 +136,32 @@ int startY = 0;
     return result;
 }
 
+-(void) drawImage:(UIImage*)pimage{
+    self.layer.contents = (id)pimage.CGImage;
+}
+
+-(void)menuButtonSelected {
+    NSLog(@"Button pressed");
+}
+
 -(void) moveForces:(CGPoint)xy {
     [calc moveGravity:xy];
 }
+
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Touch recieved");
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Touch recieved");
+}
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Touch recieved");
+}
+
+-(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"Touch recieved");
+}
+
 @end

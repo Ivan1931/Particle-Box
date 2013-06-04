@@ -21,12 +21,13 @@
 		1005263617009CE600BFAAA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1005261717009CE600BFAAA6 /* Foundation.framework */; };
 		1005263E17009CE600BFAAA6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1005263C17009CE600BFAAA6 /* InfoPlist.strings */; };
 		1005264117009CE600BFAAA6 /* Particle_BoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1005264017009CE600BFAAA6 /* Particle_BoxTests.m */; };
-		1005264C1700A0B700BFAAA6 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1005264B1700A0B700BFAAA6 /* RenderView.m */; };
 		1005264F1700A69000BFAAA6 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1005264E1700A69000BFAAA6 /* Engine.m */; };
 		100526521701CC6000BFAAA6 /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 100526511701CC5F00BFAAA6 /* Calculator.m */; };
 		1012BA391706167C003019DC /* Whirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1012BA381706167C003019DC /* Whirl.m */; };
 		1023E14B175B820100963586 /* Swirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023E14A175B820100963586 /* Swirl.m */; };
 		1023E14E175BC13500963586 /* Repulsion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023E14D175BC13500963586 /* Repulsion.m */; };
+		1023E150175E46A600963586 /* Untitled.png in Resources */ = {isa = PBXBuildFile; fileRef = 1023E14F175E46A500963586 /* Untitled.png */; };
+		1023E153175E482000963586 /* SmallMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023E152175E482000963586 /* SmallMenuView.m */; };
 		10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10291D0617023CF100A9D2AB /* QuartzCore.framework */; };
 		10291D0A1703344E00A9D2AB /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D091703344E00A9D2AB /* Particle.m */; };
 		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
@@ -69,8 +70,6 @@
 		1005263D17009CE600BFAAA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1005263F17009CE600BFAAA6 /* Particle_BoxTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Particle_BoxTests.h; sourceTree = "<group>"; };
 		1005264017009CE600BFAAA6 /* Particle_BoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Particle_BoxTests.m; sourceTree = "<group>"; };
-		1005264A1700A0B700BFAAA6 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
-		1005264B1700A0B700BFAAA6 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		1005264D1700A69000BFAAA6 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
 		1005264E1700A69000BFAAA6 /* Engine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Engine.m; sourceTree = "<group>"; };
 		100526501701CC5F00BFAAA6 /* Calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculator.h; sourceTree = "<group>"; };
@@ -81,6 +80,9 @@
 		1023E14A175B820100963586 /* Swirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Swirl.m; sourceTree = "<group>"; };
 		1023E14C175BC13500963586 /* Repulsion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repulsion.h; sourceTree = "<group>"; };
 		1023E14D175BC13500963586 /* Repulsion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repulsion.m; sourceTree = "<group>"; };
+		1023E14F175E46A500963586 /* Untitled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Untitled.png; sourceTree = "<group>"; };
+		1023E151175E481F00963586 /* SmallMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallMenuView.h; sourceTree = "<group>"; };
+		1023E152175E482000963586 /* SmallMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallMenuView.m; sourceTree = "<group>"; };
 		10291D0617023CF100A9D2AB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10291D081703344E00A9D2AB /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		10291D091703344E00A9D2AB /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
@@ -166,10 +168,10 @@
 				1005262517009CE600BFAAA6 /* AppDelegate.m */,
 				1005264D1700A69000BFAAA6 /* Engine.h */,
 				1005264E1700A69000BFAAA6 /* Engine.m */,
+				1023E151175E481F00963586 /* SmallMenuView.h */,
+				1023E152175E482000963586 /* SmallMenuView.m */,
 				10C8AF4A17021EC700848AB8 /* Timer.h */,
 				10C8AF4B17021EC700848AB8 /* Timer.m */,
-				1005264A1700A0B700BFAAA6 /* RenderView.h */,
-				1005264B1700A0B700BFAAA6 /* RenderView.m */,
 				100526501701CC5F00BFAAA6 /* Calculator.h */,
 				100526511701CC5F00BFAAA6 /* Calculator.m */,
 				10291D081703344E00A9D2AB /* Particle.h */,
@@ -195,6 +197,7 @@
 				1023E14C175BC13500963586 /* Repulsion.h */,
 				1023E14D175BC13500963586 /* Repulsion.m */,
 				10291D0B1703396800A9D2AB /* Repository.h */,
+				1023E14F175E46A500963586 /* Untitled.png */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
 			path = "Particle Box";
@@ -308,6 +311,7 @@
 				1005262817009CE600BFAAA6 /* Default.png in Resources */,
 				1005262A17009CE600BFAAA6 /* Default@2x.png in Resources */,
 				1005262C17009CE600BFAAA6 /* Default-568h@2x.png in Resources */,
+				1023E150175E46A600963586 /* Untitled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +348,6 @@
 			files = (
 				1005262217009CE600BFAAA6 /* main.m in Sources */,
 				1005262617009CE600BFAAA6 /* AppDelegate.m in Sources */,
-				1005264C1700A0B700BFAAA6 /* RenderView.m in Sources */,
 				1005264F1700A69000BFAAA6 /* Engine.m in Sources */,
 				100526521701CC6000BFAAA6 /* Calculator.m in Sources */,
 				10C8AF4C17021EC700848AB8 /* Timer.m in Sources */,
@@ -359,6 +362,7 @@
 				10413D90175B3E8C00AE79A4 /* Spirals.m in Sources */,
 				1023E14B175B820100963586 /* Swirl.m in Sources */,
 				1023E14E175BC13500963586 /* Repulsion.m in Sources */,
+				1023E153175E482000963586 /* SmallMenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

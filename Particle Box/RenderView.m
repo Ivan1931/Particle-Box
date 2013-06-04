@@ -16,7 +16,6 @@ CGPoint origion;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
     }
     return self;
 }
@@ -25,4 +24,23 @@ CGPoint origion;
     self.layer.contents = (id)image.CGImage;
 }
 
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"A touch detected");
+    [self.nextResponder touchesBegan:touches withEvent:event];
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"A touch detected");
+    [self.nextResponder touchesMoved:touches withEvent:event];
+}
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"A touch detected");
+    [self.nextResponder touchesEnded:touches withEvent:event];
+}
+
+-(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"A touch detected");
+    [self.nextResponder touchesCancelled:touches withEvent:event];
+}
 @end

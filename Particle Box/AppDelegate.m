@@ -14,20 +14,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
-    /*if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
         // RETINA DISPLAY
         screenSize.size.width = screenSize.size.width * [[UIScreen mainScreen] scale];
         screenSize.size.height = screenSize.size.height * [[UIScreen mainScreen] scale];
-    }*/
+    }
     self.window = [[UIWindow alloc] initWithFrame:screenSize];
     // Override point for customization after application launch
     
     engine = [[Engine alloc] initWithSize:screenSize andColor:[UIColor blueColor]];
-    [self.window addSubview:engine.view];
+    [self.window addSubview:engine];
     
-    
+    //[self.window addSubview:engine.menuButton];
     
     controller = [[UIViewController alloc] init];
+    [controller setView:engine];
     self.window.rootViewController = controller;
     
     [self.window makeKeyAndVisible];
@@ -60,6 +61,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+/*
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:[engine view]];
@@ -72,5 +74,5 @@
     NSLog(@"Touch at x: %f and y: %f",point.x, point.y);
     [engine moveForces:point];
 }
-
+*/
 @end
