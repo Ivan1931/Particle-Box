@@ -156,7 +156,7 @@
 -(void) addNodeList:(NodeList)list {
     //free(nodes);
     numNodes = list.len;
-    nodes = (Node*) malloc(sizeof(list.len));
+    nodes = (Node*) malloc(sizeof(Node));
     for (int i = 0; i < list.len; i++) {
         nodes[i] = list.nodes[i];
     }

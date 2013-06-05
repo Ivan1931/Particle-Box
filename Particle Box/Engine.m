@@ -104,9 +104,11 @@ int startY = 0;
     
     
     //CGColorSpaceRelease(colorSpace);
-    CGImageRef imageRef = CGBitmapContextCreateImage(context);
-    image = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
+    if (context != nil) {
+        CGImageRef imageRef = CGBitmapContextCreateImage(context);
+        image = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+    }
     CGContextRelease(context);
     //free(data);
     
@@ -165,9 +167,13 @@ int startY = 0;
 
 -(void) increaseMode {
     NSLog(@"Mode increased");
+    [calculateLink setPaused:YES];
+    [renderLink setPaused:YES];
     int tmp = [calc currentNodeType];
     tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
     [calc setForceNode:tmp];
+    [calculateLink setPaused:NO];
+    [renderLink setPaused:NO];
 }
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"Touch recieved");

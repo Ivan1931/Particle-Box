@@ -158,37 +158,24 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnBackShot {
-    BackShot *backShot = [[BackShot alloc] initWithStrength:10.f
-                        Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    node = nil;
-    node = backShot;
+    node = [[BackShot alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 -(void) spawnRose {
-    Rose *rose = [[Rose alloc] initWithStrength:2.f Suction:2.f
-                Position:VEC2 (dims.x / 2, dims.y / 2) dimesions:dims];
-    node = rose;
+    node = [[Rose alloc] initWithStrength:2.f Suction:2.f Position:VEC2 (dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 -(void) spawnGraviton {
-    Graviton *grav = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
-    node = nil;
-    node = grav;
+    node = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
 }
 
 -(void) spawnWhirl {
-    Whirl *whirl = [[Whirl alloc] initWithStrength:15.f Suction:3.f
-                                       Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
-    node = nil;
-    node = whirl;
+    node = [[Whirl alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
     
 }
 
 -(void) spawnRibbon {
-    Ribbon *ribbon = [[Ribbon alloc] initWithStrength:10.f
-                    Suction:0.f Position:VEC2(dims.x/4, dims.y / 4 ) dimesions:dims];
-    node = nil;
-    node = ribbon;
+    node = [[Ribbon alloc] initWithStrength:10.f Suction:0.f Position:VEC2(dims.x/4, dims.y / 4 ) dimesions:dims];
 }
 
 -(void) spawnNode {
@@ -197,29 +184,19 @@ void swap(int *a,int *b){
 
 
 -(void) spawnSpiral {
-    Spirals *spiral = [[Spirals alloc] initWithStrength:20.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    node = nil;
-    node = spiral;
+    node = [[Spirals alloc] initWithStrength:20.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 -(void) spawnSwirl {
-    Swirl *swirl = [[Swirl alloc] initWithStrength:10.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    node = nil;
-    node = swirl;
+    node = [[Swirl alloc] initWithStrength:10.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 -(void) spawnRepulsion {
-    Repulsion *repulsion = [[Repulsion alloc] initWithStrength:10.f Suction:3.f
-                                            Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    node = nil;
-    node = repulsion;
+    node = [[Repulsion alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
 -(void) spawnSuction {
-    Suction *suction = [[Suction alloc] initWithStrength:10.f Suction:3.f
-                                        Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
-    node = nil;
-    node = suction;
+    node = [[Suction alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
 }
 
 -(void) spawnExtraInternalNodes:(int)number {

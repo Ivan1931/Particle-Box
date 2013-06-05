@@ -34,7 +34,7 @@
     int currentNodeType;
 }
 #pragma mark - Properties
-@property (nonatomic) unsigned char *data;
+@property (assign, nonatomic) unsigned char *data;
 @property (nonatomic, strong) NSMutableArray *particles;
 @property (nonatomic, strong) ForceNode *node;
 @property int currentNodeType;
