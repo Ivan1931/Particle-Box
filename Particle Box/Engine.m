@@ -17,6 +17,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 @implementation Engine
 
+@synthesize smallMenu;
 @synthesize menuButton;
 @synthesize calc;
 @synthesize renderLink;
@@ -32,7 +33,7 @@ int startY = 0;
         width = size.size.width;
         height = size.size.height;
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        //
+        //Add the small menu button
         
         float _size = size.size.width * BUTTON_WIDTH_RATIO;
         CGRect buttonFrame = CGRectMake(0.f,
@@ -45,17 +46,30 @@ int startY = 0;
         [menuButton addTarget:self action:@selector(menuButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:menuButton];
+        //Add the small menu and make it invisible for now
+        smallMenu = [[SmallMenuView alloc] initWithFrame:CGRectMake(_size, height - 2 * _size, width, _size) forceMode:0];
+        [self addSubview:smallMenu];
+        [smallMenu setHidden:YES];
+        smallMenuOpen = NO;
         
+        //
+        [self setTargetsForSmallMenuBtns];
+        
+        //////////
         image = [self makeCalc:self.bounds];
         calculateLink = [CADisplayLink displayLinkWithTarget:calc selector:@selector(calculate:)];
         renderLink  =[CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
         [calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         [renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         
-        
+        numAvailableModes = NUM_FMODE_TYPES;
        
     }
     return self;
+}
+
+-(void) setTargetsForSmallMenuBtns {
+    [smallMenu.btnStepUpMode addTarget:self action:@selector(increaseMode) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void) clearRaster:(CADisplayLink*) link  {
@@ -141,13 +155,20 @@ int startY = 0;
 }
 
 -(void)menuButtonSelected {
-    NSLog(@"Button pressed");
+    [smallMenu setHidden:smallMenuOpen];
+    smallMenuOpen = !smallMenuOpen;
 }
 
 -(void) moveForces:(CGPoint)xy {
     [calc moveGravity:xy];
 }
 
+-(void) increaseMode {
+    NSLog(@"Mode increased");
+    int tmp = [calc currentNodeType];
+    tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
+    [calc setForceNode:tmp];
+}
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"Touch recieved");
 }

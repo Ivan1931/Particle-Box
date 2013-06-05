@@ -16,6 +16,8 @@
 #define swap_(a, b) do{ __typeof__(a) tmp;  tmp = a; a = b; b = tmp; }while(0)
 @implementation Calculator
 
+
+@synthesize currentNodeType;
 @synthesize data;
 @synthesize particles;
 @synthesize node;
@@ -31,6 +33,7 @@
         reset = false;
         tail = false;
         whirls = false;
+        currentNodeType = 0;
         [self spawnParticles];
     }
     return self;
@@ -42,7 +45,8 @@
     [self clearRaster];
     for (int p = 0; p < particles.count; p++) {
         Particle* local = [particles objectAtIndex:p];
-        [node influenceParticle:local];
+        if (node != nil)
+            [node influenceParticle:local];
         [local move];
         [self renderParticle:local];
         if (reset){
@@ -156,35 +160,26 @@ void swap(int *a,int *b){
 -(void) spawnBackShot {
     BackShot *backShot = [[BackShot alloc] initWithStrength:10.f
                         Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
+    node = nil;
     node = backShot;
 }
 
 -(void) spawnRose {
     Rose *rose = [[Rose alloc] initWithStrength:2.f Suction:2.f
                 Position:VEC2 (dims.x / 2, dims.y / 2) dimesions:dims];
-    [rose addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
-    /*[rose addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
-    [rose addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
-    [rose addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];*/
     node = rose;
 }
 
 -(void) spawnGraviton {
     Graviton *grav = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
+    node = nil;
     node = grav;
-    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
-    [node addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
-    [node addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
-    [node addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
 }
 
 -(void) spawnWhirl {
     Whirl *whirl = [[Whirl alloc] initWithStrength:15.f Suction:3.f
                                        Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
-    [whirl addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
-    [whirl addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
-    [whirl addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
-    [whirl addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
+    node = nil;
     node = whirl;
     
 }
@@ -192,47 +187,85 @@ void swap(int *a,int *b){
 -(void) spawnRibbon {
     Ribbon *ribbon = [[Ribbon alloc] initWithStrength:10.f
                     Suction:0.f Position:VEC2(dims.x/4, dims.y / 4 ) dimesions:dims];
+    node = nil;
     node = ribbon;
-    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
-    [node addNode:(Vec2) {dims.x / 6 * 3, dims.y / 6 * 3}];
-    [node addNode:(Vec2) {dims.x / 6 * 4, dims.y / 6 * 4}];
-    [node addNode:(Vec2) {dims.x / 6 * 5, dims.y / 6 * 5}];
 }
 
 -(void) spawnNode {
     node = [[ForceNode alloc] initWithStrength:2.f Suction:1.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }
 
--(void) createSuction:(int) number {
-    
-    Suction *suction = [[Suction alloc] initWithStrength:10.f Suction:1.f Position:VEC2(dims.x / 3, dims.y / 3) dimesions:dims];
-    
-    node = suction;
-    
-    for (int i = 1; i < number; i++) {
-        [node addNode:VEC2(dims.x / (number + 1) * (i + 1), dims.y / (number + 1) * (i + 1))];
-    }
-}
 
 -(void) spawnSpiral {
     Spirals *spiral = [[Spirals alloc] initWithStrength:20.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    
+    node = nil;
     node = spiral;
 }
 
 -(void) spawnSwirl {
     Swirl *swirl = [[Swirl alloc] initWithStrength:10.f Suction:2.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    
+    node = nil;
     node = swirl;
-    
-    [node addNode:(Vec2) {dims.x / 6 * 2, dims.y / 6 * 2}];
 }
 
 -(void) spawnRepulsion {
     Repulsion *repulsion = [[Repulsion alloc] initWithStrength:10.f Suction:3.f
                                             Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
-    
+    node = nil;
     node = repulsion;
+}
+
+-(void) spawnSuction {
+    Suction *suction = [[Suction alloc] initWithStrength:10.f Suction:3.f
+                                        Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
+    node = nil;
+    node = suction;
+}
+
+-(void) spawnExtraInternalNodes:(int)number {
+    int screen_divisor = number + 1;
+    for (int i = 0; i < number; i++) {
+        [node addNode:VEC2((i + 2) * dims.x / screen_divisor , (i + 2) * dims.y / screen_divisor)];
+    }
+}
+
+-(void) setForceNode:(int)nodeNumber {
+    currentNodeType = nodeNumber;
+    NodeList nodeList = [node getNodeList];
+    switch (nodeNumber) {
+        case BACK_SHOT:
+            [self spawnBackShot];
+            break;
+        case RIBBON:
+            [self spawnRibbon];
+            break;
+        case GRAVITON:
+            [self spawnGraviton];
+            break;
+        case SPIRALS:
+            [self spawnSpiral];
+            break;
+        case REPULSION:
+            [self spawnRepulsion];
+            break;
+        case SWIRL:
+            [self spawnSwirl];
+            break;
+        case SUCTION:
+            [self spawnSuction];
+            break;
+        case WHIRL:
+            [self spawnWhirl];
+            break;
+        case ROSE:
+            [self spawnRose];
+            break;
+        default:
+            [self spawnNode];
+            break;
+    }
+    [node addNodeList:nodeList];
+
 }
 
 #pragma mark - move gravity

@@ -10,6 +10,7 @@
 #include "RenderView.h"
 #include "Calculator.h"
 #include "Timer.h"
+#include "SmallMenuView.h"
 
 extern const float BUTTON_WIDTH_RATIO;
 
@@ -20,8 +21,11 @@ extern const float BUTTON_WIDTH_RATIO;
     CADisplayLink *renderLink;
     CADisplayLink *calculateLink;
     @private
+    
     UIButton *menuButton;
     UIImage *image;
+    SmallMenuView *smallMenu;
+    
     unsigned char* data;
     NSUInteger len;
     
@@ -30,11 +34,14 @@ extern const float BUTTON_WIDTH_RATIO;
     uint width;
     uint height;
     
+    BOOL smallMenuOpen;
     
+    int numAvailableModes;
     
 }
 
 @property (nonatomic, strong) UIButton *menuButton;
+@property (nonatomic, strong) SmallMenuView *smallMenu;
 
 @property (nonatomic,retain) Calculator *calc;
 

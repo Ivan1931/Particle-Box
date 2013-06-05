@@ -126,12 +126,39 @@
     return numNodes;
 }
 
+-(Vec2*) getNodePositions {
+    Vec2* ret = (Vec2*) malloc(sizeof(Vec2) * numNodes);
+    for (int i = 0 ; i < numNodes; i++){
+        ret[i] = nodes[i].position;
+    }
+    return ret;
+}
+
+-(NodeList) getNodeList {
+    NodeList ret;
+    ret.len = numNodes;
+    ret.nodes = (Node*) malloc(sizeof(Node));
+    for (int i = 0; i < numNodes; i++) {
+        ret.nodes[i] = nodes[i];
+    }
+    return ret;
+}
+
 -(void) iterateColorNodeChangeValue:(Node*)node :(int) iterationLimit {
     if (colorChngGap < iterationLimit) {
         colorChngGap++;
     } else {
         colorChngGap = 0;
         CHANGECOLOR(node->nodeColor, MIN_RGB_VAL);
+    }
+}
+
+-(void) addNodeList:(NodeList)list {
+    //free(nodes);
+    numNodes = list.len;
+    nodes = (Node*) malloc(sizeof(list.len));
+    for (int i = 0; i < list.len; i++) {
+        nodes[i] = list.nodes[i];
     }
 }
 /////////////////////////////////////////////////////////////////////

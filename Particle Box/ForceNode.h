@@ -64,6 +64,8 @@
 -(void) addNode:(Vec2)position;
 -(void) deleteNode:(Vec2)position;
 -(void) moveNode:(Vec2) position;
+-(NodeList) getNodeList;
+-(void) addNodeList:(NodeList)list;
 
 +(float) Q_rsqrt:(float) number;
 

@@ -31,11 +31,13 @@
     BOOL tail;
     BOOL whirls;
     ForceNode *node;
+    int currentNodeType;
 }
 #pragma mark - Properties
 @property (nonatomic) unsigned char *data;
 @property (nonatomic, strong) NSMutableArray *particles;
 @property (nonatomic, strong) ForceNode *node;
+@property int currentNodeType;
 #pragma mark - Methods
 -(void) calculate:(CADisplayLink*)link;
 -(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
@@ -46,12 +48,16 @@
 
 -(void) spawnNode;
 -(void) spawnRose;
--(void) swawnGravity;
--(void) swawnRibbon;
+-(void) spawnGraviton;
+-(void) spawnRibbon;
 -(void) spawnWhirl;
 -(void) spawnSuction;
 -(void) spawnBackShot;
 -(void) spawnSpiral;
 -(void) spawnSwirl;
 -(void) spawnRepulsion;
+
+-(void) spawnExtraInternalNodes:(int) number;
+
+-(void) setForceNode:(int) nodeNumber;
 @end

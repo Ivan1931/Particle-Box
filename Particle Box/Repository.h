@@ -32,12 +32,21 @@ typedef struct{
     int ID;
 }Node;
 
+typedef struct {
+    int len;
+    Vec2* vals;
+}Vec2List;
+
+typedef struct {
+    Node* nodes;
+    int len;
+} NodeList;
 #define RADIAN 0.01745329251
 #define CHANGE_DURATION 200000
 #define MAX_NODES 5
 #define MIN_RGB_VAL 50
 
-static const int NUM_FMODE_TYPES = 6;
+static const int NUM_FMODE_TYPES = 9;
 
 static const int BACK_SHOT = 0;
 static const int GRAVITON = 1;
@@ -45,7 +54,11 @@ static const int SUCTION = 2;
 static const int WHIRL = 3;
 static const int ROSE = 4;
 static const int RIBBON = 5;
+static const int SWIRL = 6;
+static const int SPIRALS = 7;
+static const int REPULSION = 8;
 
-static const int MODE_LIST[NUM_FMODE_TYPES] = {BACK_SHOT, GRAVITON, SUCTION, WHIRL, ROSE, RIBBON};
+static const int MODE_LIST[NUM_FMODE_TYPES] = {BACK_SHOT, GRAVITON, SUCTION, WHIRL, ROSE,
+                                                RIBBON, SWIRL , SPIRALS, REPULSION};
 
 #endif
