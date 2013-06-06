@@ -32,6 +32,7 @@
     BOOL whirls;
     ForceNode *node;
     int currentNodeType;
+    unsigned char** blank;
 }
 #pragma mark - Properties
 @property (assign, nonatomic) unsigned char *data;
@@ -45,6 +46,8 @@
 -(void) moveGravity:(CGPoint)xy;
 
 +(float) randFloatBetween:(float)low and:(float)high;
+
+-(void) clearRaster;
 
 -(void) spawnNode;
 -(void) spawnRose;

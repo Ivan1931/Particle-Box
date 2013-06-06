@@ -31,28 +31,24 @@
         [btnStepUpMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
         [self addSubview:btnStepUpMode];
         
-        [self addUIButton:btnScreenShot : CGRectMake(totalSpacing * 1.f, 0.f
-                                                     , size, size):@CAMMERA_BTN_IMG_STR];
+        btnScreenShot = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing, 0.f, size, size)];
+        [btnScreenShot setImage:[UIImage imageNamed:@CAMMERA_BTN_IMG_STR ] forState:UIControlStateNormal];
+        [self addSubview:btnScreenShot];
         
-        [self addUIButton:btnOpenOptions : CGRectMake(totalSpacing * 2.f, 0.f
-                                                      , size, size):@"Untitled.png"];
+        btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(totalSpacing * 2.f, 0.f, size, size)];
+        [btnOpenOptions setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
+        [self addSubview:btnOpenOptions];
         
-        [self addUIButton:btnPurchase : CGRectMake(totalSpacing * 3.f, 0.f
-                                                   , size, size):@"Untitled.png"];
+        btnPurchase = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing * 3.f, 0.f, size, size)];
+        [btnPurchase setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
+        [self addSubview:btnPurchase];
         
-        [self addUIButton:btnHelp : CGRectMake(totalSpacing * 4.f, 0.f
-                                               , size, size):@"Untitled.png"];
-        
-                
+        btnHelp = [[UIButton alloc] initWithFrame: CGRectMake(totalSpacing * 4.f, 0.f, size, size)];
+        [btnHelp setBackgroundImage:[UIImage imageNamed:@"Untitled.png" ] forState:UIControlStateNormal];
+        [self addSubview:btnHelp];
         
     }
     return self;
-}
-
--(void) addUIButton:(UIButton *)button :(CGRect)frame :(NSString*) imagePath{
-    button = [[UIButton alloc] initWithFrame:frame];
-    [button setBackgroundImage:[UIImage imageNamed:imagePath ] forState:UIControlStateNormal];
-    [self addSubview:button];
 }
 
 /*

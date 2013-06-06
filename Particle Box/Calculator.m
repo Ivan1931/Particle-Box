@@ -41,7 +41,6 @@
 
 -(void) calculate:(CADisplayLink *)link {
     //NSLog(@"Calculating");
-    
     [self clearRaster];
     for (int p = 0; p < particles.count; p++) {
         Particle* local = [particles objectAtIndex:p];
@@ -84,8 +83,11 @@
                     data[maxBytes + 2] -= FADE_RATE;
         }
     } else {
-        for (int i = 0; i < maxBytes; i++) {
+        for (int i = 0; i < maxBytes; i+=4) {
             data[i] = 0;
+            data[i + 1] = 0;
+            data [i + 2] = 0;
+            data[i + 3] = 0;
         }
     }
     //NSLog(@"Max Bytes %d",maxBytes);

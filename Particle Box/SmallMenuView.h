@@ -28,6 +28,4 @@
 
 -(id) initWithFrame:(CGRect)frame forceMode:(int) mode;
 
--(int) getSelectedMode;
-
 @end

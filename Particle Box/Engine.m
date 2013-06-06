@@ -22,6 +22,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 @synthesize calc;
 @synthesize renderLink;
 @synthesize calculateLink;
+
 int startX = 0;
 int startY = 0;
 
@@ -69,7 +70,10 @@ int startY = 0;
 }
 
 -(void) setTargetsForSmallMenuBtns {
-    [smallMenu.btnStepUpMode addTarget:self action:@selector(increaseMode) forControlEvents:UIControlEventTouchUpInside];
+    //
+    [smallMenu.btnStepUpMode addTarget:self action:@selector(cycleThroughFNodes:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [smallMenu.btnScreenShot addTarget:self action:@selector(saveImage:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void) clearRaster:(CADisplayLink*) link  {
@@ -102,7 +106,6 @@ int startY = 0;
                                                  bytesPerRow, colorSpace,
                                                  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
-    
     //CGColorSpaceRelease(colorSpace);
     if (context != nil) {
         CGImageRef imageRef = CGBitmapContextCreateImage(context);
@@ -110,12 +113,13 @@ int startY = 0;
         CGImageRelease(imageRef);
     }
     CGContextRelease(context);
-    //free(data);
+    free(data);
     
     
 }
 
 -(void) render:(CADisplayLink*) link  {
+    //[calc clearRaster];
     //NSLog(@"Render");
     @try {
         [self updateImage];
@@ -165,16 +169,32 @@ int startY = 0;
     [calc moveGravity:xy];
 }
 
--(void) increaseMode {
+-(IBAction) saveImage:(id) sender {
+    NSLog(@"Image saved");
+    [self pause];
+    UIImageWriteToSavedPhotosAlbum([UIImage imageWithCGImage:image.CGImage], nil, nil, nil);
+    [self resume];
+}
+
+-(IBAction)cycleThroughFNodes:(id)sender  {
     NSLog(@"Mode increased");
-    [calculateLink setPaused:YES];
-    [renderLink setPaused:YES];
+    [self pause];
     int tmp = [calc currentNodeType];
     tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
     [calc setForceNode:tmp];
+    [self resume];
+}
+
+-(void) pause {
+    [calculateLink setPaused:YES];
+    [renderLink setPaused:YES];
+}
+
+-(void) resume {
     [calculateLink setPaused:NO];
     [renderLink setPaused:NO];
 }
+
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"Touch recieved");
 }
