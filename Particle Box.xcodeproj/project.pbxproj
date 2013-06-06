@@ -35,6 +35,12 @@
 		10291D0E17033CEF00A9D2AB /* ForceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D0D17033CEF00A9D2AB /* ForceNode.m */; };
 		10291D111703711900A9D2AB /* Graviton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10291D101703711900A9D2AB /* Graviton.m */; };
 		10413D90175B3E8C00AE79A4 /* Spirals.m in Sources */ = {isa = PBXBuildFile; fileRef = 10413D8F175B3E8B00AE79A4 /* Spirals.m */; };
+		104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104CD3751760FE2900E0CC0E /* OpenGLES.framework */; };
+		104CD3791760FEE200E0CC0E /* FragmentShader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 104CD3771760FEE200E0CC0E /* FragmentShader.fsh */; };
+		104CD37A1760FEE200E0CC0E /* VertexShader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 104CD3781760FEE200E0CC0E /* VertexShader.vsh */; };
+		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
+		104CD37E1760FF1A00E0CC0E /* FragmentShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 104CD3771760FEE200E0CC0E /* FragmentShader.fsh */; };
+		104CD37F1760FF1A00E0CC0E /* VertexShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 104CD3781760FEE200E0CC0E /* VertexShader.vsh */; };
 		108EA0B217589AAD001951B9 /* Suction.m in Sources */ = {isa = PBXBuildFile; fileRef = 108EA0B117589AAD001951B9 /* Suction.m */; };
 		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
@@ -97,6 +103,11 @@
 		10291D101703711900A9D2AB /* Graviton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graviton.m; sourceTree = "<group>"; };
 		10413D8E175B3E8B00AE79A4 /* Spirals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spirals.h; sourceTree = "<group>"; };
 		10413D8F175B3E8B00AE79A4 /* Spirals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spirals.m; sourceTree = "<group>"; };
+		104CD3751760FE2900E0CC0E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		104CD3771760FEE200E0CC0E /* FragmentShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = FragmentShader.fsh; path = ../../SimpleLinesOpenGL/SimpleLinesOpenGL/FragmentShader.fsh; sourceTree = "<group>"; };
+		104CD3781760FEE200E0CC0E /* VertexShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = VertexShader.vsh; path = ../../SimpleLinesOpenGL/SimpleLinesOpenGL/VertexShader.vsh; sourceTree = "<group>"; };
+		104CD37B1760FEF200E0CC0E /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLView.h; path = ../../SimpleLinesOpenGL/GLView.h; sourceTree = "<group>"; };
+		104CD37C1760FEF200E0CC0E /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLView.m; path = ../../SimpleLinesOpenGL/GLView.m; sourceTree = "<group>"; };
 		108EA0B017589AAD001951B9 /* Suction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suction.h; sourceTree = "<group>"; };
 		108EA0B117589AAD001951B9 /* Suction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suction.m; sourceTree = "<group>"; };
 		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
@@ -114,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */,
 				10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */,
 				1005261617009CE600BFAAA6 /* UIKit.framework in Frameworks */,
 				1005261817009CE600BFAAA6 /* Foundation.framework in Frameworks */,
@@ -156,6 +168,7 @@
 		1005261417009CE600BFAAA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				104CD3751760FE2900E0CC0E /* OpenGLES.framework */,
 				10291D0617023CF100A9D2AB /* QuartzCore.framework */,
 				1005261517009CE600BFAAA6 /* UIKit.framework */,
 				1005261717009CE600BFAAA6 /* Foundation.framework */,
@@ -170,6 +183,8 @@
 			children = (
 				1005262417009CE600BFAAA6 /* AppDelegate.h */,
 				1005262517009CE600BFAAA6 /* AppDelegate.m */,
+				104CD37B1760FEF200E0CC0E /* GLView.h */,
+				104CD37C1760FEF200E0CC0E /* GLView.m */,
 				1005264D1700A69000BFAAA6 /* Engine.h */,
 				1005264E1700A69000BFAAA6 /* Engine.m */,
 				1023E151175E481F00963586 /* SmallMenuView.h */,
@@ -201,9 +216,6 @@
 				10291D0B1703396800A9D2AB /* Repository.h */,
 				10C8AF4A17021EC700848AB8 /* Timer.h */,
 				10C8AF4B17021EC700848AB8 /* Timer.m */,
-				1023E156175E835C00963586 /* cammera.png */,
-				1023E154175E7BF000963586 /* plus.png */,
-				1023E14F175E46A500963586 /* Untitled.png */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
 			path = "Particle Box";
@@ -212,6 +224,11 @@
 		1005261C17009CE600BFAAA6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1023E156175E835C00963586 /* cammera.png */,
+				1023E154175E7BF000963586 /* plus.png */,
+				1023E14F175E46A500963586 /* Untitled.png */,
+				104CD3771760FEE200E0CC0E /* FragmentShader.fsh */,
+				104CD3781760FEE200E0CC0E /* VertexShader.vsh */,
 				1005261D17009CE600BFAAA6 /* Particle Box-Info.plist */,
 				1005261E17009CE600BFAAA6 /* InfoPlist.strings */,
 				1005262117009CE600BFAAA6 /* main.m */,
@@ -313,6 +330,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104CD37E1760FF1A00E0CC0E /* FragmentShader.fsh in Resources */,
+				104CD37F1760FF1A00E0CC0E /* VertexShader.vsh in Resources */,
 				1005262017009CE600BFAAA6 /* InfoPlist.strings in Resources */,
 				1005262817009CE600BFAAA6 /* Default.png in Resources */,
 				1005262A17009CE600BFAAA6 /* Default@2x.png in Resources */,
@@ -371,6 +390,9 @@
 				1023E14B175B820100963586 /* Swirl.m in Sources */,
 				1023E14E175BC13500963586 /* Repulsion.m in Sources */,
 				1023E153175E482000963586 /* SmallMenuView.m in Sources */,
+				104CD3791760FEE200E0CC0E /* FragmentShader.fsh in Sources */,
+				104CD37A1760FEE200E0CC0E /* VertexShader.vsh in Sources */,
+				104CD37D1760FEF200E0CC0E /* GLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

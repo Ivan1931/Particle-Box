@@ -22,12 +22,13 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 @synthesize calc;
 @synthesize renderLink;
 @synthesize calculateLink;
+@synthesize glview;
 
 int startX = 0;
 int startY = 0;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
-    self = [super initWithFrame:size];
+    self = [super init];
     
     if (self)
     {        //
@@ -35,6 +36,7 @@ int startY = 0;
         height = size.size.height;
         colorSpace = CGColorSpaceCreateDeviceRGB();
         //Add the small menu button
+        self.glview = [[GLView alloc] initWithFrame:size];
         
         float _size = size.size.width * BUTTON_WIDTH_RATIO;
         CGRect buttonFrame = CGRectMake(0.f,
@@ -46,10 +48,10 @@ int startY = 0;
         [menuButton setOpaque:YES];
         [menuButton addTarget:self action:@selector(menuButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         
-        [self addSubview:menuButton];
+        [self.glview addSubview:menuButton];
         //Add the small menu and make it invisible for now
         smallMenu = [[SmallMenuView alloc] initWithFrame:CGRectMake(_size, height - 2 * _size, width, _size) forceMode:0];
-        [self addSubview:smallMenu];
+        [self.glview addSubview:smallMenu];
         [smallMenu setHidden:YES];
         smallMenuOpen = NO;
         
@@ -57,7 +59,6 @@ int startY = 0;
         [self setTargetsForSmallMenuBtns];
         
         //////////
-        image = [self makeCalc:self.bounds];
         calculateLink = [CADisplayLink displayLinkWithTarget:calc selector:@selector(calculate:)];
         renderLink  =[CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
         [calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -75,90 +76,9 @@ int startY = 0;
     
     [smallMenu.btnScreenShot addTarget:self action:@selector(saveImage:) forControlEvents:UIControlEventTouchUpInside];
 }
-
--(void) clearRaster:(CADisplayLink*) link  {
-    //NSLog(@"Clear Raster");
-    
-    size_t bytesPerRow      = (width * BITSPERCOMPONENT * BYTESPERPIXEL + 7) / 8;
-    for (int y = startY ; y < height/2 + startY; y++)
-    {
-        for (int x = startX; x < width /2 + startX; x++)
-        {
-            int byteIndex = (bytesPerRow * y) + x * BYTESPERPIXEL;
-            data[byteIndex] = 255;
-            data[byteIndex + 1] = 255;
-            data[byteIndex + 2] = 255;
-            
-        }
-    }
-    if (startX >= width / 2) {
-        startX = 0;
-    } else startX++;
-    if (startY >= height / 2) {
-        startY = 0;
-    } else startY++;
-}
-
--(void) updateImage{
-    size_t bytesPerRow      = (width * BITSPERCOMPONENT * BYTESPERPIXEL + 7) / 8;
-    CGContextRef context = CGBitmapContextCreate(data, width, height,
-                                                 BITSPERCOMPONENT,
-                                                 bytesPerRow, colorSpace,
-                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    
-    //CGColorSpaceRelease(colorSpace);
-    if (context != nil) {
-        CGImageRef imageRef = CGBitmapContextCreateImage(context);
-        image = [UIImage imageWithCGImage:imageRef];
-        CGImageRelease(imageRef);
-    }
-    CGContextRelease(context);
-    free(data);
-    
-    
-}
-
 -(void) render:(CADisplayLink*) link  {
-    //[calc clearRaster];
-    //NSLog(@"Render");
-    @try {
-        [self updateImage];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Exception");
-    }
-    [self drawImage:image];
-    
 }
 
-- (UIImage*)makeCalc: (CGRect)rect
-{
-    size_t bitsPerComponent = 8;
-    size_t bytesPerPixel    = 4;
-    size_t bytesPerRow      = (width * bitsPerComponent * bytesPerPixel + 7) / 8;
-    size_t dataSize         = bytesPerRow * height;
-    
-    data = malloc(dataSize);
-    memset(data, 0, dataSize);
-    
-    CGContextRef context = CGBitmapContextCreate(data, width, height,
-                                                 bitsPerComponent,
-                                                 bytesPerRow, colorSpace,
-                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    
-    calc = [[Calculator alloc] initWithData:data andDimesions:(Vec2){rect.size.width, rect.size.height}];
-    CGColorSpaceRelease(colorSpace);
-    CGImageRef imageRef = CGBitmapContextCreateImage(context);
-    UIImage *result = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    CGContextRelease(context);
-    //free(data);
-    return result;
-}
-
--(void) drawImage:(UIImage*)pimage{
-    self.layer.contents = (id)pimage.CGImage;
-}
 
 -(void)menuButtonSelected {
     [smallMenu setHidden:smallMenuOpen];
@@ -172,7 +92,6 @@ int startY = 0;
 -(IBAction) saveImage:(id) sender {
     NSLog(@"Image saved");
     [self pause];
-    UIImageWriteToSavedPhotosAlbum([UIImage imageWithCGImage:image.CGImage], nil, nil, nil);
     [self resume];
 }
 

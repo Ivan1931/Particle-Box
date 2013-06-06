@@ -11,4 +11,9 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+    #import <QuartzCore/QuartzCore.h>
+    #import <OpenGLES/EAGL.h>
+    #import <OpenGLES/EAGLDrawable.h>
+    #import <OpenGLES/ES2/gl.h>
 #endif

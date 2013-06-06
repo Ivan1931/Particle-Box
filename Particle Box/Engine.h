@@ -11,10 +11,11 @@
 #include "Calculator.h"
 #include "Timer.h"
 #include "SmallMenuView.h"
+#include "GLView.h"
 
 extern const float BUTTON_WIDTH_RATIO;
 
-@interface Engine : UIView
+@interface Engine : UIViewController
 {
     @public
     Calculator *calc;
@@ -23,10 +24,10 @@ extern const float BUTTON_WIDTH_RATIO;
     @private
     
     UIButton *menuButton;
-    UIImage *image;
+    GLView *glview;
     SmallMenuView *smallMenu;
     
-    unsigned char* data;
+    
     NSUInteger len;
     
     CGColorSpaceRef colorSpace;
@@ -42,6 +43,7 @@ extern const float BUTTON_WIDTH_RATIO;
 
 @property (nonatomic, strong) UIButton *menuButton;
 @property (nonatomic, strong) SmallMenuView *smallMenu;
+@property (nonatomic, strong) GLView *glview;
 
 @property (nonatomic,retain) Calculator *calc;
 
@@ -49,9 +51,7 @@ extern const float BUTTON_WIDTH_RATIO;
 @property (nonatomic,retain) CADisplayLink *calculateLink;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color;
--(void) updateImage;
 -(void) render:(CADisplayLink*) link ;
--(void) clearRaster:(CADisplayLink*) link;
 -(void) moveForces:(CGPoint)xy;
 
 -(void) menuButtonSelected;

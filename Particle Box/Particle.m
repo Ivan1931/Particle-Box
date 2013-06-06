@@ -12,13 +12,15 @@
 #define VELOCITY_CAPXN -10
 #define VELOCITY_CAPYN -20
 @implementation Particle
+
 @synthesize position;
 @synthesize color;
 @synthesize velocity;
 @synthesize previousPosition;
 @synthesize nodeID;
+@dynamic dataIndex;
 
--(id) initWith:(Vec2)pposition andColor:(Color)pcolor {
+-(id) initWith:(Vec2)pposition Color:(Color)pcolor atDataIndex:(int) index{
     self = [super init];
     if(self){
         position = pposition;
@@ -27,6 +29,7 @@
         velocity.x = 0;
         velocity.x = 0;
         nodeID = 0;
+        dataIndex = index;
     }
     return self;
 }
@@ -63,6 +66,10 @@
 
 -(Vec2) getFuturePosition {
     return VEC2(position.x + velocity.x, position.y + velocity.y);
+}
+
+-(int) getDataIndex {
+    return dataIndex;
 }
 
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {

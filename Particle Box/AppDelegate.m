@@ -23,13 +23,7 @@
     // Override point for customization after application launch
     
     engine = [[Engine alloc] initWithSize:screenSize andColor:[UIColor blueColor]];
-    [self.window addSubview:engine];
-    
-    //[self.window addSubview:engine.menuButton];
-    
-    controller = [[UIViewController alloc] init];
-    [controller setView:engine];
-    self.window.rootViewController = controller;
+    self.window.rootViewController = engine;
     
     [self.window makeKeyAndVisible];
     return YES;

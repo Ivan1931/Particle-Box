@@ -22,7 +22,7 @@
 @interface Calculator : NSObject
 {
     @private
-    unsigned char* data;
+    GLfloat* data;
     NSMutableArray *particles;
     int frameNumber;
     int bytesPerRow;
@@ -35,19 +35,17 @@
     unsigned char** blank;
 }
 #pragma mark - Properties
-@property (assign, nonatomic) unsigned char *data;
+@property (assign, nonatomic) GLfloat *data;
 @property (nonatomic, strong) NSMutableArray *particles;
 @property (nonatomic, strong) ForceNode *node;
 @property int currentNodeType;
 #pragma mark - Methods
 -(void) calculate:(CADisplayLink*)link;
--(id) initWithData:(unsigned char*)pdata andDimesions:(Vec2)xy;
+-(id) initWithData:(GLfloat*)pdata andDimesions:(Vec2)xy;
 -(void) spawnParticles;
 -(void) moveGravity:(CGPoint)xy;
 
 +(float) randFloatBetween:(float)low and:(float)high;
-
--(void) clearRaster;
 
 -(void) spawnNode;
 -(void) spawnRose;

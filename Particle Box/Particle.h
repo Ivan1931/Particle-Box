@@ -15,6 +15,7 @@
     Vec2 velocity;
     Color color;
     int nodeID;
+    int dataIndex;
 
 }
 @property (nonatomic) Vec2 position;
@@ -22,10 +23,12 @@
 @property (nonatomic) Color color;
 @property (nonatomic) Vec2 previousPosition;
 @property (nonatomic) int nodeID;
--(id) initWith:(Vec2)pposition andColor:(Color)pcolor;
--(void) addAcceleration:(Vec2) acceleration; //Adds acceletation values to the velocity
+@property (nonatomic) int dataIndex;
+-(id) initWith:(Vec2)pposition Color:(Color)pcolor atDataIndex:(int)index;
+-(void) addAcceleration:(Vec2) acceleration;  //Adds acceletation values to the velocity
 -(void) move; //Adds current velocity values to position
 -(void) resetVelocity;//Sets velocity to zero
 -(void) bringToCurrent; //Sets the previous position to the current position
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner;
+-(int) getDataIndex;
 @end
