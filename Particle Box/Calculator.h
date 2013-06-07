@@ -27,6 +27,7 @@
     int frameNumber;
     int bytesPerRow;
     Vec2 dims;
+    Vec2 screenCenter;
     BOOL reset;
     BOOL tail;
     BOOL whirls;

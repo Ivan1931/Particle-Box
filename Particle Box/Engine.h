@@ -23,11 +23,9 @@ extern const float BUTTON_WIDTH_RATIO;
     CADisplayLink *calculateLink;
     @private
     
-    UIButton *menuButton;
-    GLView *glview;
+    UIButton *menuButton;    
     SmallMenuView *smallMenu;
-    
-    
+
     NSUInteger len;
     
     CGColorSpaceRef colorSpace;
@@ -38,6 +36,16 @@ extern const float BUTTON_WIDTH_RATIO;
     BOOL smallMenuOpen;
     
     int numAvailableModes;
+    
+    /////OpenGL stuff
+    GLView *glview;
+    EAGLContext *context;
+    GLuint renderBuffer;
+    GLuint frameBuffer;
+    GLuint program;
+    GLuint aPosition;
+    GLfloat* particleData;
+    //////////////////
     
 }
 

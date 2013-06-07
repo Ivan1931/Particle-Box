@@ -28,13 +28,14 @@
         tail = false;
         whirls = false;
         currentNodeType = 0;
+        screenCenter = VEC2(dims.x / 2.f, dims.y / 2.f);
         [self spawnParticles];
     }
     return self;
 }
 
 -(void) calculate:(CADisplayLink *)link {
-    //NSLog(@"Calculating");
+    NSLog(@"Calculating");
     for (int p = 0; p < particles.count; p++) {
         Particle* local = [particles objectAtIndex:p];
         if (node != nil)
@@ -65,7 +66,14 @@
 
 #pragma mark - render
 -(void) renderParticle:(Particle*)particle{
-    
+    float normCurrX = (particle.position.x - screenCenter.x) / screenCenter.x;
+    float normCurrY = -(particle.position.y - screenCenter.y) / screenCenter.y;
+    float normPrevX = (particle.previousPosition.x - screenCenter.x) / screenCenter.x;
+    float normPrevY = -(particle.previousPosition.y - screenCenter.y) / screenCenter.y;
+    data[particle.getDataIndex] = normCurrX;
+    data[particle.getDataIndex + 1] = normCurrY;
+    data[particle.getDataIndex + 2] = normPrevX;
+    data[particle.getDataIndex + 3] = normPrevY;
 }
 
 
@@ -90,7 +98,7 @@ void swap(int *a,int *b){
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    //[self spawnRose];
+    [self spawnRose];
     //[self spawnGraviton];
     //[self spawnWhirl];
     //[self spawnRibbon];
@@ -98,7 +106,7 @@ void swap(int *a,int *b){
     //[self spawnNode];
     //[self createSuction:5];
     //[self spawnSpiral];
-    [self spawnSwirl];
+    //[self spawnSwirl];
     //[self spawnRepulsion];
 }
 
@@ -111,7 +119,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnGraviton {
-    node = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
+    node = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
 }
 
 -(void) spawnWhirl {

@@ -14,16 +14,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
+    /*if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
         // RETINA DISPLAY
         screenSize.size.width = screenSize.size.width * [[UIScreen mainScreen] scale];
         screenSize.size.height = screenSize.size.height * [[UIScreen mainScreen] scale];
-    }
+    }*/
     self.window = [[UIWindow alloc] initWithFrame:screenSize];
     // Override point for customization after application launch
     
     engine = [[Engine alloc] initWithSize:screenSize andColor:[UIColor blueColor]];
     self.window.rootViewController = engine;
+    
+    engine.renderLink  =[CADisplayLink displayLinkWithTarget:engine selector:@selector(render:)];
+    //engine.calculateLink = [CADisplayLink displayLinkWithTarget:engine.calc selector:@selector(calculate:)];
+    
+    [engine.renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    //[engine.calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    
+
     
     [self.window makeKeyAndVisible];
     return YES;
