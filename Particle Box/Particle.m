@@ -54,10 +54,10 @@
     velocity.y = 0;
 }
 
--(void) move {
+-(void) moveWithVelocityMultiplyer:(float)velMult {
     previousPosition = position;
-    position.x += velocity.x;
-    position.y += velocity.y;
+    position.x += velocity.x * velMult;
+    position.y += velocity.y * velMult;
 }
 
 -(void) bringToCurrent {

@@ -56,8 +56,10 @@
 -(void) changeParticleNode:(Particle*) particle;
 -(void) particleColorToNode:(Particle*)particle;
 -(void) iterateColorNodeChangeValue:(Node*) node :(int)iterationLimit;
+-(void) validateParticle:(Particle *)particle;
 
 -(void) respawnParticleInRandomBox:(Particle*) particle;
+
 
 -(void) iterateNodeChange:(Particle *) particle :(int) iterationLimit;
 -(int) getNumberNodes;

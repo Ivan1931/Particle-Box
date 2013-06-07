@@ -26,6 +26,7 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
+    [super influenceParticle:particle];
     [particle resetVelocity];
     if(arc4random() % SHORT_CHANGE == 0)
         CHANGECOLOR(changeColor, 50);

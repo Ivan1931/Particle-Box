@@ -25,6 +25,7 @@ const int NUM_ITERATIONS_RESPBOX = 5000;
 }
 
 -(void) influenceParticle:(Particle *)particle {
+    [super influenceParticle:particle];
     int count = 0;
     int nodeIndex = particle.nodeID;
     while (count < MAX_INTERACTION) {

@@ -47,12 +47,22 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    //NSLog(@"Here");
+    [self validateParticle:particle];
+}
+
+-(void) brownianEffect:(Particle *) particle {
     [particle addAcceleration:VEC2(0.1f * (RANFLOAT - RANFLOAT), 0.1f * (RANFLOAT - RANFLOAT))];
 }
 
 -(void) update{
     
+}
+
+//This method is intended to apply all particle color effects and particle modifications
+-(void) validateParticle:(Particle *)particle {
+    if (particle.nodeID >= numNodes) {
+        particle.nodeID = arc4random() % numNodes;
+    }
 }
 
 -(void) respawnParticleInRandomBox:(Particle*) particle {

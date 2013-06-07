@@ -35,7 +35,7 @@ const int LOW_COLOR_THRESH = 50;
 }
 
 -(void) suctionBetween:(Node) node :(Node) node0 withParticle:(Particle *) particle {
-    
+    [super influenceParticle:particle];
     Vec2 midpnt = midPnts[node.ID];
     Vec2 d = computeXYDiff(particle.position, midpnt);
     

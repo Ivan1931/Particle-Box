@@ -26,7 +26,7 @@
 @property (nonatomic) int dataIndex;
 -(id) initWith:(Vec2)pposition Color:(Color)pcolor atDataIndex:(int)index;
 -(void) addAcceleration:(Vec2) acceleration;  //Adds acceletation values to the velocity
--(void) move; //Adds current velocity values to position
+-(void) moveWithVelocityMultiplyer:(float) velMult; //Adds current velocity values to position
 -(void) resetVelocity;//Sets velocity to zero
 -(void) bringToCurrent; //Sets the previous position to the current position
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner;

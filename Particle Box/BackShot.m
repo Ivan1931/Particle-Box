@@ -16,6 +16,7 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
 @implementation BackShot
 
 -(void) influenceParticle:(Particle *)particle {
+    [super influenceParticle:particle];
     for (int i = 0 ; i < numNodes; i++) {
         if (!isEqualVectors(nodes[i].position,nodes[i].prevPos)) {
             [self fireToLast:particle :nodes[i]];

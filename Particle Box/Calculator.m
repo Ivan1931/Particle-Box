@@ -16,6 +16,7 @@
 @synthesize data;
 @synthesize particles;
 @synthesize node;
+@synthesize numParticles;
 
 -(id) initWithData:(GLfloat *)pdata andDimesions:(Vec2)xy {
     self = [super init];
@@ -30,17 +31,18 @@
         currentNodeType = 0;
         screenCenter = VEC2(dims.x / 2.f, dims.y / 2.f);
         [self spawnParticles];
+        numParticles = MAX_PARTICLES;
     }
     return self;
 }
 
 -(void) calculate:(CADisplayLink *)link {
     NSLog(@"Calculating");
-    for (int p = 0; p < particles.count; p++) {
+    for (int p = 0; p < numParticles; p++) {
         Particle* local = [particles objectAtIndex:p];
         if (node != nil)
             [node influenceParticle:local];
-        [local move];
+        [local moveWithVelocityMultiplyer:2.f];
         [self renderParticle:local];
         if (reset){
             if(local.position.x <= 0) { 
@@ -84,7 +86,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnParticles {
-    for (int p = 0; p < 3000; p++){
+    for (int p = 0; p < MAX_PARTICLES; p++){
         
         Vec2 pos = {
             .x = [Calculator randFloatBetween:0.f and:dims.x],
@@ -94,7 +96,7 @@ void swap(int *a,int *b){
         Color col = {
           w,w,w
         };
-        Particle *part = [[Particle alloc] initWith:pos Color:col atDataIndex:p * 4];
+        Particle *part = [[Particle alloc] initWith:pos Color:col atDataIndex:p * POINTS_PER_PARTICLE];
         [particles addObject:part];
     }
     NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);

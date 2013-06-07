@@ -14,6 +14,7 @@
 @implementation Ribbon
 
 -(void) influenceParticle:(Particle *)particle {
+    [super influenceParticle:particle];
     int random = arc4random();
     if (![particle outOfBounds
          :VEC2(nodes[particle.nodeID].position.x - CATCH_DISTANCE, nodes[particle.nodeID].position.y - CATCH_DISTANCE)

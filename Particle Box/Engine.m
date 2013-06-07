@@ -15,6 +15,7 @@ typedef unsigned char byte;
 
 const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
+
 @implementation Engine
 
 @synthesize smallMenu;
@@ -23,9 +24,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 @synthesize renderLink;
 @synthesize calculateLink;
 @synthesize glview;
-
-int startX = 0;
-int startY = 0;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
     self = [super init];
@@ -108,7 +106,7 @@ int startY = 0;
     glUseProgram(program);
     
     
-    particleData = (GLfloat*)malloc(sizeof(GLfloat) * 12000);
+    particleData = (GLfloat*)malloc(sizeof(GLfloat) * MAX_PARTICLES * POINTS_PER_PARTICLE);
         
     const char *aPositionCString = [@"a_position" cStringUsingEncoding:NSUTF8StringEncoding];
     aPosition = glGetAttribLocation(program, aPositionCString);
@@ -120,7 +118,7 @@ int startY = 0;
     glEnable(GL_BLEND);
     //glEnable(GL_LINE_SMOOTH);
     glLineWidth(1);
-    glDrawArrays(GL_LINES, 0, 3000);
+    glDrawArrays(GL_LINES, 0, MAX_PARTICLES);
     
     [context presentRenderbuffer:GL_RENDERBUFFER];
 	// Do any additional setup after loading the view.
@@ -136,7 +134,7 @@ int startY = 0;
 -(void) render:(CADisplayLink*) link  {
     NSLog(@"Rendering");
     [calc calculate:link];
-    glDrawArrays(GL_LINES, 0, 3000);
+    glDrawArrays(GL_LINES, 0, [calc numParticles]);
     
     [context presentRenderbuffer:GL_RENDERBUFFER];
     glClearColor(0.f, 0.f, 0.f, 1.f);

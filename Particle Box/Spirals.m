@@ -27,7 +27,7 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    
+    [super influenceParticle:particle];
     if (colorChangeCount< COLOR_CHNG_FREQ) {
         colorChangeCount ++;
     } else {

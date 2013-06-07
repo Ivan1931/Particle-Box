@@ -34,8 +34,10 @@
     ForceNode *node;
     int currentNodeType;
     unsigned char** blank;
+    uint numParticles;
 }
 #pragma mark - Properties
+@property uint numParticles;
 @property (assign, nonatomic) GLfloat *data;
 @property (nonatomic, strong) NSMutableArray *particles;
 @property (nonatomic, strong) ForceNode *node;

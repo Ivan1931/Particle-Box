@@ -15,6 +15,7 @@ const int NODE_COL_CHANGE_FREQ = 1000000;
 @implementation Repulsion
 
 -(void) influenceParticle:(Particle *)particle {
+    [super influenceParticle:particle];
     if ([particle outOfBounds:nothing :dimesions ]) {
         [particle setPosition:VEC2(RAND_BETWEEN(0, (int)dimesions.x), RAND_BETWEEN(0, (int)dimesions.y))];
         [particle bringToCurrent];
@@ -34,10 +35,12 @@ const int NODE_COL_CHANGE_FREQ = 1000000;
         if (distance < RING_RADIUS) {
             a = VEC2(-d.x / distance * suction, -d.y / distance * suction);
             [particle setColor:node.nodeColor];
+            [particle setVelocity:a];
         } else {
             a = VEC2(d.x / distance * suction, d.y / distance * suction);
+            [particle addAcceleration:a];
         }
-        [particle addAcceleration:a];
+        
     }
 }
 
