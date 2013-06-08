@@ -14,11 +14,13 @@
 #define NEGATIVE_MAGIC_PUSH -500
 #define MAGIC_INCREMENTOR 1.00001
 
+extern const uint RESPAWN_BOX_CHANGE;
+
 @interface Whirl : ForceNode
 {
     @private
     BOOL clockwise; //True if clockwise, false if anti-clockwise
-    
+    uint count;
 }
 
 -(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy Clockwise:(BOOL) isClockwise

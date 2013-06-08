@@ -50,7 +50,7 @@
 
 -(id) initWithStrength:(float) pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims;
 
--(void) influenceParticle:(Particle*)particle;
+-(BOOL) influenceParticle:(Particle*)particle;
 -(void) update;
 
 -(void) changeParticleNode:(Particle*) particle;
@@ -60,7 +60,6 @@
 
 -(void) respawnParticleInRandomBox:(Particle*) particle;
 
-
 -(void) iterateNodeChange:(Particle *) particle :(int) iterationLimit;
 -(int) getNumberNodes;
 -(void) addNode:(Vec2)position;
@@ -68,6 +67,7 @@
 -(void) moveNode:(Vec2) position;
 -(NodeList) getNodeList;
 -(void) addNodeList:(NodeList)list;
+-(void) deleteNodes;
 
 +(float) Q_rsqrt:(float) number;
 

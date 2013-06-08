@@ -16,7 +16,6 @@
     Color color;
     int nodeID;
     int dataIndex;
-
 }
 @property (nonatomic) Vec2 position;
 @property (nonatomic) Vec2 velocity;

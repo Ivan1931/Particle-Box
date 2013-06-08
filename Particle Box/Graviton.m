@@ -10,7 +10,7 @@
 
 @implementation Graviton
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
+    if (![super influenceParticle:particle]) return;
     int random = arc4random();
     for (int i = 0; i < numNodes; i++) {
         [self applyGravity:particle withNode:nodes[i]];

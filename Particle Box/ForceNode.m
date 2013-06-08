@@ -29,11 +29,11 @@
         
         changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
         
-        numNodes = 1;
+        /*numNodes = 1;
         nodes = malloc(sizeof(Node));
         nodes[0].position = xy;
         nodes[0].ID =  0;
-        nodes[0].prevPos = position;
+        nodes[0].prevPos = position;*/
         
         dimesions = pdims;
         
@@ -46,8 +46,10 @@
     return self;
 }
 
--(void) influenceParticle:(Particle *)particle {
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (numNodes == 0) return NO;
     [self validateParticle:particle];
+    return YES;
 }
 
 -(void) brownianEffect:(Particle *) particle {
@@ -60,8 +62,10 @@
 
 //This method is intended to apply all particle color effects and particle modifications
 -(void) validateParticle:(Particle *)particle {
-    if (particle.nodeID >= numNodes) {
-        particle.nodeID = arc4random() % numNodes;
+    if (numNodes > 0) {
+        if (particle.nodeID >= numNodes) {
+            particle.nodeID = arc4random() % numNodes;
+        }
     }
 }
 
@@ -93,24 +97,30 @@
 
 -(void) moveNode:(Vec2)pposition {
     int closestNode = [self getIndexToClosestNode:pposition];
-    NSLog(@"Node %d moved",closestNode);
+   // NSLog(@"Node %d moved",closestNode);
     nodes[closestNode].prevPos = nodes[closestNode].position;
     nodes[closestNode].position = pposition;
     
 }
 
+
 -(void) deleteNode:(Vec2)pposition {
-    int closest = [self getIndexToClosestNode:pposition];
-    for (int i = closest; i < numNodes - 1; i++) {
+    [self deleteNodeAtIndex:[self getIndexToClosestNode:pposition]];
+}
+
+-(void) deleteNodeAtIndex:(int)index {
+    for (int i = index; i < numNodes - 1; i++) {
         nodes[i] = nodes[i + 1];
         nodes[i].ID = i + 1;
     }
     numNodes--;
 }
-
 -(void) addNode:(Vec2)pposition {
     if (numNodes < MAX_NODES) {
-        nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
+        if (numNodes == 0)
+            nodes = (Node*)malloc(sizeof(Node));
+        else
+            nodes = (Node*)realloc(nodes, (numNodes + 1) * sizeof(Node));
         nodes[numNodes].position = pposition;
         nodes[numNodes].ID = numNodes;
         nodes[numNodes].prevPos = pposition;
@@ -118,6 +128,10 @@
     }
 }
 
+-(void) deleteNodes {
+    numNodes = 0;
+    free(nodes);
+}
 -(int) getIndexToClosestNode:(Vec2)pposition {
     int ret = 0;
     float temp;

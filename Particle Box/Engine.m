@@ -55,11 +55,11 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
         [self.glview addSubview:smallMenu];
         //
         [self setTargetsForSmallMenuBtns];
-        
+        [self.glview setMultipleTouchEnabled:YES];
         //////////
                 
         numAvailableModes = NUM_FMODE_TYPES;
-       
+        numFingers = 0;
     }
     return self;
 }
@@ -82,21 +82,49 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
     glViewport(0, 0, width, height);
     
-    glClearColor(0.f, 1.f, 0.f, 1.f);
+    glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
+   
+    [self compileShaders];
     
+    particleData = (GLfloat*)malloc(sizeof(GLfloat) * MAX_PARTICLES * POINTS_PER_PARTICLE);
+        
+    const char *aPositionCString = [@"a_position" cStringUsingEncoding:NSUTF8StringEncoding];
+    aPosition = glGetAttribLocation(program, aPositionCString);
+    glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
+    glEnableVertexAttribArray(aPosition);
+    
+    const char *ColorCString = [@"Color" cStringUsingEncoding:NSUTF8StringEncoding];
+    colorPosition = glGetUniformLocation(program, ColorCString);
+    
+    
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    //glEnable(GL_LUMINANCE);
+    glLineWidth(2);
+    glDrawArrays(GL_LINES, 0, MAX_PARTICLES);
+    
+    [context presentRenderbuffer:GL_RENDERBUFFER];
+	// Do any additional setup after loading the view.
+
+}
+
+-(void) compileShaders {
     NSString *vertexShaderSource = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"VertexShader" ofType:@"vsh"] encoding:NSUTF8StringEncoding error:nil];
     const char *vertexShaderSourceCString = [vertexShaderSource cStringUsingEncoding:NSUTF8StringEncoding];
     
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSourceCString, NULL);
     glCompileShader(vertexShader);
+    if (![self validateShaderCompilation:vertexShader]) exit(0);
     
     NSString *fragmentShaderSource = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FragmentShader" ofType:@"fsh"] encoding:NSUTF8StringEncoding error:nil];
     const char *fragmentShaderSourceCString = [fragmentShaderSource cStringUsingEncoding:NSUTF8StringEncoding];
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSourceCString, NULL);
     glCompileShader(fragmentShader);
+    if (![self validateShaderCompilation:fragmentShader]) exit(0);
+    
     
     program = glCreateProgram();
     glAttachShader(program, vertexShader);
@@ -104,26 +132,22 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     glLinkProgram(program);
     
     glUseProgram(program);
-    
-    
-    particleData = (GLfloat*)malloc(sizeof(GLfloat) * MAX_PARTICLES * POINTS_PER_PARTICLE);
-        
-    const char *aPositionCString = [@"a_position" cStringUsingEncoding:NSUTF8StringEncoding];
-    aPosition = glGetAttribLocation(program, aPositionCString);
-    
-    glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
-    glEnableVertexAttribArray(aPosition);
-    
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    //glEnable(GL_LINE_SMOOTH);
-    glLineWidth(1);
-    glDrawArrays(GL_LINES, 0, MAX_PARTICLES);
-    
-    [context presentRenderbuffer:GL_RENDERBUFFER];
-	// Do any additional setup after loading the view.
+}
+
+-(BOOL) validateShaderCompilation:(GLuint) shader {
+    GLint compilationStatus;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &compilationStatus);
+    if (compilationStatus == GL_TRUE)
+        return YES;
+    else {
+        char buffer[512];
+        glGetShaderInfoLog(shader, 512, NULL, buffer);
+        NSLog(@"%s",buffer);
+        return  NO;
+    }
 
 }
+
 
 -(void) setTargetsForSmallMenuBtns {
     //
@@ -132,17 +156,23 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     [smallMenu.btnScreenShot addTarget:self action:@selector(saveImage:) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void) render:(CADisplayLink*) link  {
-    NSLog(@"Rendering");
+    //NSLog(@"Rendering");
     [calc calculate:link];
+    [self draw];
+    
+}
+
+-(void) draw {
+    glUniform4f(colorPosition, 0.f, 0.f, 0.f, .2f);
+    glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, overLay);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(overLay) / sizeof(GLfloat));
+    
+    glUniform4f(colorPosition, .5f, .2f, .7f, 1.f);
+    glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
     glDrawArrays(GL_LINES, 0, [calc numParticles]);
     
     [context presentRenderbuffer:GL_RENDERBUFFER];
-    glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-
 }
-
 
 -(void)menuButtonSelected {
     [smallMenu setHidden:smallMenuOpen];
@@ -179,24 +209,39 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:[self view]];
-    [calc moveGravity:point];
-    
+    NSLog(@"Touches began with numfingers %d", [touches count]);
+    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
+    for (int i = 0 ; i < [touches count]; i++) {
+        CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+        [calc.node addNode:VEC2(point.x, point.y)];
+    }
+       
+   
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:[self view]];
-    [calc moveGravity:point];
+    NSLog(@"Touches moved with fingers %d", [touches count]);
+    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
+    for (int i = 0 ; i < [touches count]; i++){
+        CGPoint p = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+        [calc moveGravity:p];
+    }
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touch recieved");
+    NSLog(@"Touch ended fingers %d ", [touches count]);
+    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
+    numFingers -= [touches count];
+    for (int i = 0 ; i < [touches count]; i++) {
+            CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+            [calc.node deleteNode:VEC2(point.x, point.y)];
+    }
 }
 
 -(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touch recieved");
+    NSLog(@"Touches cancelled with fingers %d", [touches count]);
+    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
+    [calc.node deleteNodes];
 }
 
 @end

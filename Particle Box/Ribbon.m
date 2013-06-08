@@ -13,21 +13,26 @@
 #define COLOR_DURATION 500000
 @implementation Ribbon
 
+int randomNumber;
+
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
-    int random = arc4random();
+    randomNumber = arc4random();
+    if (![super influenceParticle:particle]) return;
+    [self ribbonEffect:particle withNode:nodes[particle.nodeID]];
+}
+
+-(void) validateParticle:(Particle *)particle {
+    [super validateParticle:particle];
+    if (randomNumber % ESCAPE_FREQUENCY == 0)
+        [self teleport:particle to:nodes[randomNumber % numNodes]];
+    if (randomNumber % COLOR_DURATION == 0)
+        CHANGECOLOR(nodes[particle.nodeID].nodeColor, 50);
     if (![particle outOfBounds
-         :VEC2(nodes[particle.nodeID].position.x - CATCH_DISTANCE, nodes[particle.nodeID].position.y - CATCH_DISTANCE)
+          :VEC2(nodes[particle.nodeID].position.x - CATCH_DISTANCE, nodes[particle.nodeID].position.y - CATCH_DISTANCE)
           :VEC2(nodes[particle.nodeID].position.x + CATCH_DISTANCE, nodes[particle.nodeID].position.y + CATCH_DISTANCE)]) {
         [particle setNodeID:(particle.nodeID >= numNodes - 1) ? 0 : particle.nodeID + 1 ];
         [particle setColor:nodes[particle.nodeID].nodeColor];
     }
-    [self ribbonEffect:particle withNode:nodes[particle.nodeID]];
-    if (random % COLOR_DURATION == 0)
-        CHANGECOLOR(nodes[particle.nodeID].nodeColor, 50);
-    if (random % ESCAPE_FREQUENCY == 0)
-        [self teleport:particle to:nodes[random % numNodes]];
-        
 }
 
 -(void) ribbonEffect:(Particle *)particle withNode:(Node) node {
@@ -40,6 +45,7 @@
     a.y += SPREAD_FACT * (RANFLOAT - RANFLOAT);
     [particle setVelocity:a];
 }
+
 -(void) teleport:(Particle *)particle to:(Node)node {
     [particle setPosition:VEC2(node.position.x + SPREAD_FACT * (RANFLOAT - RANFLOAT),
                               node.position.y + SPREAD_FACT * (RANFLOAT - RANFLOAT))];
@@ -47,4 +53,5 @@
     [particle setNodeID:node.ID];
     [particle setColor:node.nodeColor];
 }
+
 @end

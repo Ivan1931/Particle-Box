@@ -26,10 +26,7 @@
     self.window.rootViewController = engine;
     
     engine.renderLink  =[CADisplayLink displayLinkWithTarget:engine selector:@selector(render:)];
-    //engine.calculateLink = [CADisplayLink displayLinkWithTarget:engine.calc selector:@selector(calculate:)];
-    
     [engine.renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    //[engine.calculateLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
 
     

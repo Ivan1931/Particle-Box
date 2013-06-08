@@ -61,6 +61,16 @@ static const int REPULSION = 8;
 static const int MODE_LIST[NUM_FMODE_TYPES] = {BACK_SHOT, GRAVITON, SUCTION, WHIRL, ROSE,
                                                 RIBBON, SWIRL , SPIRALS, REPULSION};
 
-static const uint MAX_PARTICLES = 4000;
+static const uint MAX_PARTICLES = 2000;
 static const uint POINTS_PER_PARTICLE = 4;
+
+static const GLfloat overLay[] = {
+    1.0, 1.0,
+    1.0, -1.0,
+    -1.0, 1.0,
+    
+    1.0,-1.0,
+    -1.0,1.0,
+    -1.0,-1.0
+};
 #endif

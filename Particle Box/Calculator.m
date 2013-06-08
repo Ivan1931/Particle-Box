@@ -37,10 +37,10 @@
 }
 
 -(void) calculate:(CADisplayLink *)link {
-    NSLog(@"Calculating");
+    //NSLog(@"Calculating");
     for (int p = 0; p < numParticles; p++) {
         Particle* local = [particles objectAtIndex:p];
-        if (node != nil)
+        if (node != nil && [node getNumberNodes] > 0)
             [node influenceParticle:local];
         [local moveWithVelocityMultiplyer:2.f];
         [self renderParticle:local];
@@ -63,7 +63,8 @@
         }
         
     }
-    [node update];
+    if([node getNumberNodes] > 0)
+        [node update];
 }
 
 #pragma mark - render
@@ -72,10 +73,10 @@
     float normCurrY = -(particle.position.y - screenCenter.y) / screenCenter.y;
     float normPrevX = (particle.previousPosition.x - screenCenter.x) / screenCenter.x;
     float normPrevY = -(particle.previousPosition.y - screenCenter.y) / screenCenter.y;
-    data[particle.getDataIndex] = normCurrX;
-    data[particle.getDataIndex + 1] = normCurrY;
-    data[particle.getDataIndex + 2] = normPrevX;
-    data[particle.getDataIndex + 3] = normPrevY;
+    data[particle.getDataIndex] = normPrevX;
+    data[particle.getDataIndex + 1] = normPrevY;
+    data[particle.getDataIndex + 2] = normCurrX;
+    data[particle.getDataIndex + 3] = normCurrY;
 }
 
 

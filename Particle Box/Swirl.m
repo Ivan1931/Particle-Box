@@ -13,19 +13,21 @@
 #define RING_RADIUS 50.f
 
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
-    [self iterateNodeChange:particle :NODE_CHANGE_TIME];
-    if ([particle outOfBounds:nothing :dimesions ]) {
-        [particle setPosition:VEC2(RAND_BETWEEN(0, (int)dimesions.x), RAND_BETWEEN(0, (int)dimesions.y))];
-        [particle bringToCurrent];
-        [particle resetVelocity];
-    }
+    if (![super influenceParticle:particle]) return;
     for (int i = 0; i < numNodes; i++) {
         [self swirlEffect:particle :nodes[i]];
     }
     
 }
 
+-(void) validateParticle:(Particle *)particle {
+    [self iterateNodeChange:particle :NODE_CHANGE_TIME];
+    if ([particle outOfBounds:nothing :dimesions ]) {
+        [particle setPosition:VEC2(RAND_BETWEEN(0, (int)dimesions.x), RAND_BETWEEN(0, (int)dimesions.y))];
+        [particle bringToCurrent];
+        [particle resetVelocity];
+    }
+}
 -(void) swirlEffect:(Particle *)paricle :(Node) node {
         float distance = computeDistance(paricle.position, node.position);
         if (distance != 0) {

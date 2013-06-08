@@ -11,7 +11,7 @@
 
 #define RINGS 100.f
 #define PULLIN 2.f
-#define COLOR_CHNG_FREQ 1000000
+#define COLOR_CHNG_FREQ 600
 
 @implementation Spirals
 
@@ -27,18 +27,23 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
+    if (![super influenceParticle:particle]) return;
+    [self spirallingEffect:particle :effectLocation];
+}
+
+-(void) validateParticle:(Particle *)particle {
+    [super validateParticle:particle];
+    [particle setColor:col];
+}
+
+-(void) update {
     if (colorChangeCount< COLOR_CHNG_FREQ) {
         colorChangeCount ++;
     } else {
         CHANGECOLOR(col, MIN_RGB_VAL);
         colorChangeCount = 0;
     }
-    
-    [particle setColor:col];
-    [self spirallingEffect:particle :effectLocation];
 }
-
 -(void) spirallingEffect:(Particle *) particle :(Vec2)centralPoint {
     Vec2 d = computeXYDiff(particle.position, centralPoint);
     float distance = computeDistance(particle.position, centralPoint);

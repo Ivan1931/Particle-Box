@@ -15,15 +15,18 @@ const int NODE_COL_CHANGE_FREQ = 1000000;
 @implementation Repulsion
 
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
+     if (![super influenceParticle:particle]) return;    
+    for (int i = 0 ; i < numNodes; i++) {
+        [self iterateColorNodeChangeValue:&nodes[i] :NODE_COL_CHANGE_FREQ];
+        [self repulsionEffect:nodes[i] :particle];
+    }
+}
+
+-(void) validateParticle:(Particle *)particle {
     if ([particle outOfBounds:nothing :dimesions ]) {
         [particle setPosition:VEC2(RAND_BETWEEN(0, (int)dimesions.x), RAND_BETWEEN(0, (int)dimesions.y))];
         [particle bringToCurrent];
         [particle resetVelocity];
-    }
-    for (int i = 0 ; i < numNodes; i++) {
-        [self iterateColorNodeChangeValue:&nodes[i] :NODE_COL_CHANGE_FREQ];
-        [self repulsionEffect:nodes[i] :particle];
     }
 }
 

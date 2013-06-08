@@ -10,8 +10,8 @@
 
 #define MAX_INTERACTION 3
 #define LOWEST_VELOCITY 0.2f
-const int NUM_ITERATIONS_COLOR = 1000000;
-const int NUM_ITERATIONS_RESPBOX = 5000;
+const int NUM_ITERATIONS_COLOR = 600;
+const int NUM_ITERATIONS_RESPBOX = 10;
 
 @implementation Rose
 
@@ -25,29 +25,32 @@ const int NUM_ITERATIONS_RESPBOX = 5000;
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
+    if (![super influenceParticle:particle]) return;
     int count = 0;
     int nodeIndex = particle.nodeID;
     while (count < MAX_INTERACTION) {
         nodeIndex = (particle.nodeID + count >= numNodes) ? -1 + count : particle.nodeID + count;
         [self roseAffectWithNode:particle node:nodes[nodeIndex] gradient:0.f];
-        if (colorChngGap < NUM_ITERATIONS_COLOR) {
-            CHANGECOLOR(nodes[nodeIndex].nodeColor, MIN_RGB_VAL);
-            colorChngGap = 0;
-        } else {
-            colorChngGap++;
-        }
         count++;
     }
+    
+}
+
+-(void) update {
+    
     if (randomBoxChangeTime >= NUM_ITERATIONS_RESPBOX) {
-        [self changeParticleNode:particle];
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
         randomBoxChangeTime = 0;
     } else {
         randomBoxChangeTime++;
     }
+    if (colorChngGap < NUM_ITERATIONS_COLOR) {
+        CHANGECOLOR(nodes[arc4random() % numNodes].nodeColor, MIN_RGB_VAL);
+        colorChngGap = 0;
+    } else {
+        colorChngGap++;
+    }
 }
-
 -(void) roseAffectWithNode:(Particle*) particle node:(Node)pnode gradient:(float)grad {
     //r = (cos(x + a))^2
     if( ![particle outOfBounds:nothing :dimesions]  && particleEscapeCount < ESCAPE_FREQUENCY ) {

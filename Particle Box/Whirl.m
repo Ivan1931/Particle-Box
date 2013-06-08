@@ -11,6 +11,7 @@
 
 #define SHORT_CHANGE 50000
 
+const uint RESPAWN_BOX_CHANGE = 3;
 
 @implementation Whirl
 @synthesize clockwise;
@@ -26,23 +27,20 @@
 }
 
 -(void) influenceParticle:(Particle *)particle {
-    [super influenceParticle:particle];
-    [particle resetVelocity];
-    if(arc4random() % SHORT_CHANGE == 0)
-        CHANGECOLOR(changeColor, 50);
-    if ([particle outOfBounds:nothing :dimesions]) {
-        if (arc4random() % RETURN_FREQUENCY != 0)
-            return;
-        else {
-            [particle setColor:changeColor];
-            setRespawnBox (&dimesions,&spawnBoxUp, &spawnBoxLow,RESPAWN_AREA_S,500);
-        }
-    }
+    if (![super influenceParticle:particle]) return;
     for (int i = 0; i < numNodes; i++)
         [self whirlEffect:particle to:nodes[i]];
     
 }
 
+-(void) validateParticle:(Particle *)particle {
+    [particle resetVelocity];
+    if ([particle outOfBounds:nothing :dimesions]) {
+        [particle setPosition:VEC2(arc4random() % (int)dimesions.x, arc4random() % (int) dimesions.y)];
+        [particle bringToCurrent];
+        [particle resetVelocity];
+    }
+}
 -(void) whirlEffect:(Particle*)particle to:(Node)node {
     float disx = [particle position].x - node.position.x;
     float disy = [particle position].y - node.position.y;
@@ -66,9 +64,7 @@
         float dy = y - disy;
         [particle addAcceleration:(Vec2) {dx, dy}];
     } else {
-        float ranx = [Calculator randFloatBetween:spawnBoxUp.x and:spawnBoxLow.x];
-        float rany = [Calculator randFloatBetween:spawnBoxUp.y and:spawnBoxLow.y];
-        [particle setPosition:(Vec2){ranx, rany}];
+        [particle setPosition:VEC2(arc4random() % (int)dimesions.x, arc4random() % (int) dimesions.y)];
         [particle bringToCurrent];
         [particle resetVelocity];
     }
