@@ -160,11 +160,12 @@
 
 -(NodeList) getNodeList {
     NodeList ret;
+    Node* tmp = (Node*) malloc(sizeof(Node) * numNodes * 2);
     ret.len = numNodes;
-    ret.nodes = (Node*) malloc(sizeof(Node));
     for (int i = 0; i < numNodes; i++) {
-        ret.nodes[i] = nodes[i];
+        tmp[i] = nodes[i];
     }
+    ret.nodes = tmp;
     return ret;
 }
 
@@ -180,7 +181,7 @@
 -(void) addNodeList:(NodeList)list {
     //free(nodes);
     numNodes = list.len;
-    nodes = (Node*) malloc(sizeof(Node));
+    nodes = (Node*) malloc(sizeof(Node) * list.len);
     for (int i = 0; i < list.len; i++) {
         nodes[i] = list.nodes[i];
     }

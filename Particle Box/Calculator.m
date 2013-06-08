@@ -165,6 +165,9 @@ void swap(int *a,int *b){
 -(void) setForceNode:(int)nodeNumber {
     currentNodeType = nodeNumber;
     NodeList nodeList = [node getNodeList];
+    NSLog(@"\nGot node List");
+    [node deleteNodes];
+    NSLog(@"Deleted nodes");
     switch (nodeNumber) {
         case BACK_SHOT:
             [self spawnBackShot];
@@ -197,7 +200,9 @@ void swap(int *a,int *b){
             [self spawnNode];
             break;
     }
+    NSLog(@"Changed node type");
     [node addNodeList:nodeList];
+    NSLog(@"Finished\n");
 
 }
 

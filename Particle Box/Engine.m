@@ -163,15 +163,12 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) draw {
-    glUniform4f(colorPosition, 0.f, 0.f, 0.f, .2f);
-    glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, overLay);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(overLay) / sizeof(GLfloat));
-    
-    glUniform4f(colorPosition, .5f, .2f, .7f, 1.f);
+    glUniform4f(colorPosition, 1.f, .2f, .7f, 1.f);
     glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
     glDrawArrays(GL_LINES, 0, [calc numParticles]);
-    
     [context presentRenderbuffer:GL_RENDERBUFFER];
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 -(void)menuButtonSelected {
