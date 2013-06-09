@@ -24,8 +24,8 @@ const int NUM_ITERATIONS_RESPBOX = 10;
     return self;
 }
 
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     int count = 0;
     int nodeIndex = particle.nodeID;
     while (count < MAX_INTERACTION) {
@@ -33,6 +33,7 @@ const int NUM_ITERATIONS_RESPBOX = 10;
         [self roseAffectWithNode:particle node:nodes[nodeIndex] gradient:0.f];
         count++;
     }
+    return YES;
     
 }
 

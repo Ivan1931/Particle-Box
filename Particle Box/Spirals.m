@@ -26,9 +26,10 @@
     return self;
 }
 
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     [self spirallingEffect:particle :effectLocation];
+    return YES;
 }
 
 -(void) validateParticle:(Particle *)particle {

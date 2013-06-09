@@ -15,7 +15,6 @@
                                 (COL).g = rand() % rng + MINCOL; \
                                 (COL).b = rand() % rng + MINCOL; \
                             }
-#define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
 #define RESPAWN_AREA_S 20
 #define NODE_CHANGE_TIME 500
 #define REDEF_RAND_BOX_FREQ 200000
@@ -57,8 +56,9 @@
 -(void) particleColorToNode:(Particle*)particle;
 -(void) iterateColorNodeChangeValue:(Node*) node :(int)iterationLimit;
 -(void) validateParticle:(Particle *)particle;
-
+-(BOOL) requiresFadeEffect;
 -(void) respawnParticleInRandomBox:(Particle*) particle;
+-(void) brownianEffect:(Particle *) particle;
 
 -(void) iterateNodeChange:(Particle *) particle :(int) iterationLimit;
 -(int) getNumberNodes;

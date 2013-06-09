@@ -72,10 +72,16 @@
     return dataIndex;
 }
 
+-(void) respawnInBounds:(Vec2)start :(Vec2) end {
+    [self setPosition:VEC2(RAND_BETWEEN((int)start.x, (int)end.x), RAND_BETWEEN((int)start.y, (int)end.y))];
+    [self bringToCurrent];
+}
+
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner {
     if (position.x >= topLeftCorner.x && position.x <= bottomRightCorner.x)
         if (position.y >= topLeftCorner.y && position.y <= bottomRightCorner.y)
             return false;
     return true;
 }
+
 @end

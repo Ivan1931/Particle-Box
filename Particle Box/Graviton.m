@@ -9,8 +9,8 @@
 #import "Graviton.h"
 
 @implementation Graviton
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     int random = arc4random();
     for (int i = 0; i < numNodes; i++) {
         [self applyGravity:particle withNode:nodes[i]];
@@ -19,6 +19,7 @@
     }
     if (random % NODE_CHANGE_TIME)
         [self changeParticleNode:particle];
+    return YES;
     
 }
 -(void) applyGravity:(Particle*)particle withNode:(Node)node {

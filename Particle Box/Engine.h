@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "SmallMenuView.h"
 #include "GLView.h"
+#import "OptionPane.h"
 
 extern const float BUTTON_WIDTH_RATIO;
 
@@ -25,7 +26,8 @@ extern const float BUTTON_WIDTH_RATIO;
     
     UIButton *menuButton;    
     SmallMenuView *smallMenu;
-
+    OptionPane *optionPane;
+    
     NSUInteger len;
     
     CGColorSpaceRef colorSpace;
@@ -34,6 +36,7 @@ extern const float BUTTON_WIDTH_RATIO;
     uint height;
     
     BOOL smallMenuOpen;
+    BOOL optionPaneOpen;
     
     int numAvailableModes;
     
@@ -51,11 +54,13 @@ extern const float BUTTON_WIDTH_RATIO;
     
     uint numFingers;
     
+    
 }
 
 @property (nonatomic, strong) UIButton *menuButton;
 @property (nonatomic, strong) SmallMenuView *smallMenu;
 @property (nonatomic, strong) GLView *glview;
+@property (nonatomic, strong) OptionPane *optionPane;
 
 @property (nonatomic,retain) Calculator *calc;
 

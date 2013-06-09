@@ -12,11 +12,12 @@
 
 #define RING_RADIUS 50.f
 
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     for (int i = 0; i < numNodes; i++) {
         [self swirlEffect:particle :nodes[i]];
     }
+    return YES;
     
 }
 

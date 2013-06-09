@@ -60,18 +60,4 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-/*
--(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:[engine view]];
-    NSLog(@"Touch at x: %f and y: %f",point.x, point.y);
-    [engine moveForces:point];
-}
--(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:[engine view]];
-    NSLog(@"Touch at x: %f and y: %f",point.x, point.y);
-    [engine moveForces:point];
-}
-*/
 @end

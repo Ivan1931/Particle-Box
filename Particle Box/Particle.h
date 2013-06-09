@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#include "Repository.h"
 @interface Particle : NSObject {
     @private
     Vec2 position;
@@ -30,4 +29,5 @@
 -(void) bringToCurrent; //Sets the previous position to the current position
 -(BOOL) outOfBounds:(Vec2)topLeftCorner :(Vec2)bottomRightCorner;
 -(int) getDataIndex;
+-(void) respawnInBounds:(Vec2)start :(Vec2) end;
 @end

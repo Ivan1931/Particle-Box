@@ -15,10 +15,11 @@
 
 int randomNumber;
 
--(void) influenceParticle:(Particle *)particle {
+-(BOOL) influenceParticle:(Particle *)particle {
     randomNumber = arc4random();
-    if (![super influenceParticle:particle]) return;
+    if (![super influenceParticle:particle]) return NO;
     [self ribbonEffect:particle withNode:nodes[particle.nodeID]];
+    return YES;
 }
 
 -(void) validateParticle:(Particle *)particle {

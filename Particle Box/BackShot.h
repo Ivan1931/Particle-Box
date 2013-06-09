@@ -13,8 +13,4 @@
     int firedParticles;
 }
 
--(void) influenceParticle:(Particle *)particle;
-
--(void) moveNode:(Vec2)pposition;
-
 @end

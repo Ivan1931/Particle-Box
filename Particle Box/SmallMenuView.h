@@ -10,20 +10,20 @@
 
 @interface SmallMenuView : UIView {
     @private
-    UIButton *btnStepUpMode;
+    UIButton *btnNextMode;
     UIButton *btnPurchase;
     UIButton *btnOpenOptions;
-    UIButton *btnScreenShot;
+    UIButton *btnReset;
     UIButton *btnHelp;
     
     int modeNumber;
     
 }
 
-@property (nonatomic, strong) UIButton *btnStepUpMode;
+@property (nonatomic, strong) UIButton *btnNextMode;
 @property (nonatomic, strong) UIButton *btnPurchase;
 @property (nonatomic, strong) UIButton *btnOpenOptions;
-@property (nonatomic, strong) UIButton *btnScreenShot;
+@property (nonatomic, strong) UIButton *btnReset;
 @property (nonatomic, strong) UIButton *btnHelp;
 
 -(id) initWithFrame:(CGRect)frame forceMode:(int) mode;

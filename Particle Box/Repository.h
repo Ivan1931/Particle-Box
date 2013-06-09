@@ -13,7 +13,8 @@
 #define BITSPERCOMPONENT 8
 #define VEC2(x,y)((Vec2){(x),(y)})
 #define RANFLOAT ((float)arc4random() / (float)RAND_MAX)
-
+#define RAND_ZERO_ONE() (((float) arc4random () / (float)RAND_MAX) - 1.f)
+#define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
 typedef struct {
     Byte r;
     Byte g;
@@ -62,6 +63,7 @@ static const int MODE_LIST[NUM_FMODE_TYPES] = {BACK_SHOT, GRAVITON, SUCTION, WHI
                                                 RIBBON, SWIRL , SPIRALS, REPULSION};
 
 static const uint MAX_PARTICLES = 2000;
+static const uint MIN_PARTICLES = 200;
 static const uint POINTS_PER_PARTICLE = 4;
 
 static const GLfloat overLay[] = {
@@ -73,4 +75,9 @@ static const GLfloat overLay[] = {
     -1.0,1.0,
     -1.0,-1.0
 };
+
+static const float MAX_THICKNESS = 8.f;
+
+static const float MAX_VELOCITY_MULTIPLYER = 3.f;
+static const float MIN_VELOCITY_MULTIPLYER = 0.5f;
 #endif

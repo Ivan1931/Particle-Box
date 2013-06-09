@@ -14,12 +14,13 @@ const int NODE_COL_CHANGE_FREQ = 1000000;
 
 @implementation Repulsion
 
--(void) influenceParticle:(Particle *)particle {
-     if (![super influenceParticle:particle]) return;    
+-(BOOL) influenceParticle:(Particle *)particle {
+     if (![super influenceParticle:particle]) return NO;
     for (int i = 0 ; i < numNodes; i++) {
         [self iterateColorNodeChangeValue:&nodes[i] :NODE_COL_CHANGE_FREQ];
         [self repulsionEffect:nodes[i] :particle];
     }
+    return YES;
 }
 
 -(void) validateParticle:(Particle *)particle {

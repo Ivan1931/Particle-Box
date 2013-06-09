@@ -17,8 +17,4 @@
     int randomBoxChangeTime;
 }
 
--(id) initWithStrength:(float) pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims;
-
--(void) influenceParticle:(Particle *)particle;
-
 @end

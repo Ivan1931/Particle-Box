@@ -9,6 +9,4 @@
 #import <Foundation/Foundation.h>
 #import "ForceNode.h"
 @interface Graviton : ForceNode
-
--(void) influenceParticle:(Particle *)particle;
 @end

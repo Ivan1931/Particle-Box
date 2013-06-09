@@ -88,7 +88,6 @@ void swap(int *a,int *b){
 
 -(void) spawnParticles {
     for (int p = 0; p < MAX_PARTICLES; p++){
-        
         Vec2 pos = {
             .x = [Calculator randFloatBetween:0.f and:dims.x],
             .y = [Calculator randFloatBetween:0.f and:dims.y]
@@ -100,19 +99,16 @@ void swap(int *a,int *b){
         Particle *part = [[Particle alloc] initWith:pos Color:col atDataIndex:p * POINTS_PER_PARTICLE];
         [particles addObject:part];
     }
-    NSLog(@"Dimsx and y: %f, %f",dims.x / 2,dims.y / 2);
-    [self spawnRose];
-    //[self spawnGraviton];
-    //[self spawnWhirl];
-    //[self spawnRibbon];
-    //[self spawnBackShot];
-    //[self spawnNode];
-    //[self createSuction:5];
-    //[self spawnSpiral];
-    //[self spawnSwirl];
-    //[self spawnRepulsion];
+    [self setForceNode:0];
 }
 
+-(void) resetParticles {
+    NSLog(@"Reset");
+    for (int i = 0 ; i < numParticles; i++) {
+        [[particles objectAtIndex:i] respawnInBounds:VEC2(0.f,0.f) :dims];
+        [[particles objectAtIndex:i] resetVelocity];
+    }
+}
 -(void) spawnBackShot {
     node = [[BackShot alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x / 2, dims.y / 2) dimesions:dims];
 }

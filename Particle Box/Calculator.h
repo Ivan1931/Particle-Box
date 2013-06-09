@@ -47,6 +47,7 @@
 -(id) initWithData:(GLfloat*)pdata andDimesions:(Vec2)xy;
 -(void) spawnParticles;
 -(void) moveGravity:(CGPoint)xy;
+-(void) resetParticles;
 
 +(float) randFloatBetween:(float)low and:(float)high;
 

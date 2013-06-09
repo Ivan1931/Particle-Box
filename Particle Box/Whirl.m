@@ -26,10 +26,12 @@ const uint RESPAWN_BOX_CHANGE = 3;
     return  self;
 }
 
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     for (int i = 0; i < numNodes; i++)
         [self whirlEffect:particle to:nodes[i]];
+    
+    return YES;
     
 }
 

@@ -14,8 +14,8 @@
 @synthesize btnHelp;
 @synthesize btnOpenOptions;
 @synthesize btnPurchase;
-@synthesize btnScreenShot;
-@synthesize btnStepUpMode;
+@synthesize btnReset;
+@synthesize btnNextMode;
 
 -(id) initWithFrame:(CGRect) frame forceMode:(int) mode {
     self = [super initWithFrame:frame];
@@ -24,16 +24,16 @@
         float gap = 5.f;
         float totalSpacing = size + gap;
         
-        btnStepUpMode = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, size, size)];
-        [btnStepUpMode setTitle:[NSString stringWithFormat:@"  %d",mode] forState:UIControlStateNormal];
-        btnStepUpMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:50];
-        btnStepUpMode.titleLabel.textColor = [UIColor whiteColor];
-        [btnStepUpMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
-        [self addSubview:btnStepUpMode];
+        btnNextMode = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, size, size)];
+        [btnNextMode setTitle:[NSString stringWithFormat:@"  %d",mode] forState:UIControlStateNormal];
+        btnNextMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:50];
+        btnNextMode.titleLabel.textColor = [UIColor whiteColor];
+        [btnNextMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
+        [self addSubview:btnNextMode];
         
-        btnScreenShot = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing, 0.f, size, size)];
-        [btnScreenShot setImage:[UIImage imageNamed:@CAMMERA_BTN_IMG_STR ] forState:UIControlStateNormal];
-        [self addSubview:btnScreenShot];
+        btnReset = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing, 0.f, size, size)];
+        [btnReset setImage:[UIImage imageNamed:@CAMMERA_BTN_IMG_STR ] forState:UIControlStateNormal];
+        [self addSubview:btnReset];
         
         btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(totalSpacing * 2.f, 0.f, size, size)];
         [btnOpenOptions setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];

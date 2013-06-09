@@ -13,8 +13,6 @@
     float nodeDistances[5];
 }
 
--(void) influenceParticle:(Particle *)particle;
-
 -(void) moveNode:(Vec2) pposition;
 
 -(void) addNode:(Vec2)pposition;

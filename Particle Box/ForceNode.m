@@ -29,11 +29,7 @@
         
         changeColor = (Color){rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50};
         
-        /*numNodes = 1;
-        nodes = malloc(sizeof(Node));
-        nodes[0].position = xy;
-        nodes[0].ID =  0;
-        nodes[0].prevPos = position;*/
+        numNodes = 0;
         
         dimesions = pdims;
         
@@ -47,13 +43,17 @@
 }
 
 -(BOOL) influenceParticle:(Particle *)particle {
-    if (numNodes == 0) return NO;
+    if (numNodes == 0) {
+        //NSLog(@"Got here");
+        [self brownianEffect:particle];
+        return NO;
+    } 
     [self validateParticle:particle];
     return YES;
 }
 
 -(void) brownianEffect:(Particle *) particle {
-    [particle addAcceleration:VEC2(0.1f * (RANFLOAT - RANFLOAT), 0.1f * (RANFLOAT - RANFLOAT))];
+    [particle addAcceleration:VEC2(0.3f * RAND_ZERO_ONE(), 0.3f * RAND_ZERO_ONE())];
 }
 
 -(void) update{
@@ -73,6 +73,10 @@
     [particle setPosition:(Vec2){ RAND_BETWEEN((int)spawnBoxUp.x,(int)spawnBoxLow.x),
                                         RAND_BETWEEN((int)spawnBoxUp.y, (int)spawnBoxLow.y)}];
     [particle bringToCurrent];
+}
+
+-(BOOL) requiresFadeEffect {
+    return  NO;
 }
 
 //Implementation of the node system ///////////////////////////////////////

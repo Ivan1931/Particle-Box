@@ -16,11 +16,11 @@ const int LOW_COLOR_THRESH = 50;
 
 @implementation Suction
 
--(void) influenceParticle:(Particle *)particle {
+-(BOOL) influenceParticle:(Particle *)particle {
     
     if (numNodes < 2) {
         [super influenceParticle:particle];
-        return;
+        return NO;
     }
     int nextNode = 0;
     for (int i = 0; i < numNodes; i++) {
@@ -32,6 +32,7 @@ const int LOW_COLOR_THRESH = 50;
             CHANGECOLOR(nodes[i].nodeColor,LOW_COLOR_THRESH);
         }
     }
+    return YES;
 }
 
 -(void) suctionBetween:(Node) node :(Node) node0 withParticle:(Particle *) particle {
@@ -55,9 +56,7 @@ const int LOW_COLOR_THRESH = 50;
                                 , -(strengthRatio * strength * d.y) / (particleDistance))];
         
     } else {
-        
-        [super influenceParticle:particle];
-        
+        [self brownianEffect:particle];
     }
 }
 
@@ -78,5 +77,9 @@ const int LOW_COLOR_THRESH = 50;
 -(void) addNode:(Vec2)pposition {
     [super addNode:pposition];
     [self computeMidPnts];
+}
+
+-(BOOL) requiresFadeEffect {
+    return YES;
 }
 @end

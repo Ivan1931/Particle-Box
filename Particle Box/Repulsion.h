@@ -10,6 +10,4 @@
 
 @interface Repulsion : ForceNode
 
--(void) influenceParticle:(Particle *)particle;
-
 @end

@@ -10,6 +10,4 @@
 
 @interface Swirl : ForceNode
 
--(void) influenceParticle:(Particle *)particle;
-
 @end

@@ -15,28 +15,34 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
 
 @implementation BackShot
 
--(void) influenceParticle:(Particle *)particle {
-    if (![super influenceParticle:particle]) return;
+-(BOOL) influenceParticle:(Particle *)particle {
+    if (![super influenceParticle:particle]) return NO;
     for (int i = 0 ; i < numNodes; i++) {
         if (!isEqualVectors(nodes[i].position,nodes[i].prevPos)) {
             [self fireToLast:particle :nodes[i]];
             [self iterateColorNodeChangeValue:&nodes[i] :NODE_COLOR_CHANGE_FREQ];
         }
     }
+    return YES;
     
 }
 
 -(void) fireToLast:(Particle *)particle :(Node)node {
     int random = arc4random();
     int random0 = arc4random();
-    if (([particle outOfBounds:nothing :dimesions ] || random % 100 == 0 || firedParticles < 1000)) {
-        [particle setPosition:node.position];
-        [particle resetVelocity];
-        [particle bringToCurrent];
-        [particle setColor:node.nodeColor];
-        firedParticles++;
+    if (([particle outOfBounds:nothing :dimesions ] || random % 25 == 0)) {
+        if ((random0 & 0x1) == 0) {
+            [particle setPosition:node.position];
+            [particle resetVelocity];
+            [particle bringToCurrent];
+            [particle setColor:node.nodeColor];
+            firedParticles++;
+        } else {
+            [particle respawnInBounds:nothing :dimesions];
+            [particle resetVelocity];
+        }
     }
-    if (isEqualVectors(particle.position, node.position) || isEqualVectors(particle.position, nothing)) {
+    if (isEqualVectors(particle.position, node.position)) {
         Vec2 a;
         Vec2 d = computeXYDiff(node.position, node.prevPos);
         float distance = computeDistance(node.position, node.prevPos);
@@ -48,6 +54,9 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
             a.y = strength * -sinf(d.y / distance * M_1_PI) + ranY;
             [particle setVelocity:a];
         }
+    } else {
+        if (isEqualVectors(particle.velocity, nothing))
+            [self brownianEffect:particle];
     }
 }
 

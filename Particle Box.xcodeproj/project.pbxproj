@@ -43,6 +43,8 @@
 		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
 		108EA0B217589AAD001951B9 /* Suction.m in Sources */ = {isa = PBXBuildFile; fileRef = 108EA0B117589AAD001951B9 /* Suction.m */; };
 		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
+		109DC01617637D1300F608A6 /* OptionPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC01517637D1200F608A6 /* OptionPane.m */; };
+		109DC0191764692500F608A6 /* LabeledSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC0181764692400F608A6 /* LabeledSlider.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
 		10CFCEF217567F1400899CED /* BackShot.m in Sources */ = {isa = PBXBuildFile; fileRef = 10CFCEF117567F1400899CED /* BackShot.m */; };
 		10DA945D17215BF400A7EBA3 /* Rose.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DA945C17215BF400A7EBA3 /* Rose.m */; };
@@ -112,6 +114,10 @@
 		108EA0B117589AAD001951B9 /* Suction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suction.m; sourceTree = "<group>"; };
 		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
 		10991330174F7D540031EC8F /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
+		109DC01417637D1100F608A6 /* OptionPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionPane.h; sourceTree = "<group>"; };
+		109DC01517637D1200F608A6 /* OptionPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionPane.m; sourceTree = "<group>"; };
+		109DC0171764692400F608A6 /* LabeledSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabeledSlider.h; sourceTree = "<group>"; };
+		109DC0181764692400F608A6 /* LabeledSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabeledSlider.m; sourceTree = "<group>"; };
 		10C8AF4A17021EC700848AB8 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		10C8AF4B17021EC700848AB8 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		10CFCEF017567F1300899CED /* BackShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackShot.h; sourceTree = "<group>"; };
@@ -187,6 +193,10 @@
 				104CD37C1760FEF200E0CC0E /* GLView.m */,
 				1005264D1700A69000BFAAA6 /* Engine.h */,
 				1005264E1700A69000BFAAA6 /* Engine.m */,
+				109DC01417637D1100F608A6 /* OptionPane.h */,
+				109DC01517637D1200F608A6 /* OptionPane.m */,
+				109DC0171764692400F608A6 /* LabeledSlider.h */,
+				109DC0181764692400F608A6 /* LabeledSlider.m */,
 				1023E151175E481F00963586 /* SmallMenuView.h */,
 				1023E152175E482000963586 /* SmallMenuView.m */,
 				100526501701CC5F00BFAAA6 /* Calculator.h */,
@@ -393,6 +403,8 @@
 				104CD37D1760FEF200E0CC0E /* GLView.m in Sources */,
 				10090CA717633623001C5509 /* FragmentShader.fsh in Sources */,
 				10090CA817633623001C5509 /* VertexShader.vsh in Sources */,
+				109DC01617637D1300F608A6 /* OptionPane.m in Sources */,
+				109DC0191764692500F608A6 /* LabeledSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
