@@ -49,8 +49,8 @@
     Vec2 d = computeXYDiff(particle.position, centralPoint);
     float distance = computeDistance(particle.position, centralPoint);
     Vec2 a;
-    a.x = -sinf(d.x / distance);
-    a.y = -sinf(d.y / distance);
+    a.x = -sinf(d.x / distance) * numNodes;
+    a.y = -sinf(d.y / distance) * numNodes;
     if (distance < effectDistance) {
         [particle addAcceleration:a];
     } else {

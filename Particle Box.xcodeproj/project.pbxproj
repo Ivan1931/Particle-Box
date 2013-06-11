@@ -41,10 +41,15 @@
 		10413D90175B3E8C00AE79A4 /* Spirals.m in Sources */ = {isa = PBXBuildFile; fileRef = 10413D8F175B3E8B00AE79A4 /* Spirals.m */; };
 		104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104CD3751760FE2900E0CC0E /* OpenGLES.framework */; };
 		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
+		107EAFA0176630C9003DD588 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAF9F176630C8003DD588 /* Default.png */; };
+		107EAFA317672938003DD588 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA217672937003DD588 /* IAPHelper.m */; };
 		108EA0B217589AAD001951B9 /* Suction.m in Sources */ = {isa = PBXBuildFile; fileRef = 108EA0B117589AAD001951B9 /* Suction.m */; };
 		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
 		109DC01617637D1300F608A6 /* OptionPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC01517637D1200F608A6 /* OptionPane.m */; };
 		109DC0191764692500F608A6 /* LabeledSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC0181764692400F608A6 /* LabeledSlider.m */; };
+		10BB08441765D30A0060264E /* TransparentRect.png in Resources */ = {isa = PBXBuildFile; fileRef = 10BB08431765D30A0060264E /* TransparentRect.png */; };
+		10BB08461765D4000060264E /* WhiteSquareRect.png in Resources */ = {isa = PBXBuildFile; fileRef = 10BB08451765D4000060264E /* WhiteSquareRect.png */; };
+		10BB08491765D7770060264E /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 10BB08481765D7770060264E /* GradientButton.m */; };
 		10C8AF4C17021EC700848AB8 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8AF4B17021EC700848AB8 /* Timer.m */; };
 		10CFCEF217567F1400899CED /* BackShot.m in Sources */ = {isa = PBXBuildFile; fileRef = 10CFCEF117567F1400899CED /* BackShot.m */; };
 		10DA945D17215BF400A7EBA3 /* Rose.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DA945C17215BF400A7EBA3 /* Rose.m */; };
@@ -110,6 +115,9 @@
 		104CD3751760FE2900E0CC0E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		104CD37B1760FEF200E0CC0E /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLView.h; path = ../../SimpleLinesOpenGL/GLView.h; sourceTree = "<group>"; };
 		104CD37C1760FEF200E0CC0E /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLView.m; path = ../../SimpleLinesOpenGL/GLView.m; sourceTree = "<group>"; };
+		107EAF9F176630C8003DD588 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		107EAFA117672937003DD588 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = ../IAPHelper.h; sourceTree = "<group>"; };
+		107EAFA217672937003DD588 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPHelper.m; path = ../IAPHelper.m; sourceTree = "<group>"; };
 		108EA0B017589AAD001951B9 /* Suction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suction.h; sourceTree = "<group>"; };
 		108EA0B117589AAD001951B9 /* Suction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suction.m; sourceTree = "<group>"; };
 		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
@@ -118,6 +126,10 @@
 		109DC01517637D1200F608A6 /* OptionPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionPane.m; sourceTree = "<group>"; };
 		109DC0171764692400F608A6 /* LabeledSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabeledSlider.h; sourceTree = "<group>"; };
 		109DC0181764692400F608A6 /* LabeledSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabeledSlider.m; sourceTree = "<group>"; };
+		10BB08431765D30A0060264E /* TransparentRect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TransparentRect.png; path = "Particle Box/TransparentRect.png"; sourceTree = "<group>"; };
+		10BB08451765D4000060264E /* WhiteSquareRect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WhiteSquareRect.png; sourceTree = "<group>"; };
+		10BB08471765D7770060264E /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
+		10BB08481765D7770060264E /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		10C8AF4A17021EC700848AB8 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		10C8AF4B17021EC700848AB8 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		10CFCEF017567F1300899CED /* BackShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackShot.h; sourceTree = "<group>"; };
@@ -155,6 +167,8 @@
 		1005260917009CE600BFAAA6 = {
 			isa = PBXGroup;
 			children = (
+				107EAF9F176630C8003DD588 /* Default.png */,
+				10BB08431765D30A0060264E /* TransparentRect.png */,
 				1005261B17009CE600BFAAA6 /* Particle Box */,
 				1005263917009CE600BFAAA6 /* Particle BoxTests */,
 				1005261417009CE600BFAAA6 /* Frameworks */,
@@ -187,6 +201,8 @@
 		1005261B17009CE600BFAAA6 /* Particle Box */ = {
 			isa = PBXGroup;
 			children = (
+				107EAFA117672937003DD588 /* IAPHelper.h */,
+				107EAFA217672937003DD588 /* IAPHelper.m */,
 				1005262417009CE600BFAAA6 /* AppDelegate.h */,
 				1005262517009CE600BFAAA6 /* AppDelegate.m */,
 				104CD37B1760FEF200E0CC0E /* GLView.h */,
@@ -195,6 +211,8 @@
 				1005264E1700A69000BFAAA6 /* Engine.m */,
 				109DC01417637D1100F608A6 /* OptionPane.h */,
 				109DC01517637D1200F608A6 /* OptionPane.m */,
+				10BB08471765D7770060264E /* GradientButton.h */,
+				10BB08481765D7770060264E /* GradientButton.m */,
 				109DC0171764692400F608A6 /* LabeledSlider.h */,
 				109DC0181764692400F608A6 /* LabeledSlider.m */,
 				1023E151175E481F00963586 /* SmallMenuView.h */,
@@ -234,6 +252,7 @@
 		1005261C17009CE600BFAAA6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				10BB08451765D4000060264E /* WhiteSquareRect.png */,
 				10090CA517633622001C5509 /* FragmentShader.fsh */,
 				10090CA617633622001C5509 /* VertexShader.vsh */,
 				1023E156175E835C00963586 /* cammera.png */,
@@ -349,6 +368,9 @@
 				1023E150175E46A600963586 /* Untitled.png in Resources */,
 				1023E155175E7BF100963586 /* plus.png in Resources */,
 				1023E157175E835C00963586 /* cammera.png in Resources */,
+				10BB08441765D30A0060264E /* TransparentRect.png in Resources */,
+				10BB08461765D4000060264E /* WhiteSquareRect.png in Resources */,
+				107EAFA0176630C9003DD588 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +427,8 @@
 				10090CA817633623001C5509 /* VertexShader.vsh in Sources */,
 				109DC01617637D1300F608A6 /* OptionPane.m in Sources */,
 				109DC0191764692500F608A6 /* LabeledSlider.m in Sources */,
+				10BB08491765D7770060264E /* GradientButton.m in Sources */,
+				107EAFA317672938003DD588 /* IAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +539,7 @@
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";
 				"PROVISIONING_PROFILE[sdk=*]" = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";
@@ -534,7 +558,7 @@
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";

@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "LabeledSlider.h"
+#import "GradientButton.h"
 
 #define RED_STR "Red"
 #define GREEN_STR "Green"
 #define BLUE_STR "Blue"
-#define OPACITY_STR "Opaque"
-#define EXIT_STR "Exit"
+#define EXIT_STR "Done!"
 #define VELOCITY_STR "Velocity"
-#define NUM_PARTICLES_STR "Number of Particles"
+#define NUM_PARTICLES_STR "Particles"
 #define THICKNESS_STR "Thickness"
 
 @interface OptionPane : UIView {
@@ -23,7 +23,8 @@
     LabeledSlider *sldrVelocity;
     LabeledSlider *sldrNumParticle;
     LabeledSlider *sldrThickness;
-    UIButton *btnExit;
+    GradientButton *btnExit;
+    UILabel *labOptions;
 }
 
 @property (nonatomic, strong) NSMutableArray *sldrColors;

@@ -76,8 +76,16 @@ static const GLfloat overLay[] = {
     -1.0,-1.0
 };
 
-static const float MAX_THICKNESS = 8.f;
+static const float MAX_THICKNESS = 3.f;
 
 static const float MAX_VELOCITY_MULTIPLYER = 3.f;
 static const float MIN_VELOCITY_MULTIPLYER = 0.5f;
+
+static const float DEFAULT_RED = 0.4f;
+static const float DEFAULT_BLUE = 0.9f;
+static const float DEFAULT_GREEN = 0.1f;
+static const float DEFAULT_ALPHA = 1.f;
+static const float DEFAULT_VEL_MULT = 1.f;
+static const float DEFAULT_INITIAL_PARTICLES = 1500;
+static const float DEFAULT_THICKNESS = 2.f;
 #endif

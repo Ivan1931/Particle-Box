@@ -8,6 +8,8 @@
 
 #import "SmallMenuView.h"
 #define CAMMERA_BTN_IMG_STR "cammera.png"
+#define FONT_SIZE 50
+#define BORDER_WIDTH 2.f
 
 @implementation SmallMenuView
 
@@ -21,30 +23,62 @@
     self = [super initWithFrame:frame];
     if (self) {
         float size = frame.size.height;
-        float gap = 5.f;
+        float gap = frame.size.width / 30;
         float totalSpacing = size + gap;
         
-        btnNextMode = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, size, size)];
-        [btnNextMode setTitle:[NSString stringWithFormat:@"  %d",mode] forState:UIControlStateNormal];
-        btnNextMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:50];
+        btnNextMode = [[UIButton alloc] initWithFrame:CGRectMake(gap, 0.f, size, size)];
+        [btnNextMode setTitle:[NSString stringWithFormat:@"%d",mode] forState:UIControlStateNormal];
+        btnNextMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
         btnNextMode.titleLabel.textColor = [UIColor whiteColor];
         [btnNextMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
+        [btnNextMode.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [btnNextMode.layer setBorderWidth:BORDER_WIDTH];
+        btnNextMode.layer.cornerRadius = 15; // this value vary as per your desire
+        btnNextMode.clipsToBounds = YES;
         [self addSubview:btnNextMode];
         
-        btnReset = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing, 0.f, size, size)];
-        [btnReset setImage:[UIImage imageNamed:@CAMMERA_BTN_IMG_STR ] forState:UIControlStateNormal];
+        btnReset = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing, 0.f, size, size)];
+        [btnReset setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
+        [btnReset.titleLabel setTextColor:[UIColor whiteColor]];
+        [btnReset setTitle:@"R" forState:UIControlStateNormal];
+        btnReset.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        [btnReset.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [btnReset.layer setBorderWidth:BORDER_WIDTH];
+        btnReset.layer.cornerRadius = 10; // this value vary as per your desire
+        btnReset.clipsToBounds = YES;
         [self addSubview:btnReset];
         
-        btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(totalSpacing * 2.f, 0.f, size, size)];
-        [btnOpenOptions setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
+        btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(gap + totalSpacing * 2.f, 0.f, size, size)];
+        [btnOpenOptions.titleLabel setTextColor:[UIColor whiteColor]];
+        [btnOpenOptions setTitle:@"O" forState:UIControlStateNormal];
+        btnOpenOptions.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        [btnOpenOptions setBackgroundColor:self.backgroundColor];
+        [btnOpenOptions.layer setBorderWidth:BORDER_WIDTH];
+        [btnOpenOptions.layer setBorderColor:[UIColor whiteColor].CGColor];
+        btnOpenOptions.layer.cornerRadius = 10; // this value vary as per your desire
+        btnOpenOptions.clipsToBounds = YES;
         [self addSubview:btnOpenOptions];
         
-        btnPurchase = [[UIButton alloc] initWithFrame:CGRectMake(totalSpacing * 3.f, 0.f, size, size)];
-        [btnPurchase setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
+        btnPurchase = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing * 3.f, 0.f, size, size)];
+        [btnPurchase setBackgroundColor:self.backgroundColor];
+        [btnPurchase.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [btnPurchase.layer setBorderWidth:BORDER_WIDTH];
+        [btnPurchase.titleLabel setTextColor:[UIColor whiteColor]];
+        btnPurchase.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        [btnPurchase setTitle:@"$" forState:UIControlStateNormal];
+        btnPurchase.layer.cornerRadius = 10; // this value vary as per your desire
+        btnPurchase.clipsToBounds = YES;
         [self addSubview:btnPurchase];
         
-        btnHelp = [[UIButton alloc] initWithFrame: CGRectMake(totalSpacing * 4.f, 0.f, size, size)];
-        [btnHelp setBackgroundImage:[UIImage imageNamed:@"Untitled.png" ] forState:UIControlStateNormal];
+        btnHelp = [[UIButton alloc] initWithFrame: CGRectMake(gap + totalSpacing * 4.f, 0.f, size, size)];
+        [btnHelp setBackgroundColor:self.backgroundColor];
+        [btnHelp.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [btnHelp.layer setBorderWidth:BORDER_WIDTH];
+        [btnHelp.titleLabel setTextColor:[UIColor whiteColor]];
+        btnHelp.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        [btnHelp setTitle:@"?" forState:UIControlStateNormal];
+        btnHelp.layer.cornerRadius = 10; // this value vary as per your desire
+        btnHelp.clipsToBounds = YES;
         [self addSubview:btnHelp];
         
     }

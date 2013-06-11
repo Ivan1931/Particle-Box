@@ -17,6 +17,7 @@
 @synthesize particles;
 @synthesize node;
 @synthesize numParticles;
+@synthesize velocityMultiplyer;
 
 -(id) initWithData:(GLfloat *)pdata andDimesions:(Vec2)xy {
     self = [super init];
@@ -40,9 +41,9 @@
     //NSLog(@"Calculating");
     for (int p = 0; p < numParticles; p++) {
         Particle* local = [particles objectAtIndex:p];
-        if (node != nil && [node getNumberNodes] > 0)
+        if (node != nil)
             [node influenceParticle:local];
-        [local moveWithVelocityMultiplyer:2.f];
+        [local moveWithVelocityMultiplyer:velocityMultiplyer];
         [self renderParticle:local];
         if (reset){
             if(local.position.x <= 0) { 

@@ -49,6 +49,7 @@ extern const float BUTTON_WIDTH_RATIO;
     GLuint aPosition;
     GLuint colorPosition;
     GLfloat* particleData;
+    GLfloat color[4];
     //////////////////
     uint numberOfParticles;
     

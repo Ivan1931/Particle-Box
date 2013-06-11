@@ -53,7 +53,7 @@
 }
 
 -(void) brownianEffect:(Particle *) particle {
-    [particle addAcceleration:VEC2(0.3f * RAND_ZERO_ONE(), 0.3f * RAND_ZERO_ONE())];
+    [particle addAcceleration:VEC2(0.05f * RAND_ZERO_ONE(), 0.05f * RAND_ZERO_ONE())];
 }
 
 -(void) update{

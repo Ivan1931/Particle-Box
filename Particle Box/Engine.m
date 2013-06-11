@@ -28,7 +28,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
     self = [super init];
-    
     if (self)
     {        //
         width = size.size.width;
@@ -65,6 +64,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                 
         numAvailableModes = NUM_FMODE_TYPES;
         numFingers = 0;
+        
+        [self synchroniseOptionSettings];
     }
     return self;
 }
@@ -87,7 +88,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
     glViewport(0, 0, width, height);
     
-    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClearColor(0.f, 0.f, 0.f, 0.f);
     glClear(GL_COLOR_BUFFER_BIT);
    
     [self compileShaders];
@@ -105,7 +106,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-    glEnable(GL_LUMINANCE);
+    glBlendEquation( GL_FUNC_ADD );
     glLineWidth(2);
     glDrawArrays(GL_LINES, 0, MAX_PARTICLES);
     
@@ -176,6 +177,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     optionFrame.origin.y = self.view.bounds.size.height;
     CGRect finalForm = self.view.frame;
     CGRect glviewInitialForm = CGRectMake(0, -height, width, height);
+    [self synchroniseOptionSettings];
+    [calc.node deleteNodes];
     [UIView animateWithDuration:0.5
                           delay:0.0
                         options: UIViewAnimationOptionCurveEaseOut
@@ -205,6 +208,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
     [smallMenu.btnReset addTarget:calc action:@selector(resetParticles) forControlEvents:UIControlEventTouchUpInside];
 }
+
 -(void) render:(CADisplayLink*) link  {
     //NSLog(@"Rendering");
     [calc calculate:link];
@@ -212,8 +216,20 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
 }
 
+-(void) synchroniseOptionSettings {
+    [calc resetParticles];
+    color[3] = 1.f;
+    for (int i = 0 ; i < 3; i++)
+        color[i] = ((LabeledSlider *)[optionPane.sldrColors objectAtIndex:i]).slider.value;
+    glLineWidth(optionPane.sldrThickness.slider.value);
+    [calc setNumParticles:optionPane.sldrNumParticle.slider.value];
+    [calc setVelocityMultiplyer:optionPane.sldrVelocity.slider.value];
+    
+    
+}
+
 -(void) draw {
-    glUniform4f(colorPosition, 1.f, .2f, .7f, 1.f);
+    glUniform4f(colorPosition, color[0], color[1], color[2], 0.f);
     glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
     glDrawArrays(GL_LINES, 0, [calc numParticles]);
     [context presentRenderbuffer:GL_RENDERBUFFER];
@@ -222,12 +238,20 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
         glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, overLay);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(overLay) / sizeof(GLfloat));
     } else {
-        glClearColor(0.f, 0.f, 0.f, 1.f);
+        glClearColor(0.f, 0.f, 0.f, 0.f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 }
 
 -(void)menuButtonSelected {
+    [self hideMenu];
+    
+}
+
+-(void) showHelp {
+    
+}
+-(void) hideMenu {
     CGRect initial = smallMenu.frame;
     initial.origin.x = -initial.size.width;
     CGRect final = smallMenu.frame;
@@ -249,12 +273,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
             smallMenuOpen = !smallMenuOpen;
         }];
     }
-    
-}
-
--(void) hideMenu {
-    [smallMenu setHidden:YES];
-    smallMenuOpen = NO;
 }
 
 -(void) moveForces:(CGPoint)xy {
@@ -272,7 +290,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     [self pause];
     int tmp = [calc currentNodeType];
     tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
-    [self.smallMenu.btnNextMode setTitle:[NSString stringWithFormat:@"  %d",tmp] forState:UIControlStateNormal];
+    [self.smallMenu.btnNextMode setTitle:[NSString stringWithFormat:@"%d",tmp] forState:UIControlStateNormal];
     [calc setForceNode:tmp];
     [self resume];
 }
@@ -290,7 +308,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"Touches began with numfingers %d", [touches count]);
     NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
-    [self hideMenu];
+    if (smallMenuOpen)
+        [self hideMenu];
     for (int i = 0 ; i < [touches count]; i++) {
         CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
         [calc.node addNode:VEC2(point.x, point.y)];
@@ -302,7 +321,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"Touches moved with fingers %d", [touches count]);
     NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
-    [self hideMenu];
     for (int i = 0 ; i < [touches count]; i++){
         CGPoint p = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
         [calc moveGravity:p];
@@ -313,7 +331,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     NSLog(@"Touch ended fingers %d ", [touches count]);
     NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
     numFingers -= [touches count];
-    [self hideMenu];
     for (int i = 0 ; i < [touches count]; i++) {
             CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
             [calc.node deleteNode:VEC2(point.x, point.y)];

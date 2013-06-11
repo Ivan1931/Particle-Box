@@ -30,16 +30,12 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
 -(void) fireToLast:(Particle *)particle :(Node)node {
     int random = arc4random();
     int random0 = arc4random();
-    if (([particle outOfBounds:nothing :dimesions ] || random % 25 == 0)) {
+    if (([particle outOfBounds:nothing :dimesions ] || random % 50 == 0)) {
         if ((random0 & 0x1) == 0) {
             [particle setPosition:node.position];
             [particle resetVelocity];
             [particle bringToCurrent];
             [particle setColor:node.nodeColor];
-            firedParticles++;
-        } else {
-            [particle respawnInBounds:nothing :dimesions];
-            [particle resetVelocity];
         }
     }
     if (isEqualVectors(particle.position, node.position)) {
@@ -50,8 +46,13 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
             //firedParticles++;
             float ranX = (float) random / (float)RAND_MAX * ((random < HALF_MAX_RAND) ? 1.f : -1.f);
             float ranY = (float) random0 / (float)RAND_MAX * ((random0 < HALF_MAX_RAND) ? 1.f : -1.f);
-            a.x = strength * -sinf(d.x / distance * M_1_PI) + ranX;
-            a.y = strength * -sinf(d.y / distance * M_1_PI) + ranY;
+            if (clock() - firedParticles > 30000) {
+                a.x = strength * -sinf(random * M_PI);
+                a.y = strength * -sinf(random0 * M_PI);
+            } else {
+                a.x = strength * -sinf(d.x / distance * M_1_PI) + ranX;
+                a.y = strength * -sinf(d.y / distance * M_1_PI) + ranY;
+            }
             [particle setVelocity:a];
         }
     } else {
@@ -62,7 +63,11 @@ const int NODE_COLOR_CHANGE_FREQ = 500;
 
 -(void) moveNode:(Vec2)pposition {
     [super moveNode:pposition];
-    firedParticles = 0;
+    firedParticles = clock();
 
+}
+
+-(BOOL) requiresFadeEffect {
+    return YES;
 }
 @end

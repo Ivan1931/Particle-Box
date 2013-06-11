@@ -10,7 +10,7 @@
 
 @interface BackShot : ForceNode {
     @private
-    int firedParticles;
+    clock_t firedParticles;
 }
 
 @end
