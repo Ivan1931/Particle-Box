@@ -43,6 +43,13 @@
 		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
 		107EAFA0176630C9003DD588 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAF9F176630C8003DD588 /* Default.png */; };
 		107EAFA317672938003DD588 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA217672937003DD588 /* IAPHelper.m */; };
+		107EAFA517672E28003DD588 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EAFA417672E28003DD588 /* StoreKit.framework */; };
+		107EAFA817672FB3003DD588 /* BoxIAP.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA717672FB2003DD588 /* BoxIAP.m */; };
+		107EAFAA176755C5003DD588 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EAFA9176755C5003DD588 /* iAd.framework */; };
+		107EAFAC1767612D003DD588 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAB1767612C003DD588 /* Default@2x.png */; };
+		107EAFAE17676136003DD588 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAD17676136003DD588 /* Default-568h@2x.png */; };
+		107EAFB01767793F003DD588 /* box_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAF1767793F003DD588 /* box_small.png */; };
+		107EAFB217677946003DD588 /* box_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFB117677946003DD588 /* box_big.png */; };
 		108EA0B217589AAD001951B9 /* Suction.m in Sources */ = {isa = PBXBuildFile; fileRef = 108EA0B117589AAD001951B9 /* Suction.m */; };
 		10991331174F7D540031EC8F /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 10991330174F7D540031EC8F /* Ribbon.m */; };
 		109DC01617637D1300F608A6 /* OptionPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC01517637D1200F608A6 /* OptionPane.m */; };
@@ -118,6 +125,14 @@
 		107EAF9F176630C8003DD588 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		107EAFA117672937003DD588 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = ../IAPHelper.h; sourceTree = "<group>"; };
 		107EAFA217672937003DD588 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPHelper.m; path = ../IAPHelper.m; sourceTree = "<group>"; };
+		107EAFA417672E28003DD588 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		107EAFA617672FB1003DD588 /* BoxIAP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxIAP.h; sourceTree = "<group>"; };
+		107EAFA717672FB2003DD588 /* BoxIAP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxIAP.m; sourceTree = "<group>"; };
+		107EAFA9176755C5003DD588 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		107EAFAB1767612C003DD588 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		107EAFAD17676136003DD588 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		107EAFAF1767793F003DD588 /* box_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_small.png; sourceTree = "<group>"; };
+		107EAFB117677946003DD588 /* box_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_big.png; sourceTree = "<group>"; };
 		108EA0B017589AAD001951B9 /* Suction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suction.h; sourceTree = "<group>"; };
 		108EA0B117589AAD001951B9 /* Suction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suction.m; sourceTree = "<group>"; };
 		1099132F174F7D540031EC8F /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
@@ -143,6 +158,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107EAFAA176755C5003DD588 /* iAd.framework in Frameworks */,
+				107EAFA517672E28003DD588 /* StoreKit.framework in Frameworks */,
 				104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */,
 				10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */,
 				1005261617009CE600BFAAA6 /* UIKit.framework in Frameworks */,
@@ -167,6 +184,10 @@
 		1005260917009CE600BFAAA6 = {
 			isa = PBXGroup;
 			children = (
+				107EAFB117677946003DD588 /* box_big.png */,
+				107EAFAF1767793F003DD588 /* box_small.png */,
+				107EAFAD17676136003DD588 /* Default-568h@2x.png */,
+				107EAFAB1767612C003DD588 /* Default@2x.png */,
 				107EAF9F176630C8003DD588 /* Default.png */,
 				10BB08431765D30A0060264E /* TransparentRect.png */,
 				1005261B17009CE600BFAAA6 /* Particle Box */,
@@ -188,6 +209,8 @@
 		1005261417009CE600BFAAA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				107EAFA9176755C5003DD588 /* iAd.framework */,
+				107EAFA417672E28003DD588 /* StoreKit.framework */,
 				104CD3751760FE2900E0CC0E /* OpenGLES.framework */,
 				10291D0617023CF100A9D2AB /* QuartzCore.framework */,
 				1005261517009CE600BFAAA6 /* UIKit.framework */,
@@ -203,6 +226,8 @@
 			children = (
 				107EAFA117672937003DD588 /* IAPHelper.h */,
 				107EAFA217672937003DD588 /* IAPHelper.m */,
+				107EAFA617672FB1003DD588 /* BoxIAP.h */,
+				107EAFA717672FB2003DD588 /* BoxIAP.m */,
 				1005262417009CE600BFAAA6 /* AppDelegate.h */,
 				1005262517009CE600BFAAA6 /* AppDelegate.m */,
 				104CD37B1760FEF200E0CC0E /* GLView.h */,
@@ -371,6 +396,10 @@
 				10BB08441765D30A0060264E /* TransparentRect.png in Resources */,
 				10BB08461765D4000060264E /* WhiteSquareRect.png in Resources */,
 				107EAFA0176630C9003DD588 /* Default.png in Resources */,
+				107EAFAC1767612D003DD588 /* Default@2x.png in Resources */,
+				107EAFAE17676136003DD588 /* Default-568h@2x.png in Resources */,
+				107EAFB01767793F003DD588 /* box_small.png in Resources */,
+				107EAFB217677946003DD588 /* box_big.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +458,7 @@
 				109DC0191764692500F608A6 /* LabeledSlider.m in Sources */,
 				10BB08491765D7770060264E /* GradientButton.m in Sources */,
 				107EAFA317672938003DD588 /* IAPHelper.m in Sources */,
+				107EAFA817672FB3003DD588 /* BoxIAP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

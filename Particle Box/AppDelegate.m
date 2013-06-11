@@ -14,11 +14,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
-    /*if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES) {
-        // RETINA DISPLAY
-        screenSize.size.width = screenSize.size.width * [[UIScreen mainScreen] scale];
-        screenSize.size.height = screenSize.size.height * [[UIScreen mainScreen] scale];
-    }*/
     self.window = [[UIWindow alloc] initWithFrame:screenSize];
     // Override point for customization after application launch
     
@@ -28,7 +23,7 @@
     engine.renderLink  =[CADisplayLink displayLinkWithTarget:engine selector:@selector(render:)];
     [engine.renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
-
+    [BoxIAP sharedInstance];
     
     [self.window makeKeyAndVisible];
     return YES;

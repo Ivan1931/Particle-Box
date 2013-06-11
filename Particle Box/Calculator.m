@@ -104,7 +104,7 @@ void swap(int *a,int *b){
 }
 
 -(void) resetParticles {
-    NSLog(@"Reset");
+    //NSLog(@"Reset");
     for (int i = 0 ; i < numParticles; i++) {
         [[particles objectAtIndex:i] respawnInBounds:VEC2(0.f,0.f) :dims];
         [[particles objectAtIndex:i] resetVelocity];
@@ -162,9 +162,9 @@ void swap(int *a,int *b){
 -(void) setForceNode:(int)nodeNumber {
     currentNodeType = nodeNumber;
     NodeList nodeList = [node getNodeList];
-    NSLog(@"\nGot node List");
+    //NSLog(@"\nGot node List");
     [node deleteNodes];
-    NSLog(@"Deleted nodes");
+    //NSLog(@"Deleted nodes");
     switch (nodeNumber) {
         case BACK_SHOT:
             [self spawnBackShot];
@@ -197,9 +197,9 @@ void swap(int *a,int *b){
             [self spawnNode];
             break;
     }
-    NSLog(@"Changed node type");
+    //NSLog(@"Changed node type");
     [node addNodeList:nodeList];
-    NSLog(@"Finished\n");
+    //NSLog(@"Finished\n");
 
 }
 

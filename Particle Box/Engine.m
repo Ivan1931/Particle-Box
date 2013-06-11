@@ -25,6 +25,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 @synthesize calculateLink;
 @synthesize glview;
 @synthesize optionPane;
+@synthesize adds;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
     self = [super init];
@@ -64,6 +65,10 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                 
         numAvailableModes = NUM_FMODE_TYPES;
         numFingers = 0;
+        
+        adds = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
+        [adds setHidden:YES];
+        [glview addSubview:adds];
         
         [self synchroniseOptionSettings];
     }
@@ -154,8 +159,20 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 }
 
+-(void) purchase {
+    [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray* products) {
+        if (success) {
+            for (SKProduct * skproduct in products) {
+                //NSLog(@"",skproduct.productIdentifier);
+            }
+        }
+    }];
+    
+}
+
 -(void) openOptions {
     [renderLink setPaused:YES];
+    [adds removeFromSuperview];
     self.view  = optionPane;
     CGRect inititialFrame = self.view.frame;
     inititialFrame.origin.y = -height;
@@ -194,6 +211,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                                 animations:^{
                                     self.view.frame = finalForm;
                                 }  completion:^(BOOL finished) {
+                                    [glview addSubview:adds];
                                     [renderLink setPaused:NO];
                                 }];
                      }];
@@ -201,16 +219,15 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 -(void) setTargetsForSmallMenuBtns {
     //
     [smallMenu.btnNextMode addTarget:self action:@selector(cycleThroughFNodes:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [smallMenu.btnReset addTarget:self action:@selector(saveImage:) forControlEvents:UIControlEventTouchUpInside];
-    
+        
     [smallMenu.btnOpenOptions addTarget:self action:@selector(openOptions) forControlEvents:UIControlEventTouchUpInside];
     
     [smallMenu.btnReset addTarget:calc action:@selector(resetParticles) forControlEvents:UIControlEventTouchUpInside];
+    
+    [smallMenu.btnPurchase addTarget:self action:@selector(purchase) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void) render:(CADisplayLink*) link  {
-    //NSLog(@"Rendering");
     [calc calculate:link];
     [self draw];
     
@@ -279,14 +296,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     [calc moveGravity:xy];
 }
 
--(IBAction) saveImage:(id) sender {
-    NSLog(@"Image saved");
-    [self pause];
-    [self resume];
-}
-
 -(IBAction)cycleThroughFNodes:(id)sender  {
-    NSLog(@"Mode increased");
+    //NSLog(@"Mode increased");
     [self pause];
     int tmp = [calc currentNodeType];
     tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
@@ -306,8 +317,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touches began with numfingers %d", [touches count]);
-    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
     if (smallMenuOpen)
         [self hideMenu];
     for (int i = 0 ; i < [touches count]; i++) {
@@ -319,8 +328,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touches moved with fingers %d", [touches count]);
-    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
     for (int i = 0 ; i < [touches count]; i++){
         CGPoint p = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
         [calc moveGravity:p];
@@ -328,8 +335,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touch ended fingers %d ", [touches count]);
-    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
     numFingers -= [touches count];
     for (int i = 0 ; i < [touches count]; i++) {
             CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
@@ -338,8 +343,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Touches cancelled with fingers %d", [touches count]);
-    NSLog(@"Num nodes %d\n", [calc.node getNumberNodes]);
     [calc.node deleteNodes];
     [self hideMenu];
 }
@@ -350,5 +353,24 @@ void delay (clock_t delayTime) {
     do {
         end = clock();
     } while (end - start < delayTime);
+}
+
+
+#pragma mark - AdViewDelegates
+
+-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
+    NSLog(@"Error loading");
+    [adds setHidden:YES];
+}
+
+-(void)bannerViewDidLoadAd:(ADBannerView *)banner{
+    NSLog(@"Ad loaded");
+}
+-(void)bannerViewWillLoadAd:(ADBannerView *)banner{
+    NSLog(@"Ad will load");
+}
+-(void)bannerViewActionDidFinish:(ADBannerView *)banner{
+    NSLog(@"Ad did finish");
+    
 }
 @end

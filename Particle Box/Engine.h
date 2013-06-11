@@ -7,16 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "iAd/ADBannerView.h"
+
 #include "RenderView.h"
 #include "Calculator.h"
 #include "Timer.h"
 #include "SmallMenuView.h"
 #include "GLView.h"
 #import "OptionPane.h"
+#import "BoxIAP.h"
+
+
 
 extern const float BUTTON_WIDTH_RATIO;
 
-@interface Engine : UIViewController
+@interface Engine : UIViewController <ADBannerViewDelegate>
 {
     @public
     Calculator *calc;
@@ -55,6 +60,10 @@ extern const float BUTTON_WIDTH_RATIO;
     
     uint numFingers;
     
+    NSArray *_products;
+    
+    //IADs stuff
+    ADBannerView *adds;
     
 }
 
@@ -62,6 +71,7 @@ extern const float BUTTON_WIDTH_RATIO;
 @property (nonatomic, strong) SmallMenuView *smallMenu;
 @property (nonatomic, strong) GLView *glview;
 @property (nonatomic, strong) OptionPane *optionPane;
+@property (nonatomic, strong) ADBannerView *adds;
 
 @property (nonatomic,retain) Calculator *calc;
 
