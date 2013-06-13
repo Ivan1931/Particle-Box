@@ -15,7 +15,7 @@
     static BoxIAP * sharedInstance;
     dispatch_once(&once, ^{
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"com.jonah.Particle_Box.BuyExtraFeatures",
+                                      @"coms.jonah.particle_box.AddOnFeatures",
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

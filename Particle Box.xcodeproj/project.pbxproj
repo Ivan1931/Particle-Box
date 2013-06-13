@@ -41,6 +41,7 @@
 		10413D90175B3E8C00AE79A4 /* Spirals.m in Sources */ = {isa = PBXBuildFile; fileRef = 10413D8F175B3E8B00AE79A4 /* Spirals.m */; };
 		104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104CD3751760FE2900E0CC0E /* OpenGLES.framework */; };
 		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
+		10768D361769042B008EE244 /* Crazy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10768D351769042A008EE244 /* Crazy.m */; };
 		107EAFA0176630C9003DD588 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAF9F176630C8003DD588 /* Default.png */; };
 		107EAFA317672938003DD588 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA217672937003DD588 /* IAPHelper.m */; };
 		107EAFA517672E28003DD588 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EAFA417672E28003DD588 /* StoreKit.framework */; };
@@ -122,6 +123,8 @@
 		104CD3751760FE2900E0CC0E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		104CD37B1760FEF200E0CC0E /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLView.h; path = ../../SimpleLinesOpenGL/GLView.h; sourceTree = "<group>"; };
 		104CD37C1760FEF200E0CC0E /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLView.m; path = ../../SimpleLinesOpenGL/GLView.m; sourceTree = "<group>"; };
+		10768D341769042A008EE244 /* Crazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crazy.h; sourceTree = "<group>"; };
+		10768D351769042A008EE244 /* Crazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crazy.m; sourceTree = "<group>"; };
 		107EAF9F176630C8003DD588 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		107EAFA117672937003DD588 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = ../IAPHelper.h; sourceTree = "<group>"; };
 		107EAFA217672937003DD588 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPHelper.m; path = ../IAPHelper.m; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				10991330174F7D540031EC8F /* Ribbon.m */,
 				1012BA371706167C003019DC /* Whirl.h */,
 				1012BA381706167C003019DC /* Whirl.m */,
+				10768D341769042A008EE244 /* Crazy.h */,
+				10768D351769042A008EE244 /* Crazy.m */,
 				10DA945B17215BF400A7EBA3 /* Rose.h */,
 				10DA945C17215BF400A7EBA3 /* Rose.m */,
 				108EA0B017589AAD001951B9 /* Suction.h */,
@@ -459,6 +464,7 @@
 				10BB08491765D7770060264E /* GradientButton.m in Sources */,
 				107EAFA317672938003DD588 /* IAPHelper.m in Sources */,
 				107EAFA817672FB3003DD588 /* BoxIAP.m in Sources */,
+				10768D361769042B008EE244 /* Crazy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

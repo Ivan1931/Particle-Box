@@ -63,7 +63,9 @@ extern const float BUTTON_WIDTH_RATIO;
     NSArray *_products;
     
     //IADs stuff
-    ADBannerView *adds;
+    //ADBannerView *adds;
+    
+    BOOL hidingSmallMenue;
     
 }
 

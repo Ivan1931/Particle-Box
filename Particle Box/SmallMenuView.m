@@ -13,7 +13,7 @@
 
 @implementation SmallMenuView
 
-@synthesize btnHelp;
+//@synthesize btnHelp;
 @synthesize btnOpenOptions;
 @synthesize btnPurchase;
 @synthesize btnReset;
@@ -23,11 +23,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         float size = frame.size.height;
-        float gap = frame.size.width / 30;
+        float gap = frame.size.width / 20;
         float totalSpacing = size + gap;
         
         btnNextMode = [[UIButton alloc] initWithFrame:CGRectMake(gap, 0.f, size, size)];
-        [btnNextMode setTitle:[NSString stringWithFormat:@"%d",mode] forState:UIControlStateNormal];
+        [btnNextMode setTitle:[NSString stringWithFormat:@"%d",(mode + 1)] forState:UIControlStateNormal];
         btnNextMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
         btnNextMode.titleLabel.textColor = [UIColor whiteColor];
         [btnNextMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
@@ -70,16 +70,6 @@
         btnPurchase.clipsToBounds = YES;
         [self addSubview:btnPurchase];
         
-        btnHelp = [[UIButton alloc] initWithFrame: CGRectMake(gap + totalSpacing * 4.f, 0.f, size, size)];
-        [btnHelp setBackgroundColor:self.backgroundColor];
-        [btnHelp.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [btnHelp.layer setBorderWidth:BORDER_WIDTH];
-        [btnHelp.titleLabel setTextColor:[UIColor whiteColor]];
-        btnHelp.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
-        [btnHelp setTitle:@"?" forState:UIControlStateNormal];
-        btnHelp.layer.cornerRadius = 10; // this value vary as per your desire
-        btnHelp.clipsToBounds = YES;
-        [self addSubview:btnHelp];
         
     }
     return self;

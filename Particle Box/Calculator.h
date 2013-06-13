@@ -18,6 +18,7 @@
 #import "Spirals.h"
 #import "Swirl.h"
 #import "Repulsion.h"
+#import "Crazy.h"
 
 @interface Calculator : NSObject
 {

@@ -152,6 +152,9 @@ void swap(int *a,int *b){
     node = [[Suction alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
 }
 
+-(void) spawnCrazy {
+    node = [[Crazy alloc] initWithStrength:3.f Suction:1.f Position:VEC2(0, 0) dimesions:dims];
+}
 -(void) spawnExtraInternalNodes:(int)number {
     int screen_divisor = number + 1;
     for (int i = 0; i < number; i++) {
@@ -161,6 +164,7 @@ void swap(int *a,int *b){
 
 -(void) setForceNode:(int)nodeNumber {
     currentNodeType = nodeNumber;
+    
     NodeList nodeList = [node getNodeList];
     //NSLog(@"\nGot node List");
     [node deleteNodes];
@@ -192,6 +196,9 @@ void swap(int *a,int *b){
             break;
         case ROSE:
             [self spawnRose];
+            break;
+        case CRAZY:
+            [self spawnCrazy];
             break;
         default:
             [self spawnNode];

@@ -66,11 +66,27 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
         numAvailableModes = NUM_FMODE_TYPES;
         numFingers = 0;
         
-        adds = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
-        [adds setHidden:YES];
-        [glview addSubview:adds];
+        NSLog(@"Started");
+        
+        [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray* products) {
+            if (success) {
+                _products = products;
+                if (![[BoxIAP sharedInstance] productPurchased:((SKProduct *)_products[0]).productIdentifier]) {
+                    adds = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
+                    [glview addSubview:adds];
+                    numAvailableModes = NUM_FMODE_TYPES / 2;
+                } else {
+                    numAvailableModes = NUM_FMODE_TYPES;
+                    [smallMenu.btnPurchase setHidden:YES];
+                }
+            }
+        }];
+        
+        
         
         [self synchroniseOptionSettings];
+        
+        hidingSmallMenue = NO;
     }
     return self;
 }
@@ -159,17 +175,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 }
 
--(void) purchase {
-    [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray* products) {
-        if (success) {
-            for (SKProduct * skproduct in products) {
-                //NSLog(@"",skproduct.productIdentifier);
-            }
-        }
-    }];
-    
-}
-
 -(void) openOptions {
     [renderLink setPaused:YES];
     [adds removeFromSuperview];
@@ -224,7 +229,17 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
     [smallMenu.btnReset addTarget:calc action:@selector(resetParticles) forControlEvents:UIControlEventTouchUpInside];
     
-    [smallMenu.btnPurchase addTarget:self action:@selector(purchase) forControlEvents:UIControlEventTouchUpInside];
+    [smallMenu.btnPurchase addTarget:self action:@selector(makePurchase) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void) makePurchase {
+    [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            SKProduct* buyProduct = _products[0];
+            NSLog(@"Buying %@",buyProduct.productIdentifier);
+            [[BoxIAP sharedInstance] buyProduct:buyProduct];
+        }
+    }];
 }
 
 -(void) render:(CADisplayLink*) link  {
@@ -265,10 +280,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     
 }
 
--(void) showHelp {
-    
-}
 -(void) hideMenu {
+    hidingSmallMenue = YES;
     CGRect initial = smallMenu.frame;
     initial.origin.x = -initial.size.width;
     CGRect final = smallMenu.frame;
@@ -280,6 +293,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
             [smallMenu setHidden:smallMenuOpen];
             smallMenu.frame = final;
             smallMenuOpen = !smallMenuOpen;
+            hidingSmallMenue = NO;
         }];
     } else {
         [smallMenu setHidden:smallMenuOpen];
@@ -288,6 +302,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
             smallMenu.frame = final;
         }completion:^(BOOL finished) {
             smallMenuOpen = !smallMenuOpen;
+            hidingSmallMenue = NO;
         }];
     }
 }
@@ -301,7 +316,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     [self pause];
     int tmp = [calc currentNodeType];
     tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
-    [self.smallMenu.btnNextMode setTitle:[NSString stringWithFormat:@"%d",tmp] forState:UIControlStateNormal];
+    [self.smallMenu.btnNextMode setTitle:[NSString stringWithFormat:@"%d",(tmp + 1)] forState:UIControlStateNormal];
     [calc setForceNode:tmp];
     [self resume];
 }
@@ -317,7 +332,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (smallMenuOpen)
+    if (smallMenuOpen && !hidingSmallMenue)
         [self hideMenu];
     for (int i = 0 ; i < [touches count]; i++) {
         CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
@@ -360,17 +375,41 @@ void delay (clock_t delayTime) {
 
 -(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
     NSLog(@"Error loading");
-    [adds setHidden:YES];
+    //[adds setHidden:YES];
 }
 
 -(void)bannerViewDidLoadAd:(ADBannerView *)banner{
     NSLog(@"Ad loaded");
 }
+
 -(void)bannerViewWillLoadAd:(ADBannerView *)banner{
     NSLog(@"Ad will load");
 }
+
 -(void)bannerViewActionDidFinish:(ADBannerView *)banner{
     NSLog(@"Ad did finish");
     
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)productPurchased:(NSNotification *)notification {
+    
+    NSString * productIdentifier = notification.object;
+    [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
+        if ([product.productIdentifier isEqualToString:productIdentifier]) {
+            [adds removeFromSuperview];
+            [smallMenu.btnPurchase setHidden:YES];
+            numAvailableModes = 10;
+        }
+    }];
+    
+}
+
 @end
