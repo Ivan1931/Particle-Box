@@ -75,9 +75,11 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                     adds = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
                     [glview addSubview:adds];
                     numAvailableModes = NUM_FMODE_TYPES / 2;
+                    addsAvailable = YES;
                 } else {
                     numAvailableModes = NUM_FMODE_TYPES;
                     [smallMenu.btnPurchase setHidden:YES];
+                    addsAvailable = NO;
                 }
             }
         }];
@@ -177,7 +179,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 -(void) openOptions {
     [renderLink setPaused:YES];
-    [adds removeFromSuperview];
+    if (addsAvailable)
+        [adds removeFromSuperview];
     self.view  = optionPane;
     CGRect inititialFrame = self.view.frame;
     inititialFrame.origin.y = -height;
@@ -216,7 +219,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                                 animations:^{
                                     self.view.frame = finalForm;
                                 }  completion:^(BOOL finished) {
-                                    [glview addSubview:adds];
+                                    if (addsAvailable)
+                                        [glview addSubview:adds];
                                     [renderLink setPaused:NO];
                                 }];
                      }];
@@ -376,6 +380,8 @@ void delay (clock_t delayTime) {
 -(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
     NSLog(@"Error loading");
     //[adds setHidden:YES];
+    [adds removeFromSuperview];
+    addsAvailable = NO;
 }
 
 -(void)bannerViewDidLoadAd:(ADBannerView *)banner{
@@ -407,6 +413,7 @@ void delay (clock_t delayTime) {
             [adds removeFromSuperview];
             [smallMenu.btnPurchase setHidden:YES];
             numAvailableModes = 10;
+            addsAvailable = NO;
         }
     }];
     

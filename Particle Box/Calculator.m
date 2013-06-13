@@ -119,11 +119,11 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnGraviton {
-    node = [[Graviton alloc] initWithStrength:10.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
+    node = [[Graviton alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} dimesions:dims];
 }
 
 -(void) spawnWhirl {
-    node = [[Whirl alloc] initWithStrength:15.f Suction:3.f Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
+    node = [[Whirl alloc] initWithStrength:15.f Suction:5.f Position:(Vec2){dims.x / 6, dims.y / 6} Clockwise:TRUE screenDimesions:dims];
     
 }
 

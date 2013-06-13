@@ -27,7 +27,7 @@
     float disy = node.position.y - particle.position.y;
     float squ_d = powf(fabsf(disx) + fabsf(disy),2);
     Vec2 a = {0.f,0.f};
-    if (squ_d >= strength) {
+    if (squ_d >= strength + 1) {
         float puller = 1.f / squ_d * strength;
         a.x =   disx * puller;
         a.y =   disy * puller;
