@@ -13,7 +13,7 @@ typedef unsigned char byte;
 
 #define Clamp255(a) (a>255 ? 255 : a)
 
-const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
+const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 
 
 @implementation Engine
@@ -49,14 +49,16 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
         
         [self.glview addSubview:menuButton];
         //Add the small menu and make it invisible for now
-        smallMenu = [[SmallMenuView alloc] initWithFrame:CGRectMake(_size, height - 2 * _size, width, _size) forceMode:0];
-        
-        [smallMenu setHidden:YES];
+        smallMenu = [[SmallMenuView alloc] initWithFrame:CGRectMake(width, height - 2 * _size, width, _size) forceMode:0];
         smallMenuOpen = NO;
         [self.glview addSubview:smallMenu];
         [self setTargetsForSmallMenuBtns];
         
-        optionPane = [[OptionPane alloc] initWithFrame:size];
+        helpView = [[HelpView alloc] initWithFrame:CGRectMake(0.f, height, width, height)];
+        [self.glview addSubview:helpView];
+        [helpView.btnExit addTarget:self action:@selector(hideHelp) forControlEvents:UIControlEventTouchUpInside];
+        
+        optionPane = [[OptionPane alloc] initWithFrame:CGRectMake(0, -height, width, height)];
         [optionPane.btnExit addTarget:self action:@selector(closeOptions) forControlEvents:UIControlEventTouchUpInside];
         //
         
@@ -66,29 +68,12 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
         numAvailableModes = NUM_FMODE_TYPES;
         numFingers = 0;
         
-        NSLog(@"Started");
-        
-        [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray* products) {
-            if (success) {
-                _products = products;
-                if (![[BoxIAP sharedInstance] productPurchased:((SKProduct *)_products[0]).productIdentifier]) {
-                    adds = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
-                    [glview addSubview:adds];
-                    numAvailableModes = NUM_FMODE_TYPES / 2;
-                    addsAvailable = YES;
-                } else {
-                    numAvailableModes = NUM_FMODE_TYPES;
-                    [smallMenu.btnPurchase setHidden:YES];
-                    addsAvailable = NO;
-                }
-            }
-        }];
-        
-        
-        
         [self synchroniseOptionSettings];
         
-        hidingSmallMenue = NO;
+        animatingSmallMenu = NO;
+        animatingHelpView = NO;
+        
+        stickyFingers = NO;
     }
     return self;
 }
@@ -179,8 +164,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 -(void) openOptions {
     [renderLink setPaused:YES];
-    if (addsAvailable)
-        [adds removeFromSuperview];
     self.view  = optionPane;
     CGRect inititialFrame = self.view.frame;
     inititialFrame.origin.y = -height;
@@ -192,7 +175,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
             animations:^{
                 self.view.frame = finalFrame;
             }completion:^(BOOL finished){
-                [self hideMenu];
+                [self hideSmallMenu];
             }];
     
 }
@@ -203,7 +186,8 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     CGRect finalForm = self.view.frame;
     CGRect glviewInitialForm = CGRectMake(0, -height, width, height);
     [self synchroniseOptionSettings];
-    [calc.node deleteNodes];
+    if(!stickyFingers)
+        [calc.node deleteNodes];
     [UIView animateWithDuration:0.5
                           delay:0.0
                         options: UIViewAnimationOptionCurveEaseOut
@@ -219,37 +203,92 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
                                 animations:^{
                                     self.view.frame = finalForm;
                                 }  completion:^(BOOL finished) {
-                                    if (addsAvailable)
-                                        [glview addSubview:adds];
+                                    [self saveSettings];
                                     [renderLink setPaused:NO];
                                 }];
                      }];
 }
+
+-(void) saveSettings {
+    float red = ((LabeledSlider *)optionPane.sldrColors[0]).slider.value;
+    float green = ((LabeledSlider *)optionPane.sldrColors[1]).slider.value ;
+    float blue = ((LabeledSlider *)optionPane.sldrColors[2]).slider.value;
+    
+    float particles = (int)optionPane.sldrNumParticle.slider.value;
+    float velocity = optionPane.sldrVelocity.slider.value;
+    float thickness = optionPane.sldrThickness.slider.value;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setFloat:red forKey:@KEY_RED];
+    [defaults setFloat:green forKey:@KEY_GREEN];
+    [defaults setFloat:blue forKey:@KEY_BLUE];
+    
+    [defaults setFloat:particles forKey:@KEY_NUM_PARTICLES];
+    [defaults setFloat:velocity forKey:@KEY_VELOCITY];
+    [defaults setFloat:thickness forKey:@KEY_THICKNESS];
+    
+}
+
+-(float) loadFloatFromUserDefaultsForKey:(NSString *)key {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults floatForKey:key];
+}
+
+-(void) saveFloatToUserDefaults:(float)x forKey:(NSString *)key {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setFloat:x forKey:key];
+    [userDefaults synchronize];
+}
+
 -(void) setTargetsForSmallMenuBtns {
     //
     [smallMenu.btnNextMode addTarget:self action:@selector(cycleThroughFNodes:) forControlEvents:UIControlEventTouchUpInside];
-        
+    [smallMenu.btnPreviousMode addTarget:self action:@selector(cycleBackThroughForceNodes) forControlEvents:UIControlEventTouchUpInside];
     [smallMenu.btnOpenOptions addTarget:self action:@selector(openOptions) forControlEvents:UIControlEventTouchUpInside];
+    [smallMenu.btnStickyFingers addTarget:self action:@selector(stickyFingersSelected) forControlEvents:UIControlEventTouchUpInside];
+    [smallMenu.btnHelp addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
     
-    [smallMenu.btnReset addTarget:calc action:@selector(resetParticles) forControlEvents:UIControlEventTouchUpInside];
-    
-    [smallMenu.btnPurchase addTarget:self action:@selector(makePurchase) forControlEvents:UIControlEventTouchUpInside];
-}
-
--(void) makePurchase {
-    [[BoxIAP sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            SKProduct* buyProduct = _products[0];
-            NSLog(@"Buying %@",buyProduct.productIdentifier);
-            [[BoxIAP sharedInstance] buyProduct:buyProduct];
-        }
-    }];
 }
 
 -(void) render:(CADisplayLink*) link  {
     [calc calculate:link];
     [self draw];
     
+}
+
+-(void) showHelp {
+    if (!animatingHelpView) {
+        CGRect final = helpView.frame;
+        final.origin.y = 0.f;
+        animatingHelpView = YES;
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^(void) {
+                             helpView.frame = final;
+                         }
+                         completion:^(BOOL completion) {
+                             animatingHelpView = NO;
+                         }];
+    }
+}
+
+-(void) hideHelp {
+    if (!animatingHelpView) {
+        CGRect final = helpView.frame;
+        final.origin.y = height;
+        animatingHelpView = YES;
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^(void) {
+                             helpView.frame = final;
+                         }
+                         completion:^(BOOL completion) {
+                             animatingHelpView = NO;
+                         }];
+    }
 }
 
 -(void) synchroniseOptionSettings {
@@ -280,33 +319,56 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void)menuButtonSelected {
-    [self hideMenu];
+    if (smallMenuOpen)
+        [self hideSmallMenu];
+    else
+        [self showSmallMenu];
     
 }
 
--(void) hideMenu {
-    hidingSmallMenue = YES;
-    CGRect initial = smallMenu.frame;
-    initial.origin.x = -initial.size.width;
-    CGRect final = smallMenu.frame;
-    if (smallMenuOpen) {
-        smallMenu.frame = final;
+-(void) stickyFingersSelected {
+    if (!stickyFingers)
+        [self stickyFingersOn];
+    else
+        [self stickyFingersOff];
+}
+
+-(void) stickyFingersOn {
+    stickyFingers = YES;
+    [smallMenu.btnStickyFingers setTitle:@STICKY_FINGER_ON_STR forState:UIControlStateNormal];
+}
+
+-(void) stickyFingersOff {
+    stickyFingers = NO;
+    [smallMenu.btnStickyFingers setTitle:@STICKY_FINGER_OFF_STR forState:UIControlStateNormal];
+    [calc.node deleteNodes];
+    [calc resetParticles];
+}
+
+-(void) hideSmallMenu {
+    if (!animatingSmallMenu && smallMenuOpen) {
+        animatingSmallMenu = YES;
+        CGRect final = smallMenu.frame;
+        final.origin.x = -smallMenu.frame.size.width;
         [UIView animateWithDuration:0.5 animations:^{
-            smallMenu.frame = initial;
-        }completion:^(BOOL finished) {
-            [smallMenu setHidden:smallMenuOpen];
             smallMenu.frame = final;
-            smallMenuOpen = !smallMenuOpen;
-            hidingSmallMenue = NO;
+        }completion:^(BOOL finished) {
+            smallMenuOpen = NO;
+            animatingSmallMenu = NO;
         }];
-    } else {
-        [smallMenu setHidden:smallMenuOpen];
-        smallMenu.frame = initial;
+    }
+}
+
+-(void) showSmallMenu {
+    if (!animatingSmallMenu && !smallMenuOpen) {
+        animatingSmallMenu = YES;
+        CGRect final = smallMenu.frame;
+        final.origin.x = menuButton.bounds.origin.x + menuButton.bounds.size.width;
         [UIView animateWithDuration:0.5 animations:^{
             smallMenu.frame = final;
         }completion:^(BOOL finished) {
-            smallMenuOpen = !smallMenuOpen;
-            hidingSmallMenue = NO;
+            smallMenuOpen = YES;
+            animatingSmallMenu = NO;
         }];
     }
 }
@@ -319,8 +381,15 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
     //NSLog(@"Mode increased");
     [self pause];
     int tmp = [calc currentNodeType];
-    tmp = (tmp == numAvailableModes - 1) ? 0 : tmp + 1;
-    [self.smallMenu.btnNextMode setTitle:[NSString stringWithFormat:@"%d",(tmp + 1)] forState:UIControlStateNormal];
+    tmp = (tmp >= numAvailableModes - 1) ? 0 : tmp + 1;
+    [calc setForceNode:tmp];
+    [self resume];
+}
+
+-(void) cycleBackThroughForceNodes {
+    [self pause];
+    int tmp = [calc currentNodeType];
+    tmp = (tmp == 0) ? NUM_FMODE_TYPES - 1 : tmp - 1;
     [calc setForceNode:tmp];
     [self resume];
 }
@@ -336,14 +405,34 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (smallMenuOpen && !hidingSmallMenue)
-        [self hideMenu];
-    for (int i = 0 ; i < [touches count]; i++) {
-        CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
-        [calc.node addNode:VEC2(point.x, point.y)];
+    [self hideSmallMenu];
+    numFingers += [touches count];
+    if (!stickyFingers) {
+        for (int i = 0; i < [touches count]; i++) {
+            CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+            [calc.node addNode:VEC2(point.x, point.y)];
+        }
+    } else {
+        if (numFingers > [[calc node] getNumberNodes]) {
+            int nodesToAdd = numFingers - [[calc node] getNumberNodes];
+            int nodesToMove = [touches count] - nodesToAdd;
+            for (int  i = 0 ; i < nodesToMove; i++) {
+                CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+                [calc moveGravity:point];
+
+            }
+            for (int i = nodesToMove ; i < [touches count]; i++) {
+                CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+                [calc.node addNode:VEC2(point.x, point.y)];
+
+            }
+        } else {
+            for (int i = 0 ; i < [touches count]; i++) {
+                CGPoint p = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+                [calc moveGravity:p];
+            }
+        }
     }
-       
-   
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -355,15 +444,18 @@ const float BUTTON_WIDTH_RATIO = 1.f / 10.f;
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     numFingers -= [touches count];
-    for (int i = 0 ; i < [touches count]; i++) {
-            CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
-            [calc.node deleteNode:VEC2(point.x, point.y)];
+    if (!stickyFingers) {
+        for (int i = 0 ; i < [touches count]; i++) {
+                CGPoint point = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
+                [calc.node deleteNode:VEC2(point.x, point.y)];
+        }
     }
 }
 
 -(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [calc.node deleteNodes];
-    [self hideMenu];
+    [self hideSmallMenu];
+    numFingers = 0;
 }
 
 void delay (clock_t delayTime) {
@@ -375,48 +467,11 @@ void delay (clock_t delayTime) {
 }
 
 
-#pragma mark - AdViewDelegates
-
--(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
-    NSLog(@"Error loading");
-    //[adds setHidden:YES];
-    [adds removeFromSuperview];
-    addsAvailable = NO;
-}
-
--(void)bannerViewDidLoadAd:(ADBannerView *)banner{
-    NSLog(@"Ad loaded");
-}
-
--(void)bannerViewWillLoadAd:(ADBannerView *)banner{
-    NSLog(@"Ad will load");
-}
-
--(void)bannerViewActionDidFinish:(ADBannerView *)banner{
-    NSLog(@"Ad did finish");
-    
-}
-
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)productPurchased:(NSNotification *)notification {
-    
-    NSString * productIdentifier = notification.object;
-    [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
-        if ([product.productIdentifier isEqualToString:productIdentifier]) {
-            [adds removeFromSuperview];
-            [smallMenu.btnPurchase setHidden:YES];
-            numAvailableModes = 10;
-            addsAvailable = NO;
-        }
-    }];
-    
-}
 
 @end

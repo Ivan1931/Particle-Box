@@ -16,11 +16,19 @@ const int LOW_COLOR_THRESH = 50;
 
 @implementation Suction
 
+-(id) initWithStrength:(float)pstrength Suction:(float)psuction Position:(Vec2)xy dimesions:(Vec2)pdims {
+    self = [super initWithStrength:pstrength Suction:psuction Position:xy dimesions:pdims];
+    if (self) {
+        [self computeMidPnts];
+    }
+    return self;
+}
+
 -(BOOL) influenceParticle:(Particle *)particle {
-    
-    if (numNodes < 2) {
-        [super influenceParticle:particle];
-        return NO;
+    if (![super influenceParticle:particle]) return NO;
+    if (numNodes == 1) {
+        [self singleNodeSuction:particle];
+        return YES;
     }
     int nextNode = 0;
     for (int i = 0; i < numNodes; i++) {
@@ -35,28 +43,44 @@ const int LOW_COLOR_THRESH = 50;
     return YES;
 }
 
+-(void) singleNodeSuction:(Particle *) particle {
+    Vec2 d = computeXYDiff(particle.position, nodes[0].position);
+    float distance = computeDistance(particle.position, nodes[0].position);
+    if (distance < strength * 2) {
+        [particle setPosition:VEC2(RANFLOAT * dimesions.x, RANFLOAT * dimesions.y)];
+        [particle bringToCurrent];
+        [particle resetVelocity];
+    } else {
+        Vec2 a = VEC2(-2.f * sinf(d.x / distance), -2.f * sinf(d.y /distance));
+        [particle setVelocity:a];
+    }
+}
+
 -(void) suctionBetween:(Node) node :(Node) node0 withParticle:(Particle *) particle {
-    [super influenceParticle:particle];
     Vec2 midpnt = midPnts[node.ID];
     Vec2 d = computeXYDiff(particle.position, midpnt);
     
     float nodeDistance  = nodeDistances[node.ID];
     float particleDistance = computeDistance(particle.position, midpnt);
-    if (particleDistance < strength || [particle outOfBounds:nothing :dimesions ]) {
-        
-        [particle setPosition:VEC2(RANFLOAT * dimesions.x, RANFLOAT * dimesions.y)];
-        [particle bringToCurrent];
-        [particle setColor:node.nodeColor];
-        [particle resetVelocity];
-        
-    } else if (particleDistance < nodeDistance && particleDistance != 0 && nodeDistance != 0) {
+    if (particleDistance < strength * 2 || [particle outOfBounds:nothing :dimesions]) {
+        do {
+            [particle setPosition:VEC2(RANFLOAT * dimesions.x, RANFLOAT * dimesions.y)];
+            [particle bringToCurrent];
+            [particle setColor:node.nodeColor];
+            [particle resetVelocity];
+        } while (computeDistance(particle.position, midpnt) < strength * 2);
+    } else if (particleDistance < nodeDistance && nodeDistance != 0) {
         
         float strengthRatio = nodeDistance / nodeDistance;
-        [particle setVelocity:VEC2(-(strengthRatio * strength * d.x) / (particleDistance)
-                                , -(strengthRatio * strength * d.y) / (particleDistance))];
+        [particle setVelocity:VEC2(-(strengthRatio * strength * d.x) / particleDistance
+                                , -(strengthRatio * strength * d.y) / particleDistance)];
         
     } else {
         [self brownianEffect:particle];
+        Vec2 a = VEC2(-sinf(d.x / nodeDistance), -sinf(d.y /nodeDistance));
+        a.x *= 0.1f;
+        a.y *= 0.1f;
+        [particle addAcceleration:a];
     }
 }
 
@@ -76,6 +100,11 @@ const int LOW_COLOR_THRESH = 50;
 
 -(void) addNode:(Vec2)pposition {
     [super addNode:pposition];
+    [self computeMidPnts];
+}
+
+-(void) addNodeList:(NodeList)list {
+    [super addNodeList:list];
     [self computeMidPnts];
 }
 

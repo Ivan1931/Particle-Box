@@ -149,7 +149,7 @@ void swap(int *a,int *b){
 }
 
 -(void) spawnSuction {
-    node = [[Suction alloc] initWithStrength:10.f Suction:3.f Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
+    node = [[Suction alloc] initWithStrength:3.f Suction:10.f Position:VEC2(dims.x/ 2.f, dims.y / 2.f) dimesions:dims];
 }
 
 -(void) spawnCrazy {
@@ -164,11 +164,8 @@ void swap(int *a,int *b){
 
 -(void) setForceNode:(int)nodeNumber {
     currentNodeType = nodeNumber;
-    
     NodeList nodeList = [node getNodeList];
-    //NSLog(@"\nGot node List");
     [node deleteNodes];
-    //NSLog(@"Deleted nodes");
     switch (nodeNumber) {
         case BACK_SHOT:
             [self spawnBackShot];
@@ -204,9 +201,7 @@ void swap(int *a,int *b){
             [self spawnNode];
             break;
     }
-    //NSLog(@"Changed node type");
     [node addNodeList:nodeList];
-    //NSLog(@"Finished\n");
 
 }
 

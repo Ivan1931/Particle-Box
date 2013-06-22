@@ -15,13 +15,12 @@
 #include "SmallMenuView.h"
 #include "GLView.h"
 #import "OptionPane.h"
-#import "BoxIAP.h"
-
-
+#import "PurchaseMenu.h"
+#import "HelpView.h"
 
 extern const float BUTTON_WIDTH_RATIO;
 
-@interface Engine : UIViewController <ADBannerViewDelegate>
+@interface Engine : UIViewController
 {
     @public
     Calculator *calc;
@@ -32,6 +31,7 @@ extern const float BUTTON_WIDTH_RATIO;
     UIButton *menuButton;    
     SmallMenuView *smallMenu;
     OptionPane *optionPane;
+    HelpView *helpView;
     
     NSUInteger len;
     
@@ -57,17 +57,11 @@ extern const float BUTTON_WIDTH_RATIO;
     GLfloat color[4];
     //////////////////
     uint numberOfParticles;
-    
     uint numFingers;
-    
-    NSArray *_products;
-    
-    //IADs stuff
-    ADBannerView *adds;
-    BOOL addsAvailable;
-    
-    BOOL hidingSmallMenue;
-    
+    BOOL stickyFingers;
+        
+    BOOL animatingSmallMenu;
+    BOOL animatingHelpView;
 }
 
 @property (nonatomic, strong) UIButton *menuButton;

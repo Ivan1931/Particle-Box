@@ -30,14 +30,12 @@
         [self setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1.f]];
         sldrColors = [[NSMutableArray alloc] init];
         NSArray *labelText = [[NSArray alloc] initWithObjects:@RED_STR, @GREEN_STR, @BLUE_STR,  nil];
-        float default_colors[3] = {DEFAULT_RED,DEFAULT_GREEN,DEFAULT_BLUE};
         LabeledSlider *tmp;
         for (int i = 0 ; i < N_COL_SLDRS; i++) {
             CGRect sliderFrame = CGRectMake(X_OFFSET, OFFSET + (GAP_BTW_SLDRS + SLDR_HEIGHT) * i, SLDR_WIDTH, SLDR_HEIGHT);
             tmp = [[LabeledSlider alloc] initWithFrame:sliderFrame withTex:[labelText objectAtIndex:i]];
             [tmp.slider setMinimumValue:0.f];
             [tmp.slider setMaximumValue:1.f];
-            [tmp.slider setValue:default_colors[i]];
             [tmp.label setBackgroundColor:self.backgroundColor];
             [tmp.label setTextColor:[UIColor whiteColor]];
             [tmp.slider addTarget:self action:@selector(updateComponentsColor) forControlEvents:UIControlEventValueChanged];
@@ -50,7 +48,6 @@
         [sldrThickness.slider setMaximumValue:MAX_THICKNESS];
         [sldrThickness.label setTextColor:[UIColor whiteColor]];
         [sldrThickness.label setBackgroundColor:self.backgroundColor];
-        [sldrThickness.slider setValue:DEFAULT_THICKNESS];
         [self addSubview:sldrThickness];
 
         CGRect numParticlesFrame = CGRectMake(thicknessFrame.origin.x,
@@ -60,7 +57,6 @@
         [sldrNumParticle.slider setMaximumValue:MAX_PARTICLES];
         [sldrNumParticle.label setBackgroundColor:self.backgroundColor];
         [sldrNumParticle.label setTextColor:[UIColor whiteColor]];
-        [sldrNumParticle.slider setValue:DEFAULT_INITIAL_PARTICLES];
         [self addSubview:sldrNumParticle];
 
         CGRect velocityFrame = CGRectMake(numParticlesFrame.origin.x,
@@ -70,7 +66,6 @@
         [sldrVelocity.slider setMaximumValue:MAX_VELOCITY_MULTIPLYER];
         [sldrVelocity.label setBackgroundColor:self.backgroundColor];
         [sldrVelocity.label setTextColor:[UIColor whiteColor]];
-        [sldrVelocity.slider setValue:DEFAULT_VEL_MULT];
         [self addSubview:sldrVelocity];
 
         CGRect buttonFrame = CGRectMake(0,
@@ -88,11 +83,49 @@
         [labOptions setTextColor:[UIColor whiteColor]];
         [self addSubview:labOptions];
         
+        [self setSliderValues];
+        
         [self updateComponentsColor];
 
 
     }
     return self;
+}
+
+
+-(void) setSliderValues {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([defaults valueForKey:@KEY_RED] != nil)
+        [((LabeledSlider *) sldrColors[0]).slider setValue:[defaults floatForKey:@KEY_RED]];
+    else
+        [((LabeledSlider *) sldrColors[0]).slider setValue:DEFAULT_RED];
+    
+    if ([defaults valueForKey:@KEY_GREEN] != nil)
+        [((LabeledSlider *) sldrColors[1]).slider setValue:[defaults floatForKey:@KEY_GREEN]];
+    else
+        [((LabeledSlider *) sldrColors[1]).slider setValue:DEFAULT_GREEN];
+    
+    if ([defaults valueForKey:@KEY_BLUE] != nil)
+        [((LabeledSlider *) sldrColors[2]).slider setValue:[defaults floatForKey:@KEY_BLUE]];
+    else
+        [((LabeledSlider *) sldrColors[2]).slider setValue:DEFAULT_BLUE];
+    
+    if ([defaults valueForKey:@KEY_NUM_PARTICLES] != nil)
+        [sldrNumParticle.slider setValue:[defaults floatForKey:@KEY_NUM_PARTICLES ]];
+    else
+        [sldrNumParticle.slider setValue:DEFAULT_INITIAL_PARTICLES];
+    
+    if ([defaults valueForKey:@KEY_THICKNESS] != nil)
+        [sldrThickness.slider setValue:[defaults floatForKey:@KEY_THICKNESS ]];
+    else
+        [sldrThickness.slider setValue:DEFAULT_THICKNESS];
+    
+    if ([defaults valueForKey:@KEY_VELOCITY] != nil)
+        [sldrVelocity.slider setValue:[defaults floatForKey:@KEY_VELOCITY ]];
+    else
+        [sldrVelocity.slider setValue:DEFAULT_VEL_MULT];
+        
 }
 
 -(void) updateComponentsColor {
@@ -109,6 +142,18 @@
     [sldrThickness.label setTextColor:actualColor];
     [sldrVelocity.label setTextColor:actualColor];
     [sldrNumParticle.label setTextColor:actualColor];
+}
+
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+
+-(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 }
 /*
 // Only override drawRect: if you perform custom drawing.

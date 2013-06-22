@@ -9,7 +9,7 @@
 #import "Spirals.h"
 
 
-#define RINGS 100.f
+#define RINGS 60.f
 #define PULLIN 2.f
 #define COLOR_CHNG_FREQ 600
 
@@ -19,7 +19,6 @@
     self = [super initWithStrength:pstrength Suction:pstrength Position:xy dimesions:pdims];
     if (self) {
         colorChangeCount = 0;
-        effectDistance = strength * 5.f;
         [self calculateEffectLocation];
         CHANGECOLOR(col, MIN_RGB_VAL);
     }
@@ -56,18 +55,40 @@
     } else {
         [particle setVelocity:a];
     }
+    if (particle.velocity.x == 0) {
+        [particle addAcceleration:VEC2(RAND_ZERO_ONE(), 0.f)];
+    } else if (particle.velocity.y == 0) {
+        [particle addAcceleration:VEC2(0.f, RAND_ZERO_ONE())];
+    } else if (particle.velocity.y / particle.velocity.x == 1.f || particle.velocity.y / particle.velocity.x == -1.f) {
+        [particle addAcceleration:VEC2(RAND_ZERO_ONE(), RAND_ZERO_ONE())];
+    }
 }
 
 -(void) calculateEffectLocation {
-    float totalx = 0.f;
-    float totaly = 0.f;
-    for (int i = 0; i < numNodes; i++) {
-        totalx += nodes[i].position.x;
-        totaly += nodes[i].position.y;
+    if (numNodes > 0) {
+        float totalx = 0.f;
+        float totaly = 0.f;
+        for (int i = 0; i < numNodes; i++) {
+            totalx += nodes[i].position.x;
+            totaly += nodes[i].position.y;
+        }
+        effectLocation = VEC2(totalx / numNodes, totaly / numNodes);
+        if (numNodes == 1)
+            effectDistance = RINGS;
+        else {
+            effectDistance = 0;
+            for (int i = 0 ; i < numNodes; i++) {
+                effectDistance += computeDistance(nodes[i].position, effectLocation);
+            }
+            effectDistance /= numNodes;
+        }
     }
-    effectLocation = VEC2(totalx / numNodes, totaly / numNodes);
 }
 
+-(void) addNodeList:(NodeList)list {
+    [super addNodeList:list];
+    [self calculateEffectLocation];
+}
 -(void) addNode:(Vec2)position {
     [super addNode:position];
     [self calculateEffectLocation];

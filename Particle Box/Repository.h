@@ -15,6 +15,23 @@
 #define RANFLOAT ((float)arc4random() / (float)RAND_MAX)
 #define RAND_ZERO_ONE() (((float) arc4random () / (float)RAND_MAX) - 1.f)
 #define RAND_BETWEEN(a,b)((a) + arc4random() % (((b) - (a)) + 1))
+
+#define KEY_RED "RED"
+#define KEY_BLUE "BLUE"
+#define KEY_GREEN "GREEN"
+#define KEY_VELOCITY "VELOCITY"
+#define KEY_THICKNESS "THICKNESS"
+#define KEY_NUM_PARTICLES "NUM_P"
+
+#define STICKY_FINGER_ON_STR "O"
+#define STICKY_FINGER_OFF_STR "I"
+
+#define PLUS_IMG_STR "plus.png"
+#define MINUS_IMG_STR "minu.png"
+#define SETTINGS_IMG_STR "ios_setting cog.png"
+#define Q_MARK_IMG_STR "qmark.png"
+#define STICKY_BTN_IMG_STR "stickybtn"
+
 typedef struct {
     Byte r;
     Byte g;

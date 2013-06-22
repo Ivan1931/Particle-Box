@@ -11,18 +11,20 @@
 @interface SmallMenuView : UIView {
     @private
     UIButton *btnNextMode;
-    UIButton *btnPurchase;
+    UIButton *btnPreviousMode;
+    UIButton *btnHelp;
     UIButton *btnOpenOptions;
-    UIButton *btnReset;
+    UIButton *btnStickyFingers;
     
     int modeNumber;
     
 }
 
 @property (nonatomic, strong) UIButton *btnNextMode;
-@property (nonatomic, strong) UIButton *btnPurchase;
+@property (nonatomic, strong) UIButton *btnHelp;
 @property (nonatomic, strong) UIButton *btnOpenOptions;
-@property (nonatomic, strong) UIButton *btnReset;
+@property (nonatomic, strong) UIButton *btnStickyFingers;
+@property (nonatomic, strong) UIButton *btnPreviousMode;
 
 -(id) initWithFrame:(CGRect)frame forceMode:(int) mode;
 

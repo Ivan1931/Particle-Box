@@ -8,67 +8,72 @@
 
 #import "SmallMenuView.h"
 #define CAMMERA_BTN_IMG_STR "cammera.png"
-#define FONT_SIZE 50
-#define BORDER_WIDTH 2.f
+#define FONT_SIZE 70
+#define BORDER_WIDTH 3.f
+
+#define PLUS_IMG_STR "plus.png"
+#define MINUS_IMG_STR "minu.png"
+#define SETTINGS_IMG_STR "ios_setting cog.png"
+#define Q_MARK_IMG_STR "qmark.png"
 
 @implementation SmallMenuView
 
-//@synthesize btnHelp;
 @synthesize btnOpenOptions;
-@synthesize btnPurchase;
-@synthesize btnReset;
+@synthesize btnHelp;
+@synthesize btnStickyFingers;
 @synthesize btnNextMode;
+@synthesize btnPreviousMode;
 
 -(id) initWithFrame:(CGRect) frame forceMode:(int) mode {
     self = [super initWithFrame:frame];
     if (self) {
         float size = frame.size.height;
-        float gap = frame.size.width / 20;
+        float gap = frame.size.width / 22;
         float totalSpacing = size + gap;
         
+        [self setBackgroundColor:[UIColor clearColor]];
+        
         btnNextMode = [[UIButton alloc] initWithFrame:CGRectMake(gap, 0.f, size, size)];
-        [btnNextMode setTitle:[NSString stringWithFormat:@"%d",(mode + 1)] forState:UIControlStateNormal];
-        btnNextMode.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
-        btnNextMode.titleLabel.textColor = [UIColor whiteColor];
         [btnNextMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
-        [btnNextMode.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [btnNextMode.layer setBorderWidth:BORDER_WIDTH];
-        btnNextMode.layer.cornerRadius = 15; // this value vary as per your desire
-        btnNextMode.clipsToBounds = YES;
+        [btnNextMode setImage:[UIImage imageNamed:@"plus.png"] forState:UIControlStateNormal];
+        btnNextMode.imageView.layer.cornerRadius = 10;
+        btnNextMode.imageView.clipsToBounds = YES;
         [self addSubview:btnNextMode];
         
-        btnReset = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing, 0.f, size, size)];
-        [btnReset setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
-        [btnReset.titleLabel setTextColor:[UIColor whiteColor]];
-        [btnReset setTitle:@"R" forState:UIControlStateNormal];
-        btnReset.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
-        [btnReset.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [btnReset.layer setBorderWidth:BORDER_WIDTH];
-        btnReset.layer.cornerRadius = 10; // this value vary as per your desire
-        btnReset.clipsToBounds = YES;
-        [self addSubview:btnReset];
+        btnPreviousMode = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing, 0.f, size, size)];
+        [btnPreviousMode setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]];
+        [btnPreviousMode setImage:[UIImage imageNamed:@"minu.png"] forState:UIControlStateNormal];
+        [btnPreviousMode.imageView setOpaque:YES];
+        btnPreviousMode.imageView.layer.cornerRadius = 10;
+        btnPreviousMode.imageView.clipsToBounds = YES;
+        [self addSubview:btnPreviousMode];
         
-        btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(gap + totalSpacing * 2.f, 0.f, size, size)];
-        [btnOpenOptions.titleLabel setTextColor:[UIColor whiteColor]];
-        [btnOpenOptions setTitle:@"O" forState:UIControlStateNormal];
-        btnOpenOptions.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        btnStickyFingers = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing * 2.f, 0.f, size, size)];
+        [btnStickyFingers setBackgroundColor:[UIColor blackColor]];
+        [btnStickyFingers.titleLabel setTextColor:[UIColor whiteColor]];
+        [btnStickyFingers setTitle:@STICKY_FINGER_OFF_STR forState:UIControlStateNormal];
+        btnStickyFingers.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
+        [btnStickyFingers.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [btnStickyFingers.layer setBorderWidth:BORDER_WIDTH];
+        btnStickyFingers.layer.cornerRadius = 10; // this value vary as per your desire
+        btnStickyFingers.clipsToBounds = YES;
+        [self addSubview:btnStickyFingers];
+                
+        btnOpenOptions = [[UIButton alloc] initWithFrame: CGRectMake(gap + totalSpacing * 3.f, 0.f, size, size)];
+        [btnOpenOptions setImage:[UIImage imageNamed:@"ios_setting cog.png"] forState:UIControlStateNormal];
         [btnOpenOptions setBackgroundColor:self.backgroundColor];
-        [btnOpenOptions.layer setBorderWidth:BORDER_WIDTH];
-        [btnOpenOptions.layer setBorderColor:[UIColor whiteColor].CGColor];
-        btnOpenOptions.layer.cornerRadius = 10; // this value vary as per your desire
-        btnOpenOptions.clipsToBounds = YES;
+        btnOpenOptions.imageView.layer.cornerRadius = 10;
+        btnOpenOptions.imageView.clipsToBounds = YES;
         [self addSubview:btnOpenOptions];
         
-        btnPurchase = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing * 3.f, 0.f, size, size)];
-        [btnPurchase setBackgroundColor:self.backgroundColor];
-        [btnPurchase.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [btnPurchase.layer setBorderWidth:BORDER_WIDTH];
-        [btnPurchase.titleLabel setTextColor:[UIColor whiteColor]];
-        btnPurchase.titleLabel.font = [UIFont fontWithName:@"Ariel" size:FONT_SIZE];
-        [btnPurchase setTitle:@"$" forState:UIControlStateNormal];
-        btnPurchase.layer.cornerRadius = 10; // this value vary as per your desire
-        btnPurchase.clipsToBounds = YES;
-        [self addSubview:btnPurchase];
+        btnHelp = [[UIButton alloc] initWithFrame:CGRectMake(gap + totalSpacing * 4.f, 0.f, size, size)];
+        [btnHelp setBackgroundImage:[UIImage imageNamed:@"qmark.png"] forState:UIControlStateNormal];
+        [btnHelp setBackgroundColor:self.backgroundColor];
+        btnHelp.imageView.layer.cornerRadius = 10;
+        btnHelp.imageView.clipsToBounds = YES;
+        btnHelp.layer.cornerRadius = 10;
+        btnHelp.clipsToBounds = YES;
+        [self addSubview:btnHelp];
         
         
     }

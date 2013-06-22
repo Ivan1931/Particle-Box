@@ -11,7 +11,7 @@
 #define MAX_INTERACTION 3
 #define LOWEST_VELOCITY 0.2f
 const int NUM_ITERATIONS_COLOR = 600;
-const int NUM_ITERATIONS_RESPBOX = 10;
+const int NUM_ITERATIONS_RESPBOX = 5;
 
 @implementation Rose
 
@@ -81,7 +81,10 @@ const int NUM_ITERATIONS_RESPBOX = 10;
     } else {
         //if (particleEscapeCount < ESCAPE_FREQUENCY)
         particleEscapeCount = 0;
-        [self respawnParticleInRandomBox:particle];
+        if ((randomBoxChangeTime & 0) == 0)
+            [self respawnParticleInRandomBox:particle];
+        else
+            [particle respawnInBounds:nothing :dimesions ];
         [particle bringToCurrent];
         [particle resetVelocity];
     }

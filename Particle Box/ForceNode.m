@@ -37,6 +37,8 @@
         
         nodeChangeGap = 0;
         
+        nodes = (Node*) malloc(sizeof(Node));
+        
         setRespawnBox(&dimesions, &spawnBoxUp, &spawnBoxLow, RESPAWN_AREA_S, 500);
     }
     return self;
@@ -134,7 +136,10 @@
 
 -(void) deleteNodes {
     numNodes = 0;
-    free(nodes);
+    if (nodes != NULL) {
+        free(nodes);
+        nodes = NULL;
+    }
 }
 -(int) getIndexToClosestNode:(Vec2)pposition {
     int ret = 0;

@@ -8,7 +8,7 @@
 
 #import "Repulsion.h"
 
-const float RING_RADIUS = 40.f;
+const float RING_RADIUS = 50.f;
 const int NODE_COL_CHANGE_FREQ = 1000000;
 
 
@@ -36,15 +36,8 @@ const int NODE_COL_CHANGE_FREQ = 1000000;
     if (distance != 0) {
         Vec2 d = computeXYDiff(particle.position, node.position);
         Vec2 a;
-        if (distance < RING_RADIUS) {
-            a = VEC2(-d.x / distance * suction, -d.y / distance * suction);
-            [particle setColor:node.nodeColor];
-            [particle setVelocity:a];
-        } else {
-            a = VEC2(d.x / distance * suction, d.y / distance * suction);
-            [particle addAcceleration:a];
-        }
-        
+        a = VEC2(d.x / distance * suction, d.y / distance * suction);
+        [particle addAcceleration:a];
     }
 }
 
