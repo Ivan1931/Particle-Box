@@ -22,7 +22,10 @@
     
     engine.renderLink  =[CADisplayLink displayLinkWithTarget:engine selector:@selector(render:)];
     [engine.renderLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-        
+    [engine becomeFirstResponder];
+    
+    application.applicationSupportsShakeToEdit = YES;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

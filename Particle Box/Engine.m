@@ -25,7 +25,6 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 @synthesize calculateLink;
 @synthesize glview;
 @synthesize optionPane;
-@synthesize adds;
 
 -(id) initWithSize:(CGRect)size andColor:(UIColor*)color {
     self = [super init];
@@ -46,20 +45,20 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
         [menuButton setBackgroundImage:[UIImage imageNamed:@"Untitled.png"] forState:UIControlStateNormal];
         [menuButton setOpaque:YES];
         [menuButton addTarget:self action:@selector(menuButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        
         [self.glview addSubview:menuButton];
         //Add the small menu and make it invisible for now
         smallMenu = [[SmallMenuView alloc] initWithFrame:CGRectMake(width, height - 2 * _size, width, _size) forceMode:0];
-        smallMenuOpen = NO;
         [self.glview addSubview:smallMenu];
+        smallMenuOpen = NO;
         [self setTargetsForSmallMenuBtns];
         
         helpView = [[HelpView alloc] initWithFrame:CGRectMake(0.f, height, width, height)];
         [self.glview addSubview:helpView];
         [helpView.btnExit addTarget:self action:@selector(hideHelp) forControlEvents:UIControlEventTouchUpInside];
         
-        optionPane = [[OptionPane alloc] initWithFrame:CGRectMake(0, -height, width, height)];
+        optionPane = [[OptionPane alloc] initWithFrame:CGRectMake(0.f, height, width, height)];
         [optionPane.btnExit addTarget:self action:@selector(closeOptions) forControlEvents:UIControlEventTouchUpInside];
+        [self.glview addSubview:optionPane];
         //
         
         [self.glview setMultipleTouchEnabled:YES];
@@ -163,49 +162,33 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 }
 
 -(void) openOptions {
-    [renderLink setPaused:YES];
-    self.view  = optionPane;
-    CGRect inititialFrame = self.view.frame;
-    inititialFrame.origin.y = -height;
-    CGRect finalFrame = self.view.frame;
-    self.view.frame = inititialFrame;
+    [self pause];
+    CGRect final = CGRectMake(0.f, 0.f, width, height);
     [UIView animateWithDuration:0.5
-            delay:0.0
-            options:UIViewAnimationOptionBeginFromCurrentState
-            animations:^{
-                self.view.frame = finalFrame;
-            }completion:^(BOOL finished){
-                [self hideSmallMenu];
-            }];
+                        delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                        animations:^{
+                         optionPane.frame = final;
+                        }completion:^(BOOL finished){
+                         [self hideSmallMenu];
+                        }];
     
 }
 
 -(void) closeOptions {
-    CGRect optionFrame = optionPane.frame;
-    optionFrame.origin.y = self.view.bounds.size.height;
-    CGRect finalForm = self.view.frame;
-    CGRect glviewInitialForm = CGRectMake(0, -height, width, height);
+    CGRect final = glview.frame;
+    final.origin.y = glview.frame.size.height;
     [self synchroniseOptionSettings];
+    [self saveSettings];
     if(!stickyFingers)
         [calc.node deleteNodes];
     [UIView animateWithDuration:0.5
                           delay:0.0
-                        options: UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         optionPane.frame = optionFrame;
-                     } 
-                     completion:^(BOOL finished){
-                         self.view = glview;
-                         self.view.frame = glviewInitialForm;
-                         [UIView animateWithDuration:0.5
-                                delay:0.0
-                                options:UIViewAnimationOptionBeginFromCurrentState
-                                animations:^{
-                                    self.view.frame = finalForm;
-                                }  completion:^(BOOL finished) {
-                                    [self saveSettings];
-                                    [renderLink setPaused:NO];
-                                }];
+                         optionPane.frame = final;
+                     }completion:^(BOOL finished){
+                         [self resume];
                      }];
 }
 
@@ -342,14 +325,14 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
     stickyFingers = NO;
     [smallMenu.btnStickyFingers setTitle:@STICKY_FINGER_OFF_STR forState:UIControlStateNormal];
     [calc.node deleteNodes];
-    [calc resetParticles];
+    //[calc resetParticles];
 }
 
 -(void) hideSmallMenu {
     if (!animatingSmallMenu && smallMenuOpen) {
         animatingSmallMenu = YES;
         CGRect final = smallMenu.frame;
-        final.origin.x = -smallMenu.frame.size.width;
+        final.origin.x = smallMenu.frame.size.width;
         [UIView animateWithDuration:0.5 animations:^{
             smallMenu.frame = final;
         }completion:^(BOOL finished) {
@@ -395,12 +378,10 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 }
 
 -(void) pause {
-    [calculateLink setPaused:YES];
-    [renderLink setPaused:YES];
+     [renderLink setPaused:YES];
 }
 
 -(void) resume {
-    [calculateLink setPaused:NO];
     [renderLink setPaused:NO];
 }
 
@@ -436,6 +417,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self hideSmallMenu];
     for (int i = 0 ; i < [touches count]; i++){
         CGPoint p = [[[touches allObjects] objectAtIndex:i] locationInView:glview];
         [calc moveGravity:p];
@@ -467,10 +449,25 @@ void delay (clock_t delayTime) {
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
+-(void) motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        NSLog(@"Particles Reset");
+        [calc resetParticles];
+    }
+}
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
 }
 
 

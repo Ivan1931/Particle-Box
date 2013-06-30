@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #include "Engine.h"
-#import "BoxIAP.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

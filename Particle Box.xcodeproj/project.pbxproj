@@ -40,10 +40,6 @@
 		105DDD71176A51EF00F3E75C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 105DDD6E176A51EF00F3E75C /* Icon@2x.png */; };
 		10768D361769042B008EE244 /* Crazy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10768D351769042A008EE244 /* Crazy.m */; };
 		107EAFA0176630C9003DD588 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAF9F176630C8003DD588 /* Default.png */; };
-		107EAFA317672938003DD588 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA217672937003DD588 /* IAPHelper.m */; };
-		107EAFA517672E28003DD588 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EAFA417672E28003DD588 /* StoreKit.framework */; };
-		107EAFA817672FB3003DD588 /* BoxIAP.m in Sources */ = {isa = PBXBuildFile; fileRef = 107EAFA717672FB2003DD588 /* BoxIAP.m */; };
-		107EAFAA176755C5003DD588 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EAFA9176755C5003DD588 /* iAd.framework */; };
 		107EAFAC1767612D003DD588 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAB1767612C003DD588 /* Default@2x.png */; };
 		107EAFAE17676136003DD588 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAD17676136003DD588 /* Default-568h@2x.png */; };
 		107EAFB01767793F003DD588 /* Icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAF1767793F003DD588 /* Icon-small.png */; };
@@ -52,7 +48,6 @@
 		109DC01617637D1300F608A6 /* OptionPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC01517637D1200F608A6 /* OptionPane.m */; };
 		109DC0191764692500F608A6 /* LabeledSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 109DC0181764692400F608A6 /* LabeledSlider.m */; };
 		10AB94FB176A572800CB0848 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AB94FA176A572800CB0848 /* Icon-Small@2x.png */; };
-		10AB94FE176B192B00CB0848 /* PurchaseMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AB94FD176B192B00CB0848 /* PurchaseMenu.m */; };
 		10AB95011774EDEA00CB0848 /* HelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AB95001774EDE900CB0848 /* HelpView.m */; };
 		10AB95031775C2EC00CB0848 /* ios_setting cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AB95021775C2EA00CB0848 /* ios_setting cog.png */; };
 		10AB95051775D29900CB0848 /* qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AB95041775D29700CB0848 /* qmark.png */; };
@@ -126,12 +121,6 @@
 		10768D341769042A008EE244 /* Crazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crazy.h; sourceTree = "<group>"; };
 		10768D351769042A008EE244 /* Crazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crazy.m; sourceTree = "<group>"; };
 		107EAF9F176630C8003DD588 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
-		107EAFA117672937003DD588 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = ../IAPHelper.h; sourceTree = "<group>"; };
-		107EAFA217672937003DD588 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPHelper.m; path = ../IAPHelper.m; sourceTree = "<group>"; };
-		107EAFA417672E28003DD588 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		107EAFA617672FB1003DD588 /* BoxIAP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxIAP.h; sourceTree = "<group>"; };
-		107EAFA717672FB2003DD588 /* BoxIAP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxIAP.m; sourceTree = "<group>"; };
-		107EAFA9176755C5003DD588 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		107EAFAB1767612C003DD588 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		107EAFAD17676136003DD588 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		107EAFAF1767793F003DD588 /* Icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-small.png"; path = "../Icon-small.png"; sourceTree = "<group>"; };
@@ -144,8 +133,6 @@
 		109DC0171764692400F608A6 /* LabeledSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabeledSlider.h; sourceTree = "<group>"; };
 		109DC0181764692400F608A6 /* LabeledSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabeledSlider.m; sourceTree = "<group>"; };
 		10AB94FA176A572800CB0848 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "../Icon-Small@2x.png"; sourceTree = "<group>"; };
-		10AB94FC176B192A00CB0848 /* PurchaseMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseMenu.h; sourceTree = "<group>"; };
-		10AB94FD176B192B00CB0848 /* PurchaseMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseMenu.m; sourceTree = "<group>"; };
 		10AB94FF1774EDE800CB0848 /* HelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpView.h; sourceTree = "<group>"; };
 		10AB95001774EDE900CB0848 /* HelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpView.m; sourceTree = "<group>"; };
 		10AB95021775C2EA00CB0848 /* ios_setting cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios_setting cog.png"; sourceTree = SOURCE_ROOT; };
@@ -169,8 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				107EAFAA176755C5003DD588 /* iAd.framework in Frameworks */,
-				107EAFA517672E28003DD588 /* StoreKit.framework in Frameworks */,
 				104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */,
 				10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */,
 				1005261617009CE600BFAAA6 /* UIKit.framework in Frameworks */,
@@ -214,8 +199,6 @@
 		1005261417009CE600BFAAA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				107EAFA9176755C5003DD588 /* iAd.framework */,
-				107EAFA417672E28003DD588 /* StoreKit.framework */,
 				104CD3751760FE2900E0CC0E /* OpenGLES.framework */,
 				10291D0617023CF100A9D2AB /* QuartzCore.framework */,
 				1005261517009CE600BFAAA6 /* UIKit.framework */,
@@ -229,57 +212,12 @@
 		1005261B17009CE600BFAAA6 /* Particle Box */ = {
 			isa = PBXGroup;
 			children = (
-				107EAFA117672937003DD588 /* IAPHelper.h */,
-				107EAFA217672937003DD588 /* IAPHelper.m */,
-				107EAFA617672FB1003DD588 /* BoxIAP.h */,
-				107EAFA717672FB2003DD588 /* BoxIAP.m */,
 				1005262417009CE600BFAAA6 /* AppDelegate.h */,
 				1005262517009CE600BFAAA6 /* AppDelegate.m */,
-				104CD37B1760FEF200E0CC0E /* GLView.h */,
-				104CD37C1760FEF200E0CC0E /* GLView.m */,
-				1005264D1700A69000BFAAA6 /* Engine.h */,
-				1005264E1700A69000BFAAA6 /* Engine.m */,
-				109DC01417637D1100F608A6 /* OptionPane.h */,
-				109DC01517637D1200F608A6 /* OptionPane.m */,
-				10BB08471765D7770060264E /* GradientButton.h */,
-				10BB08481765D7770060264E /* GradientButton.m */,
-				10AB94FF1774EDE800CB0848 /* HelpView.h */,
-				10AB95001774EDE900CB0848 /* HelpView.m */,
-				109DC0171764692400F608A6 /* LabeledSlider.h */,
-				109DC0181764692400F608A6 /* LabeledSlider.m */,
-				1023E151175E481F00963586 /* SmallMenuView.h */,
-				1023E152175E482000963586 /* SmallMenuView.m */,
-				100526501701CC5F00BFAAA6 /* Calculator.h */,
-				100526511701CC5F00BFAAA6 /* Calculator.m */,
-				10291D081703344E00A9D2AB /* Particle.h */,
-				10291D091703344E00A9D2AB /* Particle.m */,
-				10291D0C17033CEF00A9D2AB /* ForceNode.h */,
-				10291D0D17033CEF00A9D2AB /* ForceNode.m */,
-				10CFCEF017567F1300899CED /* BackShot.h */,
-				10CFCEF117567F1400899CED /* BackShot.m */,
-				10291D0F1703711800A9D2AB /* Graviton.h */,
-				10291D101703711900A9D2AB /* Graviton.m */,
-				1099132F174F7D540031EC8F /* Ribbon.h */,
-				10991330174F7D540031EC8F /* Ribbon.m */,
-				1012BA371706167C003019DC /* Whirl.h */,
-				1012BA381706167C003019DC /* Whirl.m */,
-				10AB94FC176B192A00CB0848 /* PurchaseMenu.h */,
-				10AB94FD176B192B00CB0848 /* PurchaseMenu.m */,
-				10768D341769042A008EE244 /* Crazy.h */,
-				10768D351769042A008EE244 /* Crazy.m */,
-				10DA945B17215BF400A7EBA3 /* Rose.h */,
-				10DA945C17215BF400A7EBA3 /* Rose.m */,
-				108EA0B017589AAD001951B9 /* Suction.h */,
-				108EA0B117589AAD001951B9 /* Suction.m */,
-				10413D8E175B3E8B00AE79A4 /* Spirals.h */,
-				10413D8F175B3E8B00AE79A4 /* Spirals.m */,
-				1023E149175B820000963586 /* Swirl.h */,
-				1023E14A175B820100963586 /* Swirl.m */,
-				1023E14C175BC13500963586 /* Repulsion.h */,
-				1023E14D175BC13500963586 /* Repulsion.m */,
-				10291D0B1703396800A9D2AB /* Repository.h */,
-				10C8AF4A17021EC700848AB8 /* Timer.h */,
-				10C8AF4B17021EC700848AB8 /* Timer.m */,
+				10DAB5AC1776F96200B58441 /* UI Custom Components */,
+				10DAB5AE1776F9B100B58441 /* Archetecture */,
+				10DAB5AD1776F99100B58441 /* Force Nodes */,
+				10DAB5AF1776F9D600B58441 /* Supporting Classes */,
 				1005261C17009CE600BFAAA6 /* Supporting Files */,
 			);
 			path = "Particle Box";
@@ -288,6 +226,7 @@
 		1005261C17009CE600BFAAA6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				10291D0B1703396800A9D2AB /* Repository.h */,
 				10AB950A17760E8200CB0848 /* stickybtn.png */,
 				10AB95061775DBBB00CB0848 /* minu.png */,
 				10AB95071775DBBD00CB0848 /* plus.png */,
@@ -329,6 +268,76 @@
 				1005263C17009CE600BFAAA6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		10DAB5AC1776F96200B58441 /* UI Custom Components */ = {
+			isa = PBXGroup;
+			children = (
+				104CD37B1760FEF200E0CC0E /* GLView.h */,
+				104CD37C1760FEF200E0CC0E /* GLView.m */,
+				109DC01417637D1100F608A6 /* OptionPane.h */,
+				109DC01517637D1200F608A6 /* OptionPane.m */,
+				10BB08471765D7770060264E /* GradientButton.h */,
+				10BB08481765D7770060264E /* GradientButton.m */,
+				10AB94FF1774EDE800CB0848 /* HelpView.h */,
+				10AB95001774EDE900CB0848 /* HelpView.m */,
+				109DC0171764692400F608A6 /* LabeledSlider.h */,
+				109DC0181764692400F608A6 /* LabeledSlider.m */,
+				1023E151175E481F00963586 /* SmallMenuView.h */,
+				1023E152175E482000963586 /* SmallMenuView.m */,
+			);
+			name = "UI Custom Components";
+			sourceTree = "<group>";
+		};
+		10DAB5AD1776F99100B58441 /* Force Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				10291D0C17033CEF00A9D2AB /* ForceNode.h */,
+				10291D0D17033CEF00A9D2AB /* ForceNode.m */,
+				10CFCEF017567F1300899CED /* BackShot.h */,
+				10CFCEF117567F1400899CED /* BackShot.m */,
+				10291D0F1703711800A9D2AB /* Graviton.h */,
+				10291D101703711900A9D2AB /* Graviton.m */,
+				1099132F174F7D540031EC8F /* Ribbon.h */,
+				10991330174F7D540031EC8F /* Ribbon.m */,
+				1012BA371706167C003019DC /* Whirl.h */,
+				1012BA381706167C003019DC /* Whirl.m */,
+				10768D341769042A008EE244 /* Crazy.h */,
+				10768D351769042A008EE244 /* Crazy.m */,
+				10DA945B17215BF400A7EBA3 /* Rose.h */,
+				10DA945C17215BF400A7EBA3 /* Rose.m */,
+				108EA0B017589AAD001951B9 /* Suction.h */,
+				108EA0B117589AAD001951B9 /* Suction.m */,
+				10413D8E175B3E8B00AE79A4 /* Spirals.h */,
+				10413D8F175B3E8B00AE79A4 /* Spirals.m */,
+				1023E149175B820000963586 /* Swirl.h */,
+				1023E14A175B820100963586 /* Swirl.m */,
+				1023E14C175BC13500963586 /* Repulsion.h */,
+				1023E14D175BC13500963586 /* Repulsion.m */,
+			);
+			name = "Force Nodes";
+			sourceTree = "<group>";
+		};
+		10DAB5AE1776F9B100B58441 /* Archetecture */ = {
+			isa = PBXGroup;
+			children = (
+				1005264D1700A69000BFAAA6 /* Engine.h */,
+				1005264E1700A69000BFAAA6 /* Engine.m */,
+				100526501701CC5F00BFAAA6 /* Calculator.h */,
+				100526511701CC5F00BFAAA6 /* Calculator.m */,
+				10291D081703344E00A9D2AB /* Particle.h */,
+				10291D091703344E00A9D2AB /* Particle.m */,
+			);
+			name = Archetecture;
+			sourceTree = "<group>";
+		};
+		10DAB5AF1776F9D600B58441 /* Supporting Classes */ = {
+			isa = PBXGroup;
+			children = (
+				10C8AF4A17021EC700848AB8 /* Timer.h */,
+				10C8AF4B17021EC700848AB8 /* Timer.m */,
+			);
+			name = "Supporting Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,10 +485,7 @@
 				109DC01617637D1300F608A6 /* OptionPane.m in Sources */,
 				109DC0191764692500F608A6 /* LabeledSlider.m in Sources */,
 				10BB08491765D7770060264E /* GradientButton.m in Sources */,
-				107EAFA317672938003DD588 /* IAPHelper.m in Sources */,
-				107EAFA817672FB3003DD588 /* BoxIAP.m in Sources */,
 				10768D361769042B008EE244 /* Crazy.m in Sources */,
-				10AB94FE176B192B00CB0848 /* PurchaseMenu.m in Sources */,
 				10AB95011774EDEA00CB0848 /* HelpView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

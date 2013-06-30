@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "GradientButton.h"
 
-static const NSString *STICKY_FINGERS_STR = @"Toggling this button on and off will cause force nodes to remain when you remove your fingers";
-static const NSString *PLUS_OPT_STR = @"Press this to change to the next force node";
-static const NSString *MINUS_OPT_STR = @"Select this to change to the previous force mode";
-static const NSString *SETTING_OPT_STR = @"Select this button to open an option menu";
+static const NSString *STICKY_FINGERS_STR = @"Toggling this button on and off will cause force modes to remain when you lift your fingers";
+static const NSString *PLUS_OPT_STR = @"Select to change to the next force mode";
+static const NSString *MINUS_OPT_STR = @"Select to change to the previous force mode";
+static const NSString *SETTING_OPT_STR = @"Select to open an option menu";
+static const NSString *SHAKE_OPT_STR = @"Shake your device to reset the particles";
 
 static const float SCREEN_TO_COMP_RATIO = 1.f / 6.f;
 
@@ -21,7 +22,7 @@ static const float COMPONENT_GAP = 10.f;
 @interface HelpView : UIView {
     NSMutableArray *imgOptionImages;
     NSMutableArray *labHelpOptions;
-    UILabel *labHelp;
+    UILabel *labShake;
     GradientButton *btnExit;
 }
 

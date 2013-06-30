@@ -28,6 +28,11 @@
         float imgWidth = componentHeight;
         float labWidth = frame.size.width - imgWidth - COMPONENT_GAP;
         
+        labShake = [[UILabel alloc] initWithFrame:CGRectMake(5.f, COMPONENT_GAP, frame.size.width, componentHeight)];
+        [labShake setBackgroundColor:self.backgroundColor];
+        [labShake setTextColor:[UIColor whiteColor]];
+        [labShake setText:(NSString*)SHAKE_OPT_STR];
+        [self addSubview:labShake];
         
         for (int i = 0 ; i < [idStrings count]; i++) {
             float layerHeight = (i + 1) * (componentHeight + COMPONENT_GAP);

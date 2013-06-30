@@ -7,15 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "iAd/ADBannerView.h"
-
 #include "RenderView.h"
 #include "Calculator.h"
 #include "Timer.h"
 #include "SmallMenuView.h"
 #include "GLView.h"
 #import "OptionPane.h"
-#import "PurchaseMenu.h"
 #import "HelpView.h"
 
 extern const float BUTTON_WIDTH_RATIO;
@@ -68,7 +65,6 @@ extern const float BUTTON_WIDTH_RATIO;
 @property (nonatomic, strong) SmallMenuView *smallMenu;
 @property (nonatomic, strong) GLView *glview;
 @property (nonatomic, strong) OptionPane *optionPane;
-@property (nonatomic, strong) ADBannerView *adds;
 
 @property (nonatomic,retain) Calculator *calc;
 
