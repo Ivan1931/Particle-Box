@@ -18,6 +18,7 @@
 @synthesize node;
 @synthesize numParticles;
 @synthesize velocityMultiplyer;
+@synthesize stagnateMode;
 
 -(id) initWithData:(GLfloat *)pdata andDimesions:(Vec2)xy {
     self = [super init];
@@ -41,9 +42,18 @@
     //NSLog(@"Calculating");
     for (int p = 0; p < numParticles; p++) {
         Particle* local = [particles objectAtIndex:p];
-        if (node != nil)
+        if (node != nil) {
             [node influenceParticle:local];
-        [local moveWithVelocityMultiplyer:velocityMultiplyer];
+            if (stagnateMode && node.getNumberNodes == 0) {
+                clock_t timeDifference = clock() - slowDownStart;
+                float finalSpeed = velocityMultiplyer * (1.f - (float)timeDifference / (float)MAX_SLOW_DOWN_TIME) / 2.f;
+                finalSpeed = finalSpeed < 0.f ? 0.f : finalSpeed;
+                [local moveWithVelocityMultiplyer:finalSpeed];
+            } else {
+                [local moveWithVelocityMultiplyer:velocityMultiplyer];
+
+            }
+        }
         [self renderParticle:local];
         if (reset){
             if(local.position.x <= 0) { 
@@ -105,9 +115,13 @@ void swap(int *a,int *b){
 
 -(void) resetParticles {
     //NSLog(@"Reset");
+    int particlesPerRow = numParticles / 60;
+    float offSetX = dims.x / particlesPerRow;
+    float offSetY = dims.y / 60;
     for (int i = 0 ; i < numParticles; i++) {
-        [[particles objectAtIndex:i] respawnInBounds:VEC2(0.f,0.f) :dims];
-        [[particles objectAtIndex:i] resetVelocity];
+            [((Particle *)[particles objectAtIndex:i]) setPosition:VEC2(i % 60 * offSetX, i / 60 * offSetY)];
+            [[particles objectAtIndex:i] bringToCurrent];
+            [[particles objectAtIndex:i] resetVelocity];
     }
 }
 -(void) spawnBackShot {
@@ -204,7 +218,6 @@ void swap(int *a,int *b){
     [node addNodeList:nodeList];
 
 }
-
 #pragma mark - move gravity
 
 -(void) moveGravity:(CGPoint)xy {
@@ -214,6 +227,14 @@ void swap(int *a,int *b){
 +(float) randFloatBetween:(float)low and:(float)high {
     float diff = high - low;
     return (((float) rand() / RAND_MAX) * diff) + low;
+}
+
+-(void) startStagnationTimer {
+    slowDownStart = clock();
+}
+
+-(BOOL) hasStagnated {
+    return clock() - slowDownStart > MAX_SLOW_DOWN_TIME;
 }
 
 @end

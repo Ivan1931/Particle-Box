@@ -92,4 +92,8 @@ const int NUM_ITERATIONS_RESPBOX = 5;
     
 }
 
+-(BOOL) requiresFadeEffect {
+    return YES;
+}
+
 @end

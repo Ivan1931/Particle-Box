@@ -72,4 +72,7 @@ const uint RESPAWN_BOX_CHANGE = 3;
     }
 }
 
+-(BOOL) requiresFadeEffect {
+    return YES; 
+}
 @end

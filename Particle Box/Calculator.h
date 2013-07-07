@@ -37,10 +37,14 @@
     unsigned char** blank;
     uint numParticles;
     float velocityMultiplyer;
+    BOOL stagnateMode;
+    clock_t slowDownStart;
 }
 #pragma mark - Properties
 @property uint numParticles;
 @property float velocityMultiplyer;
+@property BOOL stagnateMode;
+
 @property (assign, nonatomic) GLfloat *data;
 @property (nonatomic, strong) NSMutableArray *particles;
 @property (nonatomic, strong) ForceNode *node;
@@ -51,6 +55,8 @@
 -(void) spawnParticles;
 -(void) moveGravity:(CGPoint)xy;
 -(void) resetParticles;
+
+-(void) startStagnationTimer;
 
 +(float) randFloatBetween:(float)low and:(float)high;
 
@@ -68,4 +74,6 @@
 -(void) spawnExtraInternalNodes:(int) number;
 
 -(void) setForceNode:(int) nodeNumber;
+
+-(BOOL) hasStagnated;
 @end

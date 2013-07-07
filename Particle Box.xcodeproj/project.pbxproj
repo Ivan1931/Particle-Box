@@ -38,6 +38,7 @@
 		104CD37D1760FEF200E0CC0E /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 104CD37C1760FEF200E0CC0E /* GLView.m */; };
 		105DDD70176A51EF00F3E75C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 105DDD6D176A51EF00F3E75C /* Icon.png */; };
 		105DDD71176A51EF00F3E75C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 105DDD6E176A51EF00F3E75C /* Icon@2x.png */; };
+		107299B51786CF3000662D23 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107299B41786CF2F00662D23 /* GLKit.framework */; };
 		10768D361769042B008EE244 /* Crazy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10768D351769042A008EE244 /* Crazy.m */; };
 		107EAFA0176630C9003DD588 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAF9F176630C8003DD588 /* Default.png */; };
 		107EAFAC1767612D003DD588 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107EAFAB1767612C003DD588 /* Default@2x.png */; };
@@ -118,6 +119,7 @@
 		104CD37C1760FEF200E0CC0E /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLView.m; path = ../../SimpleLinesOpenGL/GLView.m; sourceTree = "<group>"; };
 		105DDD6D176A51EF00F3E75C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		105DDD6E176A51EF00F3E75C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		107299B41786CF2F00662D23 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		10768D341769042A008EE244 /* Crazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crazy.h; sourceTree = "<group>"; };
 		10768D351769042A008EE244 /* Crazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crazy.m; sourceTree = "<group>"; };
 		107EAF9F176630C8003DD588 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107299B51786CF3000662D23 /* GLKit.framework in Frameworks */,
 				104CD3761760FE2900E0CC0E /* OpenGLES.framework in Frameworks */,
 				10291D0717023CF100A9D2AB /* QuartzCore.framework in Frameworks */,
 				1005261617009CE600BFAAA6 /* UIKit.framework in Frameworks */,
@@ -199,6 +202,7 @@
 		1005261417009CE600BFAAA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				107299B41786CF2F00662D23 /* GLKit.framework */,
 				104CD3751760FE2900E0CC0E /* OpenGLES.framework */,
 				10291D0617023CF100A9D2AB /* QuartzCore.framework */,
 				1005261517009CE600BFAAA6 /* UIKit.framework */,
@@ -603,7 +607,7 @@
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";
 				"PROVISIONING_PROFILE[sdk=*]" = "C5767285-59CD-4CA5-B8D2-7B280BC8D633";
@@ -622,7 +626,7 @@
 				GCC_PREFIX_HEADER = "Particle Box/Particle Box-Prefix.pch";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "Particle Box/Particle Box-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

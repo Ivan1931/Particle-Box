@@ -66,8 +66,8 @@ typedef struct {
 
 static const int NUM_FMODE_TYPES = 10;
 
-static const int BACK_SHOT = 0;
-static const int GRAVITON = 1;
+static const int BACK_SHOT = 1;
+static const int GRAVITON = 0;
 static const int SUCTION = 2;
 static const int REPULSION = 3;
 static const int ROSE = 4;
@@ -106,4 +106,8 @@ static const float DEFAULT_ALPHA = 1.f;
 static const float DEFAULT_VEL_MULT = 1.f;
 static const float DEFAULT_INITIAL_PARTICLES = 1500;
 static const float DEFAULT_THICKNESS = 2.f;
+
+static const int NUM_OPTIONS = 5;
+
+static const clock_t MAX_SLOW_DOWN_TIME = 300000;
 #endif

@@ -73,15 +73,24 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
         animatingHelpView = NO;
         
         stickyFingers = NO;
+        
+        [calc setStagnateMode:YES];
     }
     return self;
 }
 
 -(void) setupOpenGL {
     context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    [EAGLContext setCurrentContext:context];
     self.glview = [[GLView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     self.view = glview;
+    [EAGLContext setCurrentContext:context];
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer*) glview.layer;
+    eaglLayer.opaque = YES;
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:YES],
+                                    kEAGLDrawablePropertyRetainedBacking,
+                                    kEAGLColorFormatRGB565, kEAGLDrawablePropertyColorFormat, nil];
+    
     //Create render buffers
     glGenRenderbuffers(1, &renderBuffer);
     //This binds renderBuffer to GL_RENDERBUFFER. Essentially opengl has created an alias for renderbuffer
@@ -116,6 +125,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
     glBlendEquation( GL_FUNC_ADD );
     glLineWidth(2);
     glDrawArrays(GL_LINES, 0, MAX_PARTICLES);
+    glEnable(GL_APPLE_framebuffer_multisample);
     
     [context presentRenderbuffer:GL_RENDERBUFFER];
 	// Do any additional setup after loading the view.
@@ -287,18 +297,21 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 }
 
 -(void) draw {
+    if (![calc stagnateMode] || ([calc.node getNumberNodes] > 0)) {
+        if ([calc.node requiresFadeEffect]) {
+            glUniform4f(colorPosition, 0.f, 0.f, 0.f, 0.3f);
+            glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, overLay);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(overLay) / sizeof(GLfloat));
+        } else {
+            glClearColor(0.f, 0.f, 0.f, 0.f);
+            glClear(GL_COLOR_BUFFER_BIT);
+        }
+    }
     glUniform4f(colorPosition, color[0], color[1], color[2], 0.f);
     glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
-    glDrawArrays(GL_LINES, 0, [calc numParticles]);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, [calc numParticles]);
     [context presentRenderbuffer:GL_RENDERBUFFER];
-    if ([calc.node requiresFadeEffect]) {
-        glUniform4f(colorPosition, 0.f, 0.f, 0.f, 0.4f);
-        glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, overLay);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(overLay) / sizeof(GLfloat));
-    } else {
-        glClearColor(0.f, 0.f, 0.f, 0.f);
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
+    
 }
 
 -(void)menuButtonSelected {
@@ -432,10 +445,13 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
                 [calc.node deleteNode:VEC2(point.x, point.y)];
         }
     }
+    if ([calc.node getNumberNodes] == 0)
+        [calc startStagnationTimer];
 }
 
 -(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [calc.node deleteNodes];
+    [calc startStagnationTimer];
     [self hideSmallMenu];
     numFingers = 0;
 }

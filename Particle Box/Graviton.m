@@ -43,4 +43,8 @@
     }
     [particle addAcceleration:a];
 }
+
+-(BOOL) requiresFadeEffect {
+    return YES;
+}
 @end
