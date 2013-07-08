@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GradientButton.h"
 
-static const NSString *STICKY_FINGERS_STR = @"Toggling this button on and off will cause force modes to remain when you lift your fingers";
+static const NSString *STICKY_FINGERS_STR = @"Toggling this button will cycle through modes that create effects when you lift your fingers. Tap to check them out";
 static const NSString *PLUS_OPT_STR = @"Select to change to the next force mode";
 static const NSString *MINUS_OPT_STR = @"Select to change to the previous force mode";
 static const NSString *SETTING_OPT_STR = @"Select to open an option menu";

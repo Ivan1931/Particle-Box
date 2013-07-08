@@ -34,6 +34,7 @@
         screenCenter = VEC2(dims.x / 2.f, dims.y / 2.f);
         [self spawnParticles];
         numParticles = MAX_PARTICLES;
+        stagnateMode = NO;
     }
     return self;
 }
@@ -115,13 +116,11 @@ void swap(int *a,int *b){
 
 -(void) resetParticles {
     //NSLog(@"Reset");
-    int particlesPerRow = numParticles / 60;
-    float offSetX = dims.x / particlesPerRow;
-    float offSetY = dims.y / 60;
-    for (int i = 0 ; i < numParticles; i++) {
-            [((Particle *)[particles objectAtIndex:i]) setPosition:VEC2(i % 60 * offSetX, i / 60 * offSetY)];
-            [[particles objectAtIndex:i] bringToCurrent];
-            [[particles objectAtIndex:i] resetVelocity];
+    for (int i = 0; i < numParticles; i++) {
+        Particle* local = [particles objectAtIndex:i];
+        [local respawnInBounds:VEC2(0.f,0.f) :dims];
+        [local bringToCurrent];
+        [local resetVelocity];
     }
 }
 -(void) spawnBackShot {

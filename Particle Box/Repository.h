@@ -23,8 +23,9 @@
 #define KEY_THICKNESS "THICKNESS"
 #define KEY_NUM_PARTICLES "NUM_P"
 
-#define STICKY_FINGER_ON_STR "O"
-#define STICKY_FINGER_OFF_STR "I"
+#define STAGNATE_ON_STR "2"
+#define STICKY_FINGER_ON_STR "1"
+#define STICKY_FINGER_OFF_STR "0"
 
 #define PLUS_IMG_STR "plus.png"
 #define MINUS_IMG_STR "minu.png"

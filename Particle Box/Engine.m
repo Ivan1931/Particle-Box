@@ -74,7 +74,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
         
         stickyFingers = NO;
         
-        [calc setStagnateMode:YES];
+        //[calc setStagnateMode:YES];
     }
     return self;
 }
@@ -290,6 +290,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
     for (int i = 0 ; i < 3; i++)
         color[i] = ((LabeledSlider *)[optionPane.sldrColors objectAtIndex:i]).slider.value;
     glLineWidth(optionPane.sldrThickness.slider.value);
+    glPointSize(optionPane.sldrThickness.slider.value);
     [calc setNumParticles:optionPane.sldrNumParticle.slider.value];
     [calc setVelocityMultiplyer:optionPane.sldrVelocity.slider.value];
     
@@ -309,7 +310,7 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
     }
     glUniform4f(colorPosition, color[0], color[1], color[2], 0.f);
     glVertexAttribPointer(aPosition, 2, GL_FLOAT, GL_FALSE, 0, particleData);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, [calc numParticles]);
+    glDrawArrays(GL_LINES, 0, [calc numParticles]);
     [context presentRenderbuffer:GL_RENDERBUFFER];
     
 }
@@ -323,10 +324,25 @@ const float BUTTON_WIDTH_RATIO = 1.f / 8.f;
 }
 
 -(void) stickyFingersSelected {
-    if (!stickyFingers)
+    if (!stickyFingers && ![calc stagnateMode]) {
         [self stickyFingersOn];
-    else
+    }
+    else if (stickyFingers){
         [self stickyFingersOff];
+        [self stagnateModeOn];
+    } else {
+        [self stagnateModeOff];
+    }
+}
+
+-(void) stagnateModeOn {
+    [smallMenu.btnStickyFingers setTitle:@STAGNATE_ON_STR forState:UIControlStateNormal];
+    [calc setStagnateMode:YES];
+}
+
+-(void) stagnateModeOff {
+    [smallMenu.btnStickyFingers setTitle:@STICKY_FINGER_OFF_STR forState:UIControlStateNormal];
+    [calc setStagnateMode:NO];
 }
 
 -(void) stickyFingersOn {

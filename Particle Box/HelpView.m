@@ -49,7 +49,7 @@
             [labTmp setText:labString];
             [labTmp setTextColor:[UIColor whiteColor]];
             [labTmp setBackgroundColor:[UIColor blackColor]];
-            [labTmp setNumberOfLines:3];
+            [labTmp setNumberOfLines:4];
             [labTmp sizeToFit];
             [self addSubview:labTmp];
             [labHelpOptions addObject:labTmp];
